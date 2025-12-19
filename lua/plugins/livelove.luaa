@@ -1,0 +1,7 @@
+-- Love2d Lsp service
+return {
+  "S1M0N38/livelove.nvim",
+  ft = "lua",
+  opts = {},
+}
+

@@ -8,6 +8,6 @@ return {
 	},
 	lazy = false, -- neo-tree will lazily load itself
 	config = function()
-		vim.keymap.set("n", "<C-n>", ":Neotree toggle right<CR>", { desc = "Neotree toggle right" })
+		vim.keymap.set({"n"}, "<C-n>", ":Neotree toggle right<CR>", { desc = "Neotree toggle right" })
 	end,
 }

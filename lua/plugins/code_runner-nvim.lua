@@ -15,39 +15,39 @@ return {
 		-- Keybindings
 		vim.keymap.set(
       "n",
-      "<leader>rc",
+      "<leader>cr",
       ":RunCode<CR>",
       { noremap = true, silent = false, desc = "Run code" }
     )
 		vim.keymap.set(
       "n",
-      "<leader>rf",
+      "<leader>crf",
       ":RunFile<CR>",
       { noremap = true, silent = false, desc = "Run file" }
     )
 		vim.keymap.set(
 			"n",
-			"<leader>rft",
+			"<leader>crftb",
 			":RunFile tab<CR>",
 			{ noremap = true, silent = false, desc = "Run file tab" }
 		)
 		vim.keymap.set("n",
-      "<leader>rp",
+      "<leader>crp",
       ":RunProject<CR>",
       { noremap = true, silent = false, desc = "Run project" }
     )
 		vim.keymap.set("n",
-      "<leader>rcl",
+      "<leader>crq",
       ":RunClose<CR>",
       { noremap = true, silent = false, desc = "Run close" }
     )
 		vim.keymap.set("n",
-      "<leader>crf",
+      "<leader>crft",
       ":CRFiletype<CR>",
       { noremap = true, silent = false, desc = "CR filetype" }
     )
 		vim.keymap.set("n",
-    "<leader>crp",
+    "<leader>crps",
       ":CRProjects<CR>",
       { noremap = true, silent = false, desc = "CR projects" }
     )

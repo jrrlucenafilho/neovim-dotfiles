@@ -42,25 +42,55 @@ return {
 			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,
 				filetypes = { "lua" },
-				-- cmd = { "/usr/bin/lua-language-server" }, -- Use pacman's bin package if mason's breaks
 				root_markers = {
+          "main.lua",
+          "love.conf",
 					".luarc.json",
 					".luarc.jsonc",
 					".luacheckrc",
 					".stylua.toml",
 					".git",
 				},
+
+        -- Just so it only loads love2d and 3rd-party libraries in project mode
+				on_new_config = function(new_config, root_dir)
+					-- Ensure tables exist
+					new_config.settings = new_config.settings or {}
+					new_config.settings.Lua = new_config.settings.Lua or {}
+					new_config.settings.Lua.workspace = new_config.settings.Lua.workspace or {}
+
+					if root_dir then
+						-- Project mode → enable LÖVE + 3rd-party libs
+						new_config.settings.Lua.workspace.checkThirdParty = true
+						new_config.settings.Lua.workspace.library = {
+							vim.fn.expand("$VIMRUNTIME/lua"),
+							vim.fn.stdpath("data") .. "/lazy/love2d.nvim/library",
+						}
+					else
+						-- Single-file mode → no 3rd-party probing
+						new_config.settings.Lua.workspace.checkThirdParty = false
+						new_config.settings.Lua.workspace.library = nil
+					end
+				end,
+
 				settings = {
 					Lua = {
 						runtime = {
 							version = "LuaJIT",
+							special = {
+								-- ["love.filesystem.load"] = "loadfile",
+							},
 						},
+
 						diagnostics = {
-							globals = { "vim", "CsvView.Options" },
+							globals = { "vim", "love" },
 						},
+
+						workspace = {},
 					},
 				},
 			})
+
 			vim.lsp.enable("lua_ls")
 
 			-- html-lsp
@@ -69,11 +99,11 @@ return {
 			})
 			vim.lsp.enable("html")
 
-      -- basedpyright
-      vim.lsp.config("basedpyright", {
-        capabilities = capabilities,
-      })
-      vim.lsp.enable("basedpyright")
+			-- basedpyright
+			vim.lsp.config("basedpyright", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("basedpyright")
 
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
