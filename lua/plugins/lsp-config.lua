@@ -26,19 +26,19 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- Capabilities allows for LSPs to provide completions as well
-			-- clangd
+			-- clangd (C, C++)
 			vim.lsp.config("clangd", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("clangd")
 
-			-- ts_ls
+			-- ts_ls (Typescript)
 			vim.lsp.config("ts_ls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("ts_ls")
 
-			-- lua_ls
+			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,
 				filetypes = { "lua" },
@@ -93,13 +93,13 @@ return {
 
 			vim.lsp.enable("lua_ls")
 
-			-- html-lsp
+			-- html-lsp (Html)
 			vim.lsp.config("html", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("html")
 
-			-- basedpyright
+			-- basedpyright (Python)
 			vim.lsp.config("basedpyright", {
 				capabilities = capabilities,
 			})
