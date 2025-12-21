@@ -5,11 +5,10 @@
 -- Meanwhile, cmp_nvim_lsp asks LSP for completion suggestions
 -- (gotta add the capabilities in each LSP for this last one)
 return {
-  {
-    "hrsh7th/cmp-nvim-lsp",
-
-  },
-  {
+	{
+		"hrsh7th/cmp-nvim-lsp",
+	},
+	{
 		"L3MON4D3/LuaSnip",
 		dependencies = {
 			"saadparwaiz1/cmp_luasnip",
@@ -43,8 +42,11 @@ return {
 					["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 				}),
 				sources = cmp.config.sources({
-					{ name = 'nvim_lsp' }, -- for LSP completions
+					{ name = "nvim_lsp" }, -- for LSP completions
 					{ name = "luasnip" }, -- For luasnip users.
+					per_filetype = {
+						codecompanion = { "codecompanion" }, --codecompanion's chat buffer
+					},
 				}, {
 					{ name = "buffer" },
 				}),

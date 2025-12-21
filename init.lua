@@ -27,6 +27,9 @@ require("config.keymaps")
 require("utils.init-molten-buffer")
 require("utils.new-notebook")
 
+-- Load logger helper function for copilot.lua
+require("utils.logger").setup()
+
 -- Lazy config
 require("lazy").setup("plugins")
 

@@ -43,8 +43,8 @@ return {
 				capabilities = capabilities,
 				filetypes = { "lua" },
 				root_markers = {
-          "main.lua",
-          "love.conf",
+					"main.lua",
+					"love.conf",
 					".luarc.json",
 					".luarc.jsonc",
 					".luacheckrc",
@@ -52,7 +52,7 @@ return {
 					".git",
 				},
 
-        -- Just so it only loads love2d and 3rd-party libraries in project mode
+				-- Just so it only loads love2d and 3rd-party libraries in project mode
 				on_new_config = function(new_config, root_dir)
 					-- Ensure tables exist
 					new_config.settings = new_config.settings or {}
@@ -83,7 +83,7 @@ return {
 						},
 
 						diagnostics = {
-							globals = { "vim", "love" },
+							globals = { "vim", "love", "logger" },
 						},
 
 						workspace = {},
@@ -104,6 +104,12 @@ return {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("basedpyright")
+
+			-- yamlls (yaml)
+			vim.lsp.config("yamlls", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("yamlls")
 
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
