@@ -12,7 +12,7 @@ vim.keymap.set("n", "<A-s>", ":w<CR>", { desc = "Quick save" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Open at-cursor diagnostics
-vim.keymap.set("n", "<leader>d", function()
+vim.keymap.set("n", "<leader>dd", function()
 	vim.diagnostic.open_float({
 		focus = false,
 		scope = "cursor",
@@ -33,3 +33,16 @@ vim.keymap.set("n", "<leader>fr", function()
 	require("telescope").load_extension("frecency")
 	require("telescope").extensions.frecency.frecency()
 end, { desc = "Open Frecency / MRU" })
+
+-- Copying/pasting to system clipboard commands for neovide
+if vim.g.neovide == true then
+	-- Copy current line
+	vim.keymap.set({ "n" }, "<C-S-C>", '"+yy', { desc = "Copy current line to system clipboard" })
+	-- Copy visual selection
+	vim.keymap.set({ "v" }, "<C-S-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
+	-- Copy range of lines
+	vim.keymap.set("n", "<C-S-R>", ":<C-u>y+<left><left>", { desc = "Copy range to system clipboard" })
+
+	-- Paste (normal and visual modes)
+	vim.keymap.set({ "n", "v" }, "<C-S-V>", '"+p', { desc = "Paste from system clipboard" })
+end

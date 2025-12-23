@@ -28,7 +28,7 @@ return {
 		-- NES (Next edit suggestion smart clearing)
 		require("copilot-lsp").setup({
 			nes = {
-				move_count_threshold = 3, -- Clear after 3 cursor movements
+				move_count_threshold = 2, -- Clear after 3 cursor movements
 			},
 		})
 

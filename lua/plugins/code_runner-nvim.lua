@@ -7,8 +7,8 @@ return {
 		require("code_runner").setup({
 			filetype = {
 				python = "uv run python",
-				c = "cd $dir && gcc $fileName -g -o  /tmp/$fileNameWithoutExt && /tmp/$fileNameWithoutExt",
-				cpp = "cd $dir && g++ $fileName -g -o /tmp/$fileNameWithoutExt && /tmp/$fileNameWithoutExt",
+				c = 'cd "$dir" && gcc "$fileName" -g -o "/tmp/$fileNameWithoutExt" && "/tmp/$fileNameWithoutExt"',
+				cpp = 'cd "$dir" && g++ "$fileName" -g -o "/tmp/$fileNameWithoutExt" && "/tmp/$fileNameWithoutExt"',
 			},
 		})
 

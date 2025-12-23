@@ -27,56 +27,82 @@ return {
 				dapui.close()
 			end
 
-			-- Language debug adapters
-			-- C/C++
+			----------[[Dap Adapters Setup]]----------
+			-- Codelldb (C/C++/Rust)
+			dap.adapters.codelldb = {
+				type = "executable",
+				command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"
+
+				-- On windows you may have to uncomment this:
+				-- detached = false,
+			}
+
+			-- Gdb (C/C++/Rust)
 			dap.adapters.gdb = {
 				type = "executable",
 				command = "gdb",
 				args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
 			}
 
-			dap.configurations.c = {
+			----------[[ Dap Configurations Setup ]]----------
+			-- C/C++ using codelldb
+			dap.configurations.cpp = {
 				{
-					name = "Launch",
-					type = "gdb",
+					name = "Launch file",
+					type = "codelldb",
 					request = "launch",
 					program = function()
 						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 					end,
-					args = {}, -- provide arguments if needed
 					cwd = "${workspaceFolder}",
-					stopAtBeginningOfMainSubprogram = false,
-				},
-				{
-					name = "Select and attach to process",
-					type = "gdb",
-					request = "attach",
-					program = function()
-						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-					end,
-					pid = function()
-						local name = vim.fn.input("Executable name (filter): ")
-						return require("dap.utils").pick_process({ filter = name })
-					end,
-					cwd = "${workspaceFolder}",
-				},
-				{
-					name = "Attach to gdbserver :1234",
-					type = "gdb",
-					request = "attach",
-					target = "localhost:1234",
-					program = function()
-						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-					end,
-					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
 				},
 			}
-			dap.configurations.cpp = dap.configurations.c
+			dap.configurations.c = dap.configurations.cpp
 
-			-- Debugging keybinds
-			vim.keymap.set("n", "<Leader>dt", ":DapToggleBreakpoint<CR>", { desc = "Toggle breakpoint" })
+			-- C/C++ Using gdb
+			-- dap.configurations.c = {
+			-- 	{
+			-- 		name = "Launch",
+			-- 		type = "gdb",
+			-- 		request = "launch",
+			-- 		program = function()
+			-- 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			-- 		end,
+			-- 		args = {}, -- provide arguments if needed
+			-- 		cwd = "${workspaceFolder}",
+			-- 		stopAtBeginningOfMainSubprogram = false,
+			-- 	},
+			-- 	{
+			-- 		name = "Select and attach to process",
+			-- 		type = "gdb",
+			-- 		request = "attach",
+			-- 		program = function()
+			-- 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			-- 		end,
+			-- 		pid = function()
+			-- 			local name = vim.fn.input("Executable name (filter): ")
+			-- 			return require("dap.utils").pick_process({ filter = name })
+			-- 		end,
+			-- 		cwd = "${workspaceFolder}",
+			-- 	},
+			-- 	{
+			-- 		name = "Attach to gdbserver :1234",
+			-- 		type = "gdb",
+			-- 		request = "attach",
+			-- 		target = "localhost:1234",
+			-- 		program = function()
+			-- 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			-- 		end,
+			-- 		cwd = "${workspaceFolder}",
+			-- 	},
+			-- }
+			-- dap.configurations.cpp = dap.configurations.c
+
+			----------[[Debugging keybinds]]----------
+			vim.keymap.set("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { desc = "Toggle breakpoint" })
 			vim.keymap.set("n", "<Leader>dc", ":DapContinue<CR>", { desc = "Continue debugging" })
-			vim.keymap.set("n", "<Leader>dx", ":DapTerminate<CR>", { desc = "Terminate debugging session" })
+			vim.keymap.set("n", "<Leader>dq", ":DapTerminate<CR>", { desc = "Terminate debugging session" })
 			vim.keymap.set("n", "<Leader>dov", ":DapStepOver<CR>", { desc = "Step over (debugging)" })
 			vim.keymap.set("n", "<Leader>di", ":DapStepInto<CR>", { desc = "Step into (debugging)" })
 			vim.keymap.set("n", "<Leader>dou", ":DapStepOut<CR>", { desc = "Step out (debugging)" })
