@@ -32,11 +32,17 @@ return {
 			})
 			vim.lsp.enable("clangd")
 
-			-- ts_ls (Typescript)
+			-- ts_ls (Javascript/Typescript)
 			vim.lsp.config("ts_ls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("ts_ls")
+
+			-- eslint-lsp (Javascript/Typescript)
+			vim.lsp.config("eslint-lsp", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("eslint-lsp")
 
 			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
