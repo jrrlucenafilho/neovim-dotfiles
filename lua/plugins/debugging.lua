@@ -119,9 +119,7 @@ return {
 
 					program = "${file}", -- This configuration will launch the current file if used.
 					pythonPath = function()
-						-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-						-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-						-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+            -- Looks for virtualenv, then venv, .venv and the just uses the system one
 						local cwd = vim.fn.getcwd()
 						if os.getenv("VIRTUAL_ENV") then
 							return os.getenv("VIRTUAL_ENV") .. "/bin/python"
@@ -140,10 +138,21 @@ return {
 			vim.keymap.set("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { desc = "Toggle breakpoint" })
 			vim.keymap.set("n", "<Leader>dc", ":DapContinue<CR>", { desc = "Continue debugging" })
 			vim.keymap.set("n", "<Leader>dq", ":DapTerminate<CR>", { desc = "Terminate debugging session" })
-			vim.keymap.set("n", "<Leader>dov", ":DapStepOver<CR>", { desc = "Step over (debugging)" })
+			vim.keymap.set("n", "<Leader>dv", ":DapStepOver<CR>", { desc = "Step over (debugging)" })
 			vim.keymap.set("n", "<Leader>di", ":DapStepInto<CR>", { desc = "Step into (debugging)" })
-			vim.keymap.set("n", "<Leader>dou", ":DapStepOut<CR>", { desc = "Step out (debugging)" })
-			vim.keymap.set("n", "<Leader>dr", ":DapRestartFrame<CR>", { desc = "Restart frame (debugging)" })
+			vim.keymap.set("n", "<Leader>du", ":DapStepOut<CR>", { desc = "Step out (debugging)" })
+			vim.keymap.set("n", "<Leader>df", ":DapRestartFrame<CR>", { desc = "Restart frame (debugging)" })
+			vim.keymap.set("n", "<leader>dr", function()
+				if dap.session() then
+					dap.terminate()
+					dap.listeners.after.event_terminated["restart"] = function()
+						dap.listeners.after.event_terminated["restart"] = nil
+						dap.continue()
+					end
+				else
+					dap.continue()
+				end
+			end, { desc = "Restart debugging" })
 		end,
 	},
 	{ -- Go
