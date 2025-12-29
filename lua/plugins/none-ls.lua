@@ -3,35 +3,46 @@
 -- Builtins: https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins
 -- Extras: https://github.com/nvimtools/none-ls-extras.nvim/tree/main/lua/none-ls
 return {
-  "nvimtools/none-ls.nvim",
-  dependencies = {
-    "nvimtools/none-ls-extras.nvim",
-  },
-  config = function()
-    local null_ls = require("null-ls")
+	"nvimtools/none-ls.nvim",
+	dependencies = {
+		"nvimtools/none-ls-extras.nvim",
+	},
 
-    null_ls.setup({
-      sources = {
-        -- Lua
-        null_ls.builtins.formatting.stylua,
+	config = function()
+		local none_ls = require("null-ls")
 
-        -- Typescript/Javascript
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.semgrep,
-        -- require("none-ls.diagnostics.eslint_d"), -- Broken linter
+		none_ls.setup({
+			----------[[ Linters/Formatters ]]----------
+			sources = {
+				---[[ Lua ]]---
+				none_ls.builtins.formatting.stylua,
+				-- none_ls.builtins.diagnostics.selene, -- Using Selene on nvim-lint
 
-        -- Python
-        null_ls.builtins.formatting.black, -- general formatting
-        null_ls.builtins.formatting.isort, -- imports formatting
-        require("none-ls.diagnostics.ruff"), -- linter
+				---[[ Typescript/Javascript ]]--
+				none_ls.builtins.formatting.prettier,
+				none_ls.builtins.diagnostics.semgrep,
+				-- require("none-ls.diagnostics.eslint_d"), -- Superceded by eslint_lsp
 
-        -- Html
-        -- null_ls.builtins.formatting.prettier, -- (already included)
-        -- null_ls.builtins.diagnostics.htmlhint, -- We're using lsp linting
-      },
-    })
+				---[[ Python ]]---
+				none_ls.builtins.formatting.black, -- general formatting
+				none_ls.builtins.formatting.isort, -- imports formatting
+				require("none-ls.diagnostics.ruff"), -- linter
 
-    -- Formatting/Linting keybinds
-    vim.keymap.set("n", "<leader>ff", vim.lsp.buf.format, { desc = "Format" })
-  end,
+				---[[ Html ]]---
+				-- none_ls.builtins.formatting.prettier, -- (already included)
+				-- none_ls.builtins.diagnostics.htmlhint, -- Superceded by Html-lsp
+
+				---[[ Css ]] --
+				none_ls.builtins.diagnostics.stylelint,
+				-- none_ls.builtins.formatting.prettier, -- (already included)
+
+				---[[ C/C++ ]]---
+				none_ls.builtins.formatting.clang_format,
+				none_ls.builtins.diagnostics.cppcheck, -- Not in Mason, complementing clangtidy
+			},
+		})
+
+		-- Formatting keymaps
+		vim.keymap.set("n", "<leader>ff", vim.lsp.buf.format, { desc = "Format" })
+	end,
 }

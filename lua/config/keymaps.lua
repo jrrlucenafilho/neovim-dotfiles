@@ -28,12 +28,6 @@ vim.keymap.set("n", "<leader>bm", "m", { desc = "Set mark (bookmark)" })
 -- Open a bookmark
 vim.keymap.set("n", "<leader>bo", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "Open bookmarks" })
 
--- Open Frecency / MRU
-vim.keymap.set("n", "<leader>fr", function()
-	require("telescope").load_extension("frecency")
-	require("telescope").extensions.frecency.frecency()
-end, { desc = "Open Frecency / MRU" })
-
 -- Copying/pasting to system clipboard commands for neovide
 if vim.g.neovide == true then
 	-- Copy current line
@@ -46,3 +40,11 @@ if vim.g.neovide == true then
 	-- Paste (normal and visual modes)
 	vim.keymap.set({ "n", "v" }, "<C-S-V>", '"+p', { desc = "Paste from system clipboard" })
 end
+
+-- Create new file, prompts for name
+vim.keymap.set("n", "<leader>n", function()
+	local filename = vim.fn.input("New file name: ", "", "file")
+	if filename ~= "" then
+		vim.cmd("e " .. filename)
+	end
+end, { desc = "Create new file" })

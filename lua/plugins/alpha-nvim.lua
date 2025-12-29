@@ -12,6 +12,14 @@ return {
 		-- Load the custom header table once
 		local custom_header = require("ui.headers.header_zooey_title_dragons")
 
+		-- Change padding
+		dashboard.config.layout = {
+			{ type = "padding", val = 1 },
+			dashboard.section.header,
+			{ type = "padding", val = 0 },
+			dashboard.section.buttons,
+		}
+
 		-- Overwrite the header section's content (val)
 		dashboard.section.header.val = custom_header.val
 
@@ -23,6 +31,13 @@ return {
 
 		-- Dashboard buttons
 		dashboard.section.buttons.val = {
+
+			--Zoxide
+			dashboard.button("z", "󰓩  Zoxide", "<cmd>Telescope zoxide list<CR>"),
+
+			-- Yazi
+			dashboard.button("y", "󰉋  Yazi", "<cmd>Yazi<CR>"),
+
 			-- New file
 			dashboard.button("n", "  New file", "<cmd>ene<CR>"),
 

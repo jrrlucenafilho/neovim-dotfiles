@@ -46,7 +46,10 @@ return {
 				executable = {
 					command = "node",
 					-- Make sure to update this path to point to your installation
-					args = { "/usr/lib/js-debug/dapDebugServer.js", "${port}" },
+					args = {
+						"/home/jrrlu/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+						"${port}",
+					},
 				},
 			}
 
@@ -119,7 +122,7 @@ return {
 
 					program = "${file}", -- This configuration will launch the current file if used.
 					pythonPath = function()
-            -- Looks for virtualenv, then venv, .venv and the just uses the system one
+						-- Looks for virtualenv, then venv, .venv and the just uses the system one
 						local cwd = vim.fn.getcwd()
 						if os.getenv("VIRTUAL_ENV") then
 							return os.getenv("VIRTUAL_ENV") .. "/bin/python"
@@ -142,19 +145,24 @@ return {
 			vim.keymap.set("n", "<Leader>di", ":DapStepInto<CR>", { desc = "Step into (debugging)" })
 			vim.keymap.set("n", "<Leader>du", ":DapStepOut<CR>", { desc = "Step out (debugging)" })
 			vim.keymap.set("n", "<Leader>df", ":DapRestartFrame<CR>", { desc = "Restart frame (debugging)" })
+
 			vim.keymap.set("n", "<leader>dr", function()
 				if dap.session() then
 					dap.terminate()
-					dap.listeners.after.event_terminated["restart"] = function()
-						dap.listeners.after.event_terminated["restart"] = nil
-						dap.continue()
+					dap.listeners.after.event_terminated["dap_restart"] = function()
+						dap.listeners.after.event_terminated["dap_restart"] = nil
+						vim.schedule(function()
+							dap.run_last()
+						end)
 					end
 				else
-					dap.continue()
+					dap.run_last()
 				end
 			end, { desc = "Restart debugging" })
 		end,
 	},
+
+	----------[[External dap setups handled by plugins]]----------
 	{ -- Go
 		"leoluz/nvim-dap-go",
 
