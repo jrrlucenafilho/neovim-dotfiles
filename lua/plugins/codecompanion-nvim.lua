@@ -32,6 +32,41 @@ return {
 				},
 			},
 
+			----------[[ General Adapters ]]----------
+			adapters = {
+				---[[ Acp Protocol ]]---
+				acp = {
+					opts = {
+						show_presets = true,
+					},
+				},
+				----[[ Http Protocol ]]----
+				http = {
+					opts = {
+						show_presets = false,
+					},
+					--[[ Github Copilot ]]
+					copilot = {
+						name = "copilot",
+						model = "gpt-4.1",
+					},
+					--[[ Gemini ]]
+					gemini = function()
+						return require("codecompanion.adapters").extend("gemini", {
+							schema = {
+								model = {
+									default = "gemini-2.5-flash",
+									-- default = "gemini-2.5-flash-lite", -- choose one
+								},
+							},
+							env = {
+								api_key = os.getenv("GEMINI_API_KEY"),
+							},
+						})
+					end,
+				},
+			},
+
 			--[[
     Each 'model config' is an 'interaction'
     - Interaction types:
@@ -40,44 +75,56 @@ return {
       - Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)
       - Background - Runs tasks in the background such as compacting chat messages or generating titles for chats
     ]]
+			----------[[ Default Adapters For Each Interaction ]]----------
 			interactions = {
 				chat = {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = {
-						name = "copilot",
-						model = "gpt-4.1",
-					},
+					adapter = "gemini",
 				},
 
 				inline = {
-					adapter = {
-						name = "copilot",
-						model = "gpt-4.1",
-					},
+					adapter = "copilot",
 				},
 
 				cmd = {
-					adapter = {
-						name = "copilot",
-						model = "gpt-4.1",
-					},
+					adapter = "copilot",
 				},
 
 				background = {
-					adapter = {
-						name = "copilot",
-						model = "gpt-4.1",
-					},
+					adapter = "copilot",
 				},
 			},
 		})
 
-		-- Keybindings
-		vim.keymap.set({ "n", "v" }, "<localleader>a", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-		vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
-		vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+		-- Autocmd to disable line count for chat buffer
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "codecompanion",
+			callback = function()
+				vim.opt_local.number = false
+			end,
+		})
+
+		----------[[ Keymaps ]]----------
+		vim.keymap.set(
+			{ "n", "v" },
+			"<localleader>a",
+			"<cmd>CodeCompanionActions<cr>",
+			{ noremap = true, silent = true }
+		)
+		vim.keymap.set(
+			{ "n", "v" },
+			"<C-a>",
+			"<cmd>CodeCompanionChat Toggle<cr>",
+			{ desc = "Toggle CodeCompanion chat", noremap = true, silent = true }
+		)
+		vim.keymap.set(
+			"v",
+			"ga",
+			"<cmd>CodeCompanionChat Add<cr>",
+			{ desc = "Add selection to CodeCompanion chat", noremap = true, silent = true }
+		)
 
 		-- Expand 'cc' into 'CodeCompanion' in the command line
 		vim.cmd([[cab cc CodeCompanion]])

@@ -49,19 +49,20 @@ return {
 		----------[[ Load Extensions ]]----------
 		telescope.load_extension("zoxide")
 		telescope.load_extension("fidget")
+    telescope.load_extension("frecency")
 
 		----------[[ Keymaps ]]----------
 		vim.keymap.set("n", "<A-b>", builtin.buffers, { desc = "Telescope list buffers" })
 		vim.keymap.set("n", "<C-p>", builtin.find_files, { desc = "Telescope find files" })
 		vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "Telescope live grep" })
 		-- Open Frecency / MRU
-		vim.keymap.set("n", "<leader>fr", function()
+		vim.keymap.set("n", "<leader>frc", function()
 			require("telescope").load_extension("frecency")
 			require("telescope").extensions.frecency.frecency()
 		end, { desc = "Open Frecency / MRU" })
 		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 		vim.keymap.set("n", "<leader>fzb", builtin.current_buffer_fuzzy_find, { desc = "Telescope buffer fuzzy find" })
-		vim.keymap.set("n", "<leader>fre", builtin.registers, { desc = "Telescope list registers" })
+		vim.keymap.set("n", "<leader>frg", builtin.registers, { desc = "Telescope list registers" })
 		vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Telescope list normal mode keymaps" })
 		vim.keymap.set(
 			"n",

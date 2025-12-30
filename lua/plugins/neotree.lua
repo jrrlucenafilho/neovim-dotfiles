@@ -7,7 +7,8 @@ return {
 		"nvim-tree/nvim-web-devicons", -- optional, but recommended
 	},
 	lazy = false, -- neo-tree will lazily load itself
+
 	config = function()
-		vim.keymap.set({"n"}, "<C-n>", ":Neotree toggle left<CR>", { desc = "Neotree toggle right" })
+		vim.keymap.set({ "n" }, "<C-n>", ":Neotree toggle left<CR>", { desc = "Neotree toggle right" })
 	end,
 }

@@ -137,7 +137,7 @@ return {
 				},
 			}
 
-			----------[[Debugging keybinds]]----------
+			----------[[ Debugging keybinds ]]----------
 			vim.keymap.set("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { desc = "Toggle breakpoint" })
 			vim.keymap.set("n", "<Leader>dc", ":DapContinue<CR>", { desc = "Continue debugging" })
 			vim.keymap.set("n", "<Leader>dq", ":DapTerminate<CR>", { desc = "Terminate debugging session" })

@@ -1,7 +1,7 @@
 -- Lsp info monitor
 return {
 	"j-hui/fidget.nvim",
-	version = "*",
+	-- version = "*",
 
 	config = function()
 		require("fidget").setup({
