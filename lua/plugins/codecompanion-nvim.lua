@@ -45,12 +45,14 @@ return {
 					opts = {
 						show_presets = false,
 					},
-					--[[ Github Copilot ]]
+
+					-----[[ Github Copilot ]]-----
 					copilot = {
 						name = "copilot",
 						model = "gpt-4.1",
 					},
-					--[[ Gemini ]]
+
+					-----[[ Gemini ]]-----
 					gemini = function()
 						return require("codecompanion.adapters").extend("gemini", {
 							schema = {
@@ -64,24 +66,67 @@ return {
 							},
 						})
 					end,
+
+					----[[ Ollama models ]]----
+          ---[[ Local Models ]]---
+					--[[ Ollama qwen2.5-coder:14b ]]
+					ollama_qwen2_5_coder_14b = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+							},
+							parameters = {
+								sync = true,
+								model = "qwen2.5-coder:14b",
+							},
+						})
+					end,
+
+					--[[ Ollama qwen2.5-coder:14b-instruct-q3_K_L ]]
+					ollama_qwen2_5_coder_14b_instruct_q3_K_L = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+							},
+							parameters = {
+								sync = true,
+								model = "qwen2.5-coder:14b-instruct-q3_K_L ",
+							},
+						})
+					end,
+
+					--[[ Ollama gpt_oss_20b ]]
+					ollama_gpt_oss_20b = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+							},
+							parameters = {
+								sync = true,
+								model = "gpt-oss:20b",
+							},
+						})
+					end,
+
+          ---[[ Ollama Cloud Models ]]---
+
 				},
 			},
 
-			--[[
-    Each 'model config' is an 'interaction'
-    - Interaction types:
-      - Chat - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
-      - Inline - An inline assistant that can write code directly into a buffer (:CodeCompanion)
-      - Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)
-      - Background - Runs tasks in the background such as compacting chat messages or generating titles for chats
-    ]]
+			--[[ Interactions
+      - Interaction types:
+        - Chat - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
+        - Inline - An inline assistant that can write code directly into a buffer (:CodeCompanion)
+        - Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)
+        - Background - Runs tasks in the background such as compacting chat messages or generating titles for chats
+      ]]
 			----------[[ Default Adapters For Each Interaction ]]----------
 			interactions = {
 				chat = {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "gemini",
+					adapter = "ollama_gpt_oss_20b",
 				},
 
 				inline = {
