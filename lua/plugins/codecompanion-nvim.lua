@@ -9,7 +9,7 @@ return {
 	config = function()
 		require("codecompanion").setup({
 			opts = {
-				log_level = "DEBUG", -- or "TRACE"
+				log_level = "ERROR", -- or "TRACE"
 			},
 
 			display = {
@@ -34,10 +34,15 @@ return {
 
 			----------[[ General Adapters ]]----------
 			adapters = {
+				-----[[ Github Copilot ]]-----
+				copilot = {
+					name = "copilot",
+					-- model = "gpt-4.1", -- Specify model if wanted (check available ones)
+				},
 				---[[ Acp Protocol ]]---
 				acp = {
 					opts = {
-						show_presets = true,
+						show_presets = false,
 					},
 				},
 				----[[ Http Protocol ]]----
@@ -45,13 +50,6 @@ return {
 					opts = {
 						show_presets = false,
 					},
-
-					-----[[ Github Copilot ]]-----
-					copilot = {
-						name = "copilot",
-						model = "gpt-4.1",
-					},
-
 					-----[[ Gemini ]]-----
 					gemini = function()
 						return require("codecompanion.adapters").extend("gemini", {
@@ -68,7 +66,7 @@ return {
 					end,
 
 					----[[ Ollama models ]]----
-          ---[[ Local Models ]]---
+					---[[ Local Models ]]---
 					--[[ Ollama qwen2.5-coder:14b ]]
 					ollama_qwen2_5_coder_14b = function()
 						return require("codecompanion.adapters").extend("ollama", {
@@ -108,8 +106,96 @@ return {
 						})
 					end,
 
-          ---[[ Ollama Cloud Models ]]---
+					---[[ Ollama Cloud Models ]]---
+					--[[ Ollama qwen3-coder:480b-cloud ]]
+					ollama_qwen3_coder_480b_cloud = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+								api_key = os.getenv("OLLAMA_API_KEY"),
+							},
+							-- headers = {
+							-- ["Content-Type"] = "application/json",
+							-- ["Authorization"] = "Bearer ${api_key}",
+							-- },
+							parameters = {
+								sync = true,
+								model = "qwen3-coder:480b-cloud",
+							},
+						})
+					end,
 
+					--[[ Ollama devstral-2:123b-cloud ]]
+					ollama_devstral_2_123b_cloud = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+								api_key = os.getenv("OLLAMA_API_KEY"),
+							},
+							-- headers = {
+							-- ["Content-Type"] = "application/json",
+							-- ["Authorization"] = "Bearer ${api_key}",
+							-- },
+							parameters = {
+								sync = true,
+								model = "devstral-2:123b-cloud",
+							},
+						})
+					end,
+
+					--[[ Ollama devstral-small-2:24b-cloud ]]
+					ollama_devstral_small_2_24b_cloud = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+								api_key = os.getenv("OLLAMA_API_KEY"),
+							},
+							-- headers = {
+							-- ["Content-Type"] = "application/json",
+							-- ["Authorization"] = "Bearer ${api_key}",
+							-- },
+							parameters = {
+								sync = true,
+								model = "devstral-small-2:24b-cloud",
+							},
+						})
+					end,
+
+					--[[ Ollama gemini-3-pro-preview:latest ]]
+					ollama_gemini_3_pro_preview_cloud = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+								api_key = os.getenv("OLLAMA_API_KEY"),
+							},
+							-- headers = {
+							-- ["Content-Type"] = "application/json",
+							-- ["Authorization"] = "Bearer ${api_key}",
+							-- },
+							parameters = {
+								sync = true,
+								model = "gemini-3-pro-preview:latest",
+							},
+						})
+					end,
+
+					--[[ Ollama gemini-3-flash-preview:cloud ]]
+					ollama_gemini_3_flash_preview_cloud = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+								api_key = os.getenv("OLLAMA_API_KEY"),
+							},
+							-- headers = {
+							-- ["Content-Type"] = "application/json",
+							-- ["Authorization"] = "Bearer ${api_key}",
+							-- },
+							parameters = {
+								sync = true,
+								model = "gemini-3-flash-preview:cloud",
+							},
+						})
+					end,
 				},
 			},
 
@@ -126,7 +212,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "ollama_gpt_oss_20b",
+					adapter = "gemini",
 				},
 
 				inline = {
