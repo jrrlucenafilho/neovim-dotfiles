@@ -34,11 +34,6 @@ return {
 
 			----------[[ General Adapters ]]----------
 			adapters = {
-				-----[[ Github Copilot ]]-----
-				copilot = {
-					name = "copilot",
-					-- model = "gpt-4.1", -- Specify model if wanted (check available ones)
-				},
 				---[[ Acp Protocol ]]---
 				acp = {
 					opts = {
@@ -50,6 +45,13 @@ return {
 					opts = {
 						show_presets = false,
 					},
+
+					-----[[ Github Copilot ]]-----
+					-- copilot = {
+					-- 	name = "copilot",
+					-- 	model = "gpt-4.1", -- Specify model if wanted (check available ones)
+					-- },
+					--
 					-----[[ Gemini ]]-----
 					gemini = function()
 						return require("codecompanion.adapters").extend("gemini", {
@@ -212,7 +214,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "gemini",
+					adapter = "gemini"
 				},
 
 				inline = {

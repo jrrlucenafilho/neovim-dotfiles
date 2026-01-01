@@ -117,6 +117,18 @@ return {
 			})
 			vim.lsp.enable("yamlls")
 
+			-- tailwindcss (css)
+			vim.lsp.config("tailwindcss", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("tailwindcss")
+
+			-- fish_lsp (fish)
+			vim.lsp.config("fish_lsp", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("fish_lsp")
+
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Check definition" })

@@ -8,6 +8,7 @@ return {
 	config = function()
 		require("lint").linters_by_ft = {
       ----------[[ Linters ]]----------
+      c = { "clangtidy" },
 			cpp = { "clangtidy" }, -- Complementing cppcheck
 			lua = { "selene" },
 		}
