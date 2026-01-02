@@ -129,6 +129,12 @@ return {
 			})
 			vim.lsp.enable("fish_lsp")
 
+			-- hypr_lsp (hypr.conf)
+			vim.lsp.config("hypr_lsp", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("hypr_lsp")
+
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Check definition" })

@@ -214,7 +214,10 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "gemini"
+					adapter = {
+						name = "copilot",
+						model = "gpt-4.1",
+					},
 				},
 
 				inline = {
