@@ -33,7 +33,7 @@ return {
 		dashboard.section.buttons.val = {
 
 			--Zoxide
-			dashboard.button("z", "󰓩  Zoxide", "<cmd>Telescope zoxide list<CR>"),
+			dashboard.button("z", "  Zoxide", "<cmd>Telescope zoxide list<CR>"),
 
 			-- Yazi
 			dashboard.button("y", "󰉋  Yazi", "<cmd>Yazi<CR>"),
