@@ -49,6 +49,6 @@ vim.keymap.set("n", "<leader>nf", function()
 	end
 end, { desc = "Create new file" })
 
--- Open Lazy
+-- Open Lazy and Mason
 vim.keymap.set("n", "<leader>la", "<cmd>Lazy<CR>", { desc = "Open Lazy" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Mason<CR>", { desc = "Open Mason" })
