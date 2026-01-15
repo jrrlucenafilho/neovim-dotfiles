@@ -135,6 +135,24 @@ return {
 			})
 			vim.lsp.enable("hypr_lsp")
 
+			-- css (css_lsp)
+			vim.lsp.config("css_lsp", {
+				capabilities = capabilities,
+			})
+      vim.lsp.enable("css_lsp")
+
+      -- css variables (css-variables-language-server)
+      vim.lsp.config("css_variables", {
+				capabilities = capabilities,
+			})
+      vim.lsp.enable("css_variables")
+
+      -- css modules (css-modules-language-server)
+			vim.lsp.config("cssmodules_ls", {
+				capabilities = capabilities,
+			})
+      vim.lsp.enable("cssmodules_ls")
+
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Check definition" })
