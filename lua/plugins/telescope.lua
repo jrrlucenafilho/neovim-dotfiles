@@ -58,6 +58,7 @@ return {
 		telescope.load_extension("zoxide")
 		telescope.load_extension("fidget")
 		telescope.load_extension("frecency")
+    telescope.load_extension("fzf")
 
 		----------[[ Keymaps ]]----------
 		vim.keymap.set("n", "<A-b>", builtin.buffers, { desc = "Telescope list buffers" })
