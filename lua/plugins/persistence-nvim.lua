@@ -13,7 +13,7 @@ return {
 			options = { "buffers", "curdir", "tabpages", "winsize" },
 		})
 
-		-- Autocmd for closing neotree when returning to a session, if it's open
+		-- Autocmd for closing toggable buffers when returning to a session, if it's open
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "PersistenceLoadPost",
 			callback = function()
@@ -22,6 +22,18 @@ return {
 					local name = vim.api.nvim_buf_get_name(buf)
 
 					if ft == "neo-tree" or name:match("neo%-tree") then
+						pcall(vim.api.nvim_buf_delete, buf, { force = true })
+					end
+
+					if ft == "Outline" or name:match("OUTLINE_1") then
+						pcall(vim.api.nvim_buf_delete, buf, { force = true })
+					end
+
+					if ft == "codecompanion" or name:match("%[CodeCompanion] %d+") then
+						pcall(vim.api.nvim_buf_delete, buf, { force = true })
+					end
+
+					if ft == "trouble" then
 						pcall(vim.api.nvim_buf_delete, buf, { force = true })
 					end
 				end
