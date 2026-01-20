@@ -389,8 +389,8 @@ return {
 
 		--[[ Keymaps ]]
 		-- Standart open Neogit ui
-		vim.keymap.set("n", "<leader>ng", "<cmd>Neogit<CR>", { desc = "Open Neogit UI" })
+		vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit UI" })
     -- Open neogit commit ui
-		vim.keymap.set("n", "<leader>ngc", "<cmd>NeogitCommit<CR>", { desc = "Open Neogit UI (Commit)" })
+		vim.keymap.set("n", "<leader>ggc", "<cmd>NeogitCommit<CR>", { desc = "Open Neogit UI (Commit)" })
   end,
 }
