@@ -32,6 +32,3 @@ require("utils.logger").setup()
 
 -- Lazy config
 require("lazy").setup("plugins")
-
--- Highlight matching parenthesis
-vim.api.nvim_command("highlight MatchParen guibg=#45474a guifg=#b9babb")

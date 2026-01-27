@@ -10,9 +10,15 @@ return {
 	keys = {
 		{
 			mode = { "v", "n" },
+			"<Leader>mw",
+			"<cmd>MCstart<CR>",
+			desc = "MultiCursors start on a word",
+		},
+		{
+			mode = { "v", "n" },
 			"<Leader>mc",
-			"<cmd>MCstart<cr>",
-			desc = "Create a selection for selected text or word under the cursor",
+			"<cmd>MCunderCursor<CR>",
+			desc = "MultiCursors start at cursor",
 		},
 	},
 }

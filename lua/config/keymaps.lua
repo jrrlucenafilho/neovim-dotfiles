@@ -19,6 +19,14 @@ vim.keymap.set("n", "<leader>dd", function()
 	})
 end, { desc = "Cursor diagnostics" })
 
+-- Open at-line diagnostics
+vim.keymap.set("n", "<leader>dl", function()
+	vim.diagnostic.open_float({
+		focus = false,
+		scope = "line",
+	})
+end, { desc = "Line diagnostics" })
+
 -- Bookmarking
 -- Create a bookmark
 -- Lowercase: local bookmark

@@ -7,32 +7,32 @@ return {
 	cmd = "Trouble",
 	keys = {
 		{
-			"<leader>td",
+			"<Space>td",
 			"<cmd>Trouble diagnostics toggle<cr>",
 			desc = "Diagnostics (Trouble)",
 		},
 		{
-			"<leader>tdf",
+			"<Space>tf",
 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 			desc = "Buffer Diagnostics (Trouble)",
 		},
 		{
-			"<leader>ts",
+			"<Space>ts",
 			"<cmd>Trouble symbols toggle focus=false<cr>",
 			desc = "Symbols (Trouble)",
 		},
 		{
-			"<leader>tl",
+			"<Space>tl",
 			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
 			desc = "LSP Definitions / references / ... (Trouble)",
 		},
 		{
-			"<leader>tlo",
+			"<Space>tlo",
 			"<cmd>Trouble loclist toggle<cr>",
 			desc = "Location List (Trouble)",
 		},
 		{
-			"<leader>tq",
+			"<Space>tq",
 			"<cmd>Trouble qflist toggle<cr>",
 			desc = "Quickfix List (Trouble)",
 		},
