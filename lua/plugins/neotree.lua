@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		"MunifTanjim/nui.nvim",
 		"nvim-tree/nvim-web-devicons", -- optional, but recommended
+		"s1n7ax/nvim-window-picker",
 	},
 	lazy = false, -- neo-tree will lazily load itself
 
