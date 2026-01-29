@@ -10,15 +10,27 @@ return {
 	keys = {
 		{
 			mode = { "v", "n" },
-			"<Leader>mw",
+			"gmcw",
 			"<cmd>MCstart<CR>",
-			desc = "MultiCursors start on a word",
+			desc = "MultiCursors: Start on word",
 		},
 		{
 			mode = { "v", "n" },
-			"<Leader>mc",
+			"gmcc",
 			"<cmd>MCunderCursor<CR>",
-			desc = "MultiCursors start at cursor",
+			desc = "MultiCursors: Start under cursor",
+		},
+		{
+			mode = { "v", "n" },
+			"gmcv",
+			"<cmd>MCvisual<CR>",
+			desc = "MultiCursors: Last visual selection",
+		},
+		{
+			mode = { "v", "n" },
+			"gmcp",
+			"<cmd>MCpattern<CR>",
+			desc = "MultiCursors: Pattern",
 		},
 	},
 }
