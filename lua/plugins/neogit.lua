@@ -390,7 +390,18 @@ return {
 		--[[ Keymaps ]]
 		-- Standart open Neogit ui
 		vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit UI" })
-    -- Open neogit commit ui
-		vim.keymap.set("n", "<leader>ggc", "<cmd>NeogitCommit<CR>", { desc = "Open Neogit UI (Commit)" })
-  end,
+
+		-- Open neogit commit ui
+		vim.keymap.set("n", "<leader>gc", "<cmd>NeogitCommit<CR>", { desc = "Open Neogit UI (Commit)" })
+
+		-- Open and close Diffview
+		vim.keymap.set("n", "<leader>gdo", "<cmd>DiffviewOpen<CR>", { desc = "Open Diffview" })
+		vim.keymap.set("n", "<leader>gdq", "<cmd>DiffviewClose<CR>", { desc = "Close Diffview" })
+
+		-- Diffview file history
+		vim.keymap.set("n", "<leader>gdh", "<cmd>DiffviewFileHistory<CR>", { desc = "Open Diffview File History" })
+
+		-- Diffview refresh
+		vim.keymap.set("n", "<leader>gdr", "<cmd>DiffviewRefresh<CR>", { desc = "Refresh Diffview" })
+	end,
 }

@@ -11,26 +11,32 @@ return {
 		{
 			mode = { "v", "n" },
 			"gmcw",
-			"<cmd>MCstart<CR>",
+			"<CMD>MCstart<CR>",
 			desc = "MultiCursors: Start on word",
 		},
 		{
 			mode = { "v", "n" },
 			"gmcc",
-			"<cmd>MCunderCursor<CR>",
+			"<CMD>MCunderCursor<CR>",
 			desc = "MultiCursors: Start under cursor",
 		},
 		{
 			mode = { "v", "n" },
 			"gmcv",
-			"<cmd>MCvisual<CR>",
+			"<CMD>MCvisual<CR>",
 			desc = "MultiCursors: Last visual selection",
 		},
 		{
 			mode = { "v", "n" },
 			"gmcp",
-			"<cmd>MCpattern<CR>",
+			"<CMD>MCpattern<CR>",
 			desc = "MultiCursors: Pattern",
+		},
+		{
+			mode = { "v", "n" },
+			"gmcr",
+			"<CMD>MCclear<CR>",
+			desc = "MultiCursors: Remove/Clear",
 		},
 	},
 }

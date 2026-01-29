@@ -10,6 +10,11 @@ return {
 	lazy = false, -- neo-tree will lazily load itself
 
 	config = function()
+		require("neo-tree").setup({
+			window = {
+				width = 30,
+			},
+		})
 		vim.keymap.set({ "n" }, "<C-n>", ":Neotree toggle left<CR>", { desc = "Neotree toggle right" })
 	end,
 }
