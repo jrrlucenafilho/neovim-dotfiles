@@ -31,7 +31,7 @@ end, { desc = "Line diagnostics" })
 -- Create a bookmark
 -- Lowercase: local bookmark
 -- Uppercase: global bookmark (survives file switches)
-vim.keymap.set("n", "<leader>bm", "m", { desc = "Set mark (bookmark)" })
+vim.keymap.set("n", "<leader>bs", "m", { desc = "Set mark (bookmark)" })
 
 -- Open a bookmark
 vim.keymap.set("n", "<leader>bo", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "Open bookmarks" })
