@@ -36,6 +36,9 @@ return {
 					create_buffer_local_mappings()
 				end)
 			end,
+			-- Extra Keymaps
+			-- Open conflict list
+			vim.keymap.set("n", "<localleader>cl", "<cmd>GitConflictListQf<cr>", { desc = "Open conflict list" }),
 		})
 	end,
 }
