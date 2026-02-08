@@ -216,23 +216,20 @@ return {
 					},
 					adapter = {
 						name = "copilot",
-						model = "gpt-5.2",
+						model = "gpt-4.1",
 					},
 				},
 
 				inline = {
 					adapter = "copilot",
-					model = "gpt-5.2",
 				},
 
 				cmd = {
 					adapter = "copilot",
-					model = "gpt-5.2",
 				},
 
 				background = {
 					adapter = "copilot",
-					model = "gpt-5.2",
 				},
 			},
 		})
