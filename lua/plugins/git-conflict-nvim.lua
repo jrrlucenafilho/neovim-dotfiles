@@ -17,12 +17,12 @@ return {
 				},
 			},
 			default_mappings = {
-				ours = "<localleader>co",
-				theirs = "<localleader>ct",
-				none = "<localleader>c0",
-				both = "<localleader>cb",
-				next = "<localleader>cn",
-				prev = "<localleader>cp",
+				ours = "<leader>gco",
+				theirs = "<leader>gct",
+				none = "<leader>gc0",
+				both = "<leader>gcb",
+				next = "<leader>gcn",
+				prev = "<leader>gcp",
 			},
 		})
 
@@ -36,9 +36,23 @@ return {
 					create_buffer_local_mappings()
 				end)
 			end,
+
 			-- Extra Keymaps
-			-- Open conflict list
-			vim.keymap.set("n", "<localleader>cl", "<cmd>GitConflictListQf<cr>", { desc = "Open conflict list" }),
+			-- Toggle conflict list
+			vim.keymap.set("n", "<leader>gcl", function()
+				local qf_open = false
+				for _, win in ipairs(vim.api.nvim_list_wins()) do
+					if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "buftype") == "quickfix" then
+						qf_open = true
+						break
+					end
+				end
+				if qf_open then
+					vim.cmd("cclose")
+				else
+					vim.cmd("GitConflictListQf")
+				end
+			end, { desc = "Toggle Git Conflict List" }),
 		})
 	end,
 }

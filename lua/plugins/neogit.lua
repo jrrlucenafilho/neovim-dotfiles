@@ -391,12 +391,21 @@ return {
 		-- Standart open Neogit ui
 		vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit UI" })
 
-		-- Open neogit commit ui
-		vim.keymap.set("n", "<leader>gc", "<cmd>NeogitCommit<CR>", { desc = "Open Neogit UI (Commit)" })
-
-		-- Open and close Diffview
-		vim.keymap.set("n", "<leader>gdo", "<cmd>DiffviewOpen<CR>", { desc = "Open Diffview" })
-		vim.keymap.set("n", "<leader>gdq", "<cmd>DiffviewClose<CR>", { desc = "Close Diffview" })
+		-- Toggle Diffview function
+		local function toggle_diffview()
+			-- Check if any Diffview window is open
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+				if ft == "DiffviewFiles" or ft == "DiffviewFileHistory" then
+					vim.cmd("DiffviewClose")
+					return
+				end
+			end
+			vim.cmd("DiffviewOpen")
+		end
+    -- Toggle Diffview
+		vim.keymap.set("n", "<leader>gdt", toggle_diffview, { desc = "Toggle Diffview" })
 
 		-- Diffview file history
 		vim.keymap.set("n", "<leader>gdh", "<cmd>DiffviewFileHistory<CR>", { desc = "Open Diffview File History" })
