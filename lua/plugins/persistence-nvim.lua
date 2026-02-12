@@ -21,18 +21,22 @@ return {
 					local ft = vim.bo[buf].filetype
 					local name = vim.api.nvim_buf_get_name(buf)
 
+          -- Neotree
 					if ft == "neo-tree" or name:match("neo%-tree") then
 						pcall(vim.api.nvim_buf_delete, buf, { force = true })
 					end
 
+          -- Outline
 					if ft == "Outline" or name:match("OUTLINE_1") then
 						pcall(vim.api.nvim_buf_delete, buf, { force = true })
 					end
 
-					if ft == "codecompanion" or name:match("%[CodeCompanion] %d+") then
+          -- Empty filetype buffers (CodeCompanion)
+					if ft == "" then
 						pcall(vim.api.nvim_buf_delete, buf, { force = true })
 					end
 
+          -- Trouble
 					if ft == "trouble" then
 						pcall(vim.api.nvim_buf_delete, buf, { force = true })
 					end
