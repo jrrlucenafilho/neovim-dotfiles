@@ -10,31 +10,31 @@ return {
 	keys = {
 		{
 			mode = { "v", "n" },
-			"gmcw",
+			"gmw",
 			"<CMD>MCstart<CR>",
 			desc = "MultiCursors: Start on word",
 		},
 		{
 			mode = { "v", "n" },
-			"gmcc",
+			"gmc",
 			"<CMD>MCunderCursor<CR>",
 			desc = "MultiCursors: Start under cursor",
 		},
 		{
 			mode = { "v", "n" },
-			"gmcv",
+			"gmv",
 			"<CMD>MCvisual<CR>",
 			desc = "MultiCursors: Last visual selection",
 		},
 		{
 			mode = { "v", "n" },
-			"gmcp",
+			"gmp",
 			"<CMD>MCpattern<CR>",
 			desc = "MultiCursors: Pattern",
 		},
 		{
 			mode = { "v", "n" },
-			"gmcr",
+			"gmr",
 			"<CMD>MCclear<CR>",
 			desc = "MultiCursors: Remove/Clear",
 		},
