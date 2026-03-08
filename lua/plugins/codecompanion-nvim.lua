@@ -217,7 +217,8 @@ return {
 					},
 					adapter = {
 						name = "copilot",
-						model = "gpt-4.1",
+						-- model = "gpt-4.1",
+						model = "claude-sonnet-4.6",
 					},
 				},
 
@@ -326,7 +327,15 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
-				vim.opt_local.number = false
+        vim.opt_local.number = false
+      end,
+    })
+
+    -- Autocmd to auto open codecompanion's commit writer when neogit's commit buffer opens
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "gitcommit",
+			callback = function()
+				vim.api.nvim_command("CodeCompanion /commit")
 			end,
 		})
 
@@ -348,6 +357,12 @@ return {
 			"ga",
 			"<cmd>CodeCompanionChat Add<cr>",
 			{ desc = "Add selection to CodeCompanion chat", noremap = true, silent = true }
+		)
+		vim.keymap.set(
+			{ "n", "v" },
+			"<localleader>c",
+			"<cmd>CodeCompanion /commit<cr>",
+			{ desc = "Open CodeCompanion commit chat", noremap = true, silent = true }
 		)
 
 		-- Expand 'cc' into 'CodeCompanion' in the command line
