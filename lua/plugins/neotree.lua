@@ -16,5 +16,13 @@ return {
 			},
 		})
 		vim.keymap.set({ "n" }, "<C-n>", ":Neotree toggle left<CR>", { desc = "Neotree toggle right" })
+
+    -- Autocmd to auto update neotree on commits
+		vim.api.nvim_create_autocmd("BufDelete", {
+			pattern = "COMMIT_EDITMSG",
+			callback = function()
+				require("neo-tree.sources.manager").refresh("filesystem")
+			end,
+		})
 	end,
 }

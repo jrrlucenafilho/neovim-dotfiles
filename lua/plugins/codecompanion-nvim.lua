@@ -217,7 +217,30 @@ return {
 					},
 					adapter = {
 						name = "copilot",
-						-- model = "gpt-4.1",
+            --[[ Model names for copilot provider ]]
+						-- model = "gpt-4.1"
+						-- model = "claude-sonnet-4.5"
+						-- model = "gemini-3.5-pro-preview"
+						-- model = "gpt-5.1-codex"
+						-- model = "gpt-5.2-codex"
+						-- model = "gemini-3-pro-preview"
+						-- model = "gpt-5.1-codex-mini"
+						-- model = "gemini-3-flash-preview"
+						-- model = "gpt-5.4"
+						-- model = "gpt-5.3-codex-mx"
+						-- model = "gemini-2.5-pro"
+						-- model = "gpt-5-mini"
+						-- model = "claude-opus-4.5"
+						-- model = "gpt-4.1"
+						-- model = "gpt-5.2"
+						-- model = "oswe-vscode-prime"
+						-- model = "gpt-4o"
+						-- model = "gpt-5.3-codex"
+						-- model = "claude-sonnet-4"
+						-- model = "gpt-5.1"
+						-- model = "claude-opus-4.6"
+						-- model = "grok-code-fast-1"
+						-- model = "claude-haiku-4.5"
 						model = "claude-sonnet-4.6",
 					},
 				},
@@ -327,11 +350,11 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
-        vim.opt_local.number = false
-      end,
-    })
+				vim.opt_local.number = false
+			end,
+		})
 
-    -- Autocmd to auto open codecompanion's commit writer when neogit's commit buffer opens
+		-- Autocmd to auto open codecompanion's commit writer when neogit's commit buffer opens
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "gitcommit",
 			callback = function()
