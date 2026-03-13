@@ -219,7 +219,7 @@ return {
 						name = "copilot",
             --[[ Model names for copilot provider ]]
 						-- model = "gpt-4.1"
-						-- model = "claude-sonnet-4.5"
+						-- model = "claude-sonnet-4.5" (Gone)
 						-- model = "gemini-3.5-pro-preview"
 						-- model = "gpt-5.1-codex"
 						-- model = "gpt-5.2-codex"
@@ -230,18 +230,17 @@ return {
 						-- model = "gpt-5.3-codex-mx"
 						-- model = "gemini-2.5-pro"
 						-- model = "gpt-5-mini"
-						-- model = "claude-opus-4.5"
-						-- model = "gpt-4.1"
+						-- model = "claude-opus-4.5" (Gone)
 						-- model = "gpt-5.2"
 						-- model = "oswe-vscode-prime"
 						-- model = "gpt-4o"
 						-- model = "gpt-5.3-codex"
-						-- model = "claude-sonnet-4"
+						-- model = "claude-sonnet-4" (Gone)
 						-- model = "gpt-5.1"
-						-- model = "claude-opus-4.6"
+						-- model = "claude-opus-4.6" (Gone)
 						-- model = "grok-code-fast-1"
-						-- model = "claude-haiku-4.5"
-						model = "claude-sonnet-4.6",
+						model = "claude-haiku-4.5"
+						-- model = "claude-sonnet-4.6" (Gone)
 					},
 				},
 
