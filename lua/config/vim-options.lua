@@ -38,3 +38,6 @@ if vim.g.neovide then
 		end
 	end
 end
+
+-- Enable true color support
+vim.o.termguicolors = true

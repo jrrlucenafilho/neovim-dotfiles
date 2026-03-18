@@ -7,6 +7,8 @@ return {
 		require("bufferline").setup({
 			options = {
 				-- mode = "tabs",
+        separator_style = "slant",
+        diagnostics = "nvim_lsp",
 				offsets = {
 					{
 						filetype = "neo-tree",
@@ -20,12 +22,12 @@ return {
 						text_align = "center",
 						separator = true,
 					},
-          {
+					{
 						filetype = "Outline",
 						text = "Outline",
 						text_align = "center",
 						separator = true,
-          },
+					},
 				},
 			},
 		})

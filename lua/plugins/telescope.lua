@@ -58,6 +58,13 @@ return {
 					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 				},
 			},
+
+			---- [[ Pickers ]] ----
+			pickers = {
+				colorscheme = {
+					enable_preview = true,
+				},
+			},
 		})
 
 		----------[[ Load Extensions ]]----------
@@ -70,6 +77,7 @@ return {
 		vim.keymap.set("n", "<A-b>", builtin.buffers, { desc = "Telescope list buffers" })
 		vim.keymap.set("n", "<C-p>", builtin.find_files, { desc = "Telescope find files" })
 		vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "Telescope live grep" })
+
 		-- Open Frecency / MRU
 		vim.keymap.set("n", "<leader>frc", function()
 			require("telescope").load_extension("frecency")
@@ -85,5 +93,10 @@ return {
 			require("telescope").extensions.zoxide.list,
 			{ desc = "Telescope Zoxide list" }
 		)
+
+		-- Color scheme picker
+		vim.keymap.set("n", "<leader>cs", function()
+			require("telescope.builtin").colorscheme()
+		end, { desc = "Telescope pick colorscheme" })
 	end,
 }
