@@ -13,13 +13,16 @@ return {
 		require("neo-tree").setup({
 			window = {
 				width = 30,
+				mappings = {
+					["<C-r>"] = "refresh",
+				},
 			},
 		})
 		vim.keymap.set({ "n" }, "<C-n>", ":Neotree toggle left<CR>", { desc = "Neotree toggle right" })
 
-    -- Autocmd to auto update neotree on commits
-		vim.api.nvim_create_autocmd("BufDelete", {
-			pattern = "COMMIT_EDITMSG",
+		-- Autocmd to auto update neotree after neogit commits or pushes
+		vim.api.nvim_create_autocmd("User", {
+			pattern = { "NeogitCommitComplete", "NeogitPushComplete" },
 			callback = function()
 				require("neo-tree.sources.manager").refresh("filesystem")
 			end,
