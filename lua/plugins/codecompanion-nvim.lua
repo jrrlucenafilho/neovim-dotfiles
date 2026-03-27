@@ -218,7 +218,7 @@ return {
 					adapter = {
 						name = "copilot",
             --[[ Model names for copilot provider ]]
-						-- model = "gpt-4.1"
+						model = "gpt-4.1"
 						-- model = "claude-sonnet-4.5" (Gone)
 						-- model = "gemini-3.5-pro-preview"
 						-- model = "gpt-5.1-codex"
@@ -239,7 +239,7 @@ return {
 						-- model = "gpt-5.1"
 						-- model = "claude-opus-4.6" (Gone)
 						-- model = "grok-code-fast-1"
-						model = "claude-haiku-4.5"
+						-- model = "claude-haiku-4.5"
 						-- model = "claude-sonnet-4.6" (Gone)
 					},
 				},
