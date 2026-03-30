@@ -74,12 +74,15 @@ return {
 		end, { desc = "Toggle terminal 0" })
 
 		-- Select a terminal to focus
-		vim.keymap.set("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
+		vim.keymap.set("n", "<leader>ts", betterTerm.select, { desc = "Select terminal" })
 
 		-- Rename the current terminal
-		vim.keymap.set("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
+		vim.keymap.set({ "n", "t" }, "<A-r>", betterTerm.rename, { desc = "Rename terminal" })
 
-		-- Toggle the tabs bar
-		vim.keymap.set("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
+		-- Toggle the terminal window
+		vim.keymap.set({ "n", "t" }, "<A-t>", betterTerm.toggle_termwindow, { desc = "Toggle terminal tabs" })
+
+		-- Close the currently opened terminal (it's just bd! for terminal mode only
+		vim.keymap.set({ "t" }, "<A-c>", "<cmd>bd!<cr>", { desc = "Close current terminal" })
 	end,
 }
