@@ -82,7 +82,15 @@ return {
 		-- Toggle the terminal window
 		vim.keymap.set({ "n", "t" }, "<A-t>", betterTerm.toggle_termwindow, { desc = "Toggle terminal tabs" })
 
-		-- Close the currently opened terminal (it's just bd! for terminal mode only
-		vim.keymap.set({ "t" }, "<A-c>", "<cmd>bd!<cr>", { desc = "Close current terminal" })
+		-- Close the currently opened terminal (it's just bwipeout! for terminal mode only)
+		vim.keymap.set({ "t" }, "<A-c>", "<cmd>bwipeout!<cr>", { desc = "Close current terminal" })
+
+		-- Cycling among terminals
+		vim.keymap.set({ "t" }, "<A-Right>", function()
+			betterTerm.cycle(1)
+		end, { desc = "Cycle to next terminal" })
+		vim.keymap.set({ "t" }, "<A-Left>", function()
+			betterTerm.cycle(-1)
+		end, { desc = "Cycle to previous terminal" })
 	end,
 }

@@ -219,7 +219,7 @@ return {
 						name = "copilot",
             --[[ Model names for copilot provider ]]
             -- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
-						-- model = "gpt-4.1"
+						model = "gpt-4.1"
 						-- model = "claude-sonnet-4.5" (Gone)
 						-- model = "gemini-3.5-pro-preview"
 						-- model = "gpt-5.1-codex"
@@ -230,7 +230,7 @@ return {
 						-- model = "gpt-5.4"
 						-- model = "gpt-5.3-codex-mx"
 						-- model = "gemini-2.5-pro"
-						model = "gpt-5-mini"
+						-- model = "gpt-5-mini"
 						-- model = "claude-opus-4.5" (Gone)
 						-- model = "gpt-5.2"
 						-- model = "oswe-vscode-prime"
