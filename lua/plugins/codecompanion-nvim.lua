@@ -370,7 +370,8 @@ return {
 			},
 		})
 
-		-- Autocmd to disable line count for chat buffer
+		-----------[[ Autocmds ]]---------
+		-- Disable line count for chat buffer
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
@@ -378,11 +379,19 @@ return {
 			end,
 		})
 
-		-- Autocmd to auto open codecompanion's commit writer when neogit's commit buffer opens
+		-- Auto open codecompanion's commit writer when neogit's commit buffer opens
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "gitcommit",
 			callback = function()
 				vim.api.nvim_command("CodeCompanion /commit")
+			end,
+		})
+
+		-- Keep chat buffer as fixed size
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "codecompanion",
+			callback = function()
+				vim.opt_local.winfixwidth = true
 			end,
 		})
 

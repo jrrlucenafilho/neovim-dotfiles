@@ -7,8 +7,8 @@ return {
 		require("bufferline").setup({
 			options = {
 				-- mode = "tabs",
-        separator_style = "slant",
-        diagnostics = "nvim_lsp",
+				separator_style = "slant",
+				diagnostics = "nvim_lsp",
 				offsets = {
 					{
 						filetype = "neo-tree",
@@ -42,5 +42,8 @@ return {
 		-- Close current buffer
 		-- Disabled cause I'm using LazyVim's custom buf closing function
 		--vim.keymap.set("n", "<A-q>", "<Cmd>bd<CR>", {})
+
+		----- [[ Miscellaneous Configs ]] -----
+		vim.api.nvim_set_hl(0, "BufferLineOffsetSeparator", { fg = "#464e6a", bg = "NONE" })
 	end,
 }
