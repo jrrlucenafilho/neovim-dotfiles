@@ -51,6 +51,19 @@ return {
 				filters = {
 					filetype = { "codecompanion" }, -- don't open files in codecompanion windows
 				},
+				get_target_window = function(state, path) -- ignores codecompanion window when opening files
+					local wins = vim.api.nvim_list_wins()
+					for _, win in ipairs(wins) do
+						local buf = vim.api.nvim_win_get_buf(win)
+						local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+						if ft ~= "neo-tree" and ft ~= "codecompanion" then
+							if vim.api.nvim_buf_get_name(buf) == path then
+								return win
+							end
+						end
+					end
+					return nil
+				end,
 			},
 		})
 

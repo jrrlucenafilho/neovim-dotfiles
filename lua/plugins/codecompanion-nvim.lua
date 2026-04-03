@@ -405,43 +405,29 @@ return {
 			end,
 		})
 
-		-- Redirect buffer opens away from chat window, Neo-tree style, and block duplicate buffer opens
-		vim.api.nvim_create_autocmd("BufWinEnter", {
+		-- Corrected chat buffer protection: only restore in the chat window itself
+		vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {
 			callback = function()
 				local win = vim.api.nvim_get_current_win()
 				if vim.w.codecompanion_protect and vim.w.codecompanion_bufnr then
 					local cur_buf = vim.api.nvim_win_get_buf(win)
 					local cur_ft = vim.api.nvim_buf_get_option(cur_buf, "filetype")
-					if cur_ft ~= "codecompanion" then
-						-- If this buffer is already visible in another window, move focus there and restore chat buffer
-						local found = false
-						for _, other_win in ipairs(vim.api.nvim_list_wins()) do
-							if other_win ~= win then
-								local other_buf = vim.api.nvim_win_get_buf(other_win)
-								if other_buf == cur_buf then
-									vim.api.nvim_set_current_win(other_win)
-									found = true
-									break
-								end
-							end
-						end
-						-- Restore the chat buffer in the chat window
+					-- Only restore if the chat window is showing a non-chat buffer
+					if cur_ft ~= "codecompanion" and vim.api.nvim_buf_is_valid(vim.w.codecompanion_bufnr) then
 						vim.schedule(function()
 							if vim.api.nvim_win_is_valid(win)
-								and vim.w.codecompanion_bufnr
 								and vim.api.nvim_buf_is_valid(vim.w.codecompanion_bufnr)
 							then
-								local cur_buf2 = vim.api.nvim_win_get_buf(win)
-								local cur_ft2 = vim.api.nvim_buf_get_option(cur_buf2, "filetype")
-								if cur_ft2 ~= "codecompanion" then
-									vim.api.nvim_win_set_buf(win, vim.w.codecompanion_bufnr)
-								end
+								vim.api.nvim_win_set_buf(win, vim.w.codecompanion_bufnr)
 							end
 						end)
 					end
 				end
 			end,
 		})
+
+
+
 
 
 		----------[[ Keymaps ]]----------
