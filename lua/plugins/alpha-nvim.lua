@@ -125,6 +125,6 @@ return {
 		})
 
 		-- Keybindings
-		vim.keymap.set("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Open Alpha" })
+		vim.keymap.set("n", "<leader>aa", "<cmd>Alpha<CR>", { desc = "Open Alpha" })
 	end,
 }

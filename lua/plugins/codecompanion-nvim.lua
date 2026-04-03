@@ -395,6 +395,55 @@ return {
 			end,
 		})
 
+		-- Prevent other buffers from taking over the CodeCompanion chat window (aggressive)
+		-- Mark chat window and store its buffer
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "codecompanion",
+			callback = function()
+				vim.w.codecompanion_protect = true
+				vim.w.codecompanion_bufnr = vim.api.nvim_get_current_buf()
+			end,
+		})
+
+		-- Redirect buffer opens away from chat window, Neo-tree style, and block duplicate buffer opens
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			callback = function()
+				local win = vim.api.nvim_get_current_win()
+				if vim.w.codecompanion_protect and vim.w.codecompanion_bufnr then
+					local cur_buf = vim.api.nvim_win_get_buf(win)
+					local cur_ft = vim.api.nvim_buf_get_option(cur_buf, "filetype")
+					if cur_ft ~= "codecompanion" then
+						-- If this buffer is already visible in another window, move focus there and restore chat buffer
+						local found = false
+						for _, other_win in ipairs(vim.api.nvim_list_wins()) do
+							if other_win ~= win then
+								local other_buf = vim.api.nvim_win_get_buf(other_win)
+								if other_buf == cur_buf then
+									vim.api.nvim_set_current_win(other_win)
+									found = true
+									break
+								end
+							end
+						end
+						-- Restore the chat buffer in the chat window
+						vim.schedule(function()
+							if vim.api.nvim_win_is_valid(win)
+								and vim.w.codecompanion_bufnr
+								and vim.api.nvim_buf_is_valid(vim.w.codecompanion_bufnr)
+							then
+								local cur_buf2 = vim.api.nvim_win_get_buf(win)
+								local cur_ft2 = vim.api.nvim_buf_get_option(cur_buf2, "filetype")
+								if cur_ft2 ~= "codecompanion" then
+									vim.api.nvim_win_set_buf(win, vim.w.codecompanion_bufnr)
+								end
+							end
+						end)
+					end
+				end
+			end,
+		})
+
+
 		----------[[ Keymaps ]]----------
 		vim.keymap.set(
 			{ "n", "v" },
@@ -419,6 +468,31 @@ return {
 			"<localleader>c",
 			"<cmd>CodeCompanion /commit<cr>",
 			{ desc = "Open CodeCompanion commit chat", noremap = true, silent = true }
+		)
+
+		-- Toggle CodeCompanion chat window width between normal (default config) and expanded width
+		local function toggle_codecompanion_width()
+			local normal_width = math.floor(vim.o.columns * 0.3) -- match config default
+			local expanded_width = math.floor(vim.o.columns * 0.5)
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+				if ft == "codecompanion" then
+					local cur_width = vim.api.nvim_win_get_width(win)
+					local new_width = normal_width
+					if math.abs(cur_width - normal_width) < 2 then
+						new_width = expanded_width
+					end
+					vim.api.nvim_win_set_width(win, new_width)
+					break
+				end
+			end
+		end
+		vim.keymap.set(
+			{ "n", "t" },
+			"<leader>ae",
+			toggle_codecompanion_width,
+			{ desc = "Toggle CodeCompanion chat width" }
 		)
 
 		-- [[ Miscellaneous Configs ]]
