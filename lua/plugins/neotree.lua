@@ -51,9 +51,29 @@ return {
 			},
 		})
 
-		----- [[ Keymaps ]] -----
+----- [[ Keymaps ]] -----
 		-- Toggle neotree on the left
 		vim.keymap.set({ "n" }, "<C-t>", "<cmd>Neotree toggle left<cr>", { desc = "Neotree toggle left" })
+
+		-- Toggle Neo-tree window width between 30 and 60 columns
+		local function toggle_neotree_width()
+			local target_widths = {30, 60}
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+				if ft == "neo-tree" then
+					local cur_width = vim.api.nvim_win_get_width(win)
+					local new_width = target_widths[1]
+					if math.abs(cur_width - target_widths[1]) < 2 then
+						new_width = target_widths[2]
+					end
+					vim.api.nvim_win_set_width(win, new_width)
+					break
+				end
+			end
+		end
+		vim.keymap.set("n", "<leader>ne", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
+
 
 		-- Function for git status picker
 		local function neotree_git_status_picker()
