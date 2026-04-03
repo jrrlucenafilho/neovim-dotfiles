@@ -40,6 +40,16 @@ return {
 					opts = {
 						show_presets = false,
 					},
+
+					-- [[ Cursor CLI ]] -- TODO: Make work
+					cursor_cli_adapter = function()
+						return require("codecompanion.adapters").extend("cursor_cli", {
+							name = "cursor_cli",
+							commands = {
+								default = "cursor-agent",
+							},
+						})
+					end,
 				},
 				----[[ Http Protocol ]]----
 				http = {
@@ -70,41 +80,54 @@ return {
 
 					----[[ Ollama models ]]----
 					---[[ Local Models ]]---
-					--[[ Ollama qwen2.5-coder:14b ]]
-					ollama_qwen2_5_coder_14b = function()
+					--[[ Ollama qwen2.5-coder:7b-base-q5_K_M ]]
+					ollama_qwen2_5_coder_7b_base_q5_K_M = function()
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
 								url = "http://localhost:11434",
 							},
 							parameters = {
 								sync = true,
-								model = "qwen2.5-coder:14b",
+								model = "qwen2.5-coder:7b-base-q5_K_M",
 							},
 						})
 					end,
 
-					--[[ Ollama qwen2.5-coder:14b-instruct-q3_K_L ]]
-					ollama_qwen2_5_coder_14b_instruct_q3_K_L = function()
+					--[[ Ollama qwen2.5-coder:7b-instruct-q5_K_M]]
+					ollama_qwen2_5_coder_7b_instruct_q5_K_M = function()
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
 								url = "http://localhost:11434",
 							},
 							parameters = {
 								sync = true,
-								model = "qwen2.5-coder:14b-instruct-q3_K_L ",
+								model = "qwen2.5-coder:7b-instruct-q5_K_M",
 							},
 						})
 					end,
 
-					--[[ Ollama gpt_oss_20b ]]
-					ollama_gpt_oss_20b = function()
+					--[[ Ollama qwen3.5:9b-q4_K_M   ]]
+					ollama_qwen3_5_9b_q4_K_M = function()
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
 								url = "http://localhost:11434",
 							},
 							parameters = {
 								sync = true,
-								model = "gpt-oss:20b",
+								model = "qwen3.5:9b-q4_K_M",
+							},
+						})
+					end,
+
+					--[[ Ollama qwen3.5:4b-q8_0 ]]
+					ollama_qwen3_5_4b_q8_0 = function()
+						return require("codecompanion.adapters").extend("ollama", {
+							env = {
+								url = "http://localhost:11434",
+							},
+							parameters = {
+								sync = true,
+								model = "qwen3.5:4b-q8_0",
 							},
 						})
 					end,
@@ -216,10 +239,11 @@ return {
 						completion_provider = "cmp",
 					},
 					adapter = {
+						-- protocol = "acp", name = "cursor_cli"
 						name = "copilot",
-            --[[ Model names for copilot provider ]]
-            -- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
-						model = "gpt-4.1"
+						--[[ Model names for copilot provider ]]
+						-- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
+						model = "gpt-4.1",
 						-- model = "claude-sonnet-4.5" (Gone)
 						-- model = "gemini-3.5-pro-preview"
 						-- model = "gpt-5.1-codex"

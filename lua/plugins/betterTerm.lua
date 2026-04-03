@@ -80,7 +80,7 @@ return {
 		vim.keymap.set({ "n", "t" }, "<A-r>", betterTerm.rename, { desc = "Rename terminal" })
 
 		-- Toggle the terminal window
-		vim.keymap.set({ "n", "t" }, "<A-t>", betterTerm.toggle_termwindow, { desc = "Toggle terminal tabs" })
+		vim.keymap.set({ "n", "t" }, "<A-'>", betterTerm.toggle_termwindow, { desc = "Toggle terminal tabs" })
 
 		-- Close the currently opened terminal (it's just bwipeout! for terminal mode only)
 		vim.keymap.set({ "t" }, "<A-c>", "<cmd>bwipeout!<cr>", { desc = "Close current terminal" })
