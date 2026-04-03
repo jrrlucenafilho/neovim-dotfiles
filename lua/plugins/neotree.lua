@@ -51,7 +51,7 @@ return {
 			},
 		})
 
-		-- [[ Keymaps ]]
+		----- [[ Keymaps ]] -----
 		-- Toggle neotree on the left
 		vim.keymap.set({ "n" }, "<C-t>", "<cmd>Neotree toggle left<cr>", { desc = "Neotree toggle left" })
 
@@ -92,9 +92,17 @@ return {
 		end
 
 		-- Get git file status
-		vim.keymap.set("n", "gs", neotree_git_status_picker, { desc = "Neo-tree Git Status (pick base branch)" })
+		vim.keymap.set(
+			"n",
+			"<leader>gs",
+			neotree_git_status_picker,
+			{ desc = "Neo-tree Git Status (pick base branch)" }
+		)
 
-		-- [[ Autocmds ]]
+		-- Reveal current file in neotree
+		vim.keymap.set("n", "<leader>cf", "<cmd>Neotree reveal<cr>", { desc = "Open Neo-tree in current file" })
+
+		----- [[ Autocmds ]] -----
 		-- Refresh neotree on each commit and push
 		vim.api.nvim_create_autocmd("User", {
 			pattern = { "NeogitCommitComplete", "NeogitPushComplete" },
