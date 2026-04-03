@@ -1,5 +1,4 @@
--- A pretty list for showing diagnostics, references
--- , telescope results, quickfix and location lists
+-- A pretty list for showing diagnostics, references, telescope results, quickfix and location lists
 
 return {
 	"folke/trouble.nvim",
@@ -7,32 +6,32 @@ return {
 	cmd = "Trouble",
 	keys = {
 		{
-			"<Space>td",
+			"<leader>td",
 			"<cmd>Trouble diagnostics toggle<cr>",
 			desc = "Diagnostics (Trouble)",
 		},
 		{
-			"<Space>tf",
+			"<leader>tf",
 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 			desc = "Buffer Diagnostics (Trouble)",
 		},
 		{
-			"<Space>ts",
+			"<leader>ts",
 			"<cmd>Trouble symbols toggle focus=false<cr>",
 			desc = "Symbols (Trouble)",
 		},
 		{
-			"<Space>tl",
+			"<leader>tl",
 			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
 			desc = "LSP Definitions / references / ... (Trouble)",
 		},
 		{
-			"<Space>tlo",
+			"<leader>tlo",
 			"<cmd>Trouble loclist toggle<cr>",
 			desc = "Location List (Trouble)",
 		},
 		{
-			"<Space>tq",
+			"<leader>tq",
 			"<cmd>Trouble qflist toggle<cr>",
 			desc = "Quickfix List (Trouble)",
 		},
