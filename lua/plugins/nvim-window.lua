@@ -3,7 +3,7 @@ return {
 	"yorickpeterse/nvim-window",
 	keys = {
 		{
-			mode = { "n", "i", "t" },
+			mode = { "n", "t" },
 			",",
 			"<cmd>lua require('nvim-window').pick()<cr>",
 			desc = "Jump to window",
