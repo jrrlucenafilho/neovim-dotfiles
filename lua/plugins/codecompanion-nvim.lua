@@ -444,19 +444,27 @@ return {
               end
               if not found then
                 print("Immediate: Buffer", cur_buf, "not found in any window, trying to focus unnamed buffer")
-                -- Try to focus the first unnamed buffer (likely [No Name])
                 local unnamed_win = nil
+                local file_win = nil
                 for _, w in ipairs(vim.api.nvim_list_wins()) do
                   local b = vim.api.nvim_win_get_buf(w)
                   local name = vim.api.nvim_buf_get_name(b)
-                  if name == "" then
+                  if name == "" and not unnamed_win then
                     unnamed_win = w
-                    break
+                  elseif name ~= "" and not file_win then
+                    file_win = w
                   end
                 end
                 if unnamed_win then
                   print("Immediate: Focusing unnamed buffer in window", unnamed_win)
                   vim.api.nvim_set_current_win(unnamed_win)
+                  -- If the target buffer is loaded, display it in this window
+                  if vim.api.nvim_buf_is_loaded(cur_buf) then
+                    print("Immediate: Target buffer", cur_buf, "is loaded, setting it in window", unnamed_win)
+                    vim.api.nvim_win_set_buf(unnamed_win, cur_buf)
+                  else
+                    print("Immediate: Target buffer", cur_buf, "is NOT loaded")
+                  end
                 else
                   print("Immediate: No unnamed buffer window found")
                 end
