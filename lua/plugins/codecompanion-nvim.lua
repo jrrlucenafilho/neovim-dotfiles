@@ -460,9 +460,7 @@ return {
 										if unnamed_buf ~= cur_buf and vim.api.nvim_buf_is_valid(unnamed_buf) then
 											vim.api.nvim_buf_delete(unnamed_buf, { force = true })
 										end
-									else
 									end
-								else
 								end
 							end
 						end)
