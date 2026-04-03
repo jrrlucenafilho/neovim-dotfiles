@@ -13,7 +13,7 @@ return {
 					vim.api.nvim_set_current_win(picked_window_id)
 				end
 			end,
-			desc = "Pick a window",
+			desc = "Window Picker",
 			mode = { "n", "t" },
 		},
 	},
