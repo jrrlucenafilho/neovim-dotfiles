@@ -84,7 +84,7 @@ return {
 			require("telescope").extensions.frecency.frecency()
 		end, { desc = "Open Frecency / MRU" })
 		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-		vim.keymap.set("n", "gfzb", builtin.current_buffer_fuzzy_find, { desc = "Telescope buffer fuzzy find" })
+		vim.keymap.set("n", "<leader>fzb", builtin.current_buffer_fuzzy_find, { desc = "Telescope buffer fuzzy find" })
 		vim.keymap.set("n", "<leader>frg", builtin.registers, { desc = "Telescope list registers" })
 		vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Telescope list normal mode keymaps" })
 		vim.keymap.set(

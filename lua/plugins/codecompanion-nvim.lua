@@ -412,6 +412,7 @@ return {
 			{ desc = "Open CodeCompanion commit chat", noremap = true, silent = true }
 		)
 
+		-- [[ Miscellaneous Configs ]]
 		-- Expand 'cc' into 'CodeCompanion' in the command line
 		vim.cmd([[cab cc CodeCompanion]])
 	end,

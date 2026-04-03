@@ -32,3 +32,6 @@ require("utils.logger").setup()
 
 -- Lazy config
 require("lazy").setup("plugins")
+
+-- Set Window Separator
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#464e6a" })

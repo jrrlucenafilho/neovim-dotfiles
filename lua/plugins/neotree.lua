@@ -35,11 +35,12 @@ return {
 	lazy = false,
 	config = function()
 		require("neo-tree").setup({
+			close_if_last_window = true,
 			window = {
 				width = 30,
 				mappings = {
-					["<C-r>"] = "refresh",
-					["p"] = {
+					["R"] = "refresh",
+					["P"] = {
 						"toggle_preview",
 						config = {
 							use_float = true,
@@ -49,8 +50,52 @@ return {
 				},
 			},
 		})
+
+		-- [[ Keymaps ]]
+		-- Toggle neotree on the left
 		vim.keymap.set({ "n" }, "<C-t>", "<cmd>Neotree toggle left<cr>", { desc = "Neotree toggle left" })
 
+		-- Function for git status picker
+		local function neotree_git_status_picker()
+			local pickers = require("telescope.pickers")
+			local finders = require("telescope.finders")
+			local conf = require("telescope.config").values
+			local actions = require("telescope.actions")
+			local action_state = require("telescope.actions.state")
+			local Job = require("plenary.job")
+			Job:new({
+				command = "git",
+				args = { "branch", "--format=%(refname:short)" },
+				on_exit = function(j)
+					local branches = j:result()
+					vim.schedule(function()
+						pickers
+							.new({}, {
+								prompt_title = "Git base branch",
+								finder = finders.new_table({ results = branches }),
+								sorter = conf.generic_sorter({}),
+								attach_mappings = function(prompt_bufnr, map)
+									actions.select_default:replace(function()
+										actions.close(prompt_bufnr)
+										local selection = action_state.get_selected_entry()
+										if selection and selection[1] then
+											vim.cmd("Neotree float git_status git_base=" .. selection[1])
+										end
+									end)
+									return true
+								end,
+							})
+							:find()
+					end)
+				end,
+			}):start()
+		end
+
+		-- Get git file status
+		vim.keymap.set("n", "gs", neotree_git_status_picker, { desc = "Neo-tree Git Status (pick base branch)" })
+
+		-- [[ Autocmds ]]
+		-- Refresh neotree on each commit and push
 		vim.api.nvim_create_autocmd("User", {
 			pattern = { "NeogitCommitComplete", "NeogitPushComplete" },
 			callback = function()
