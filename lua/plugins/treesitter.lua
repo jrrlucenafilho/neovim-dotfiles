@@ -1,6 +1,5 @@
 -- Responsible for code parsing
 -- highlighting, better syntax, indentation and navigation
-
 return {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",

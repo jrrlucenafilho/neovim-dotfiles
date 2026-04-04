@@ -133,6 +133,9 @@ return {
 							["qwen3-coder:480b-cloud"] = {
 								formatted_name = "Qwen3 Coder 480B (cloud)",
 							},
+							["qwen3-coder-next:cloud"] = {
+								formatted_name = "Qwen3 Coder Next (cloud)",
+							},
 							["devstral-2:123b-cloud"] = {
 								formatted_name = "Devstral 2 123B (cloud)",
 							},
