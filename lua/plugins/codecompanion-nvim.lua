@@ -148,6 +148,12 @@ return {
 							["gemini-3-flash-preview:cloud"] = {
 								formatted_name = "Gemini 3 Flash preview (cloud)",
 							},
+							["gemma4:31b-cloud"] = {
+								formatted_name = "Gemma 4 31B (cloud)",
+							},
+							["minimax-m2.7:cloud"] = {
+								formatted_name = "Minimax M2.7 (cloud)",
+							},
 						}
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
