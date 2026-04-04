@@ -76,14 +76,14 @@ return {
 		-- Select a terminal to focus
 		vim.keymap.set("n", "<leader>ts", betterTerm.select, { desc = "Select terminal" })
 
-		-- Rename the current terminal
+		-- Rename the current terminal (for now renaming shoudln't be done if i plan on closing the renamed terminal)
 		vim.keymap.set({ "n", "t" }, "<A-r>", betterTerm.rename, { desc = "Rename terminal" })
 
 		-- Toggle the terminal window
 		vim.keymap.set({ "n", "t" }, "<A-'>", betterTerm.toggle_termwindow, { desc = "Toggle terminal tabs" })
 
 		-- Close the currently opened terminal (it's just bwipeout! for terminal mode only)
-		vim.keymap.set({ "t" }, "<A-c>", "<cmd>bwipeout!<cr>", { desc = "Close current terminal" })
+		vim.keymap.set({ "t" }, "<A-q>", "<cmd>bwipeout!<cr>", { desc = "Close current terminal" })
 
 		-- Cycling among terminals
 		vim.keymap.set({ "t" }, "<A-Right>", function()
