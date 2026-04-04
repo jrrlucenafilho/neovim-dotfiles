@@ -41,25 +41,19 @@ return {
 						show_presets = false,
 					},
 
-					-- [[ Cursor CLI ]]
-					-- ACP model list comes from Cursor; defaults.model is matched exactly or as substring on modelId.
+					----- [[ Cursor CLI ]] -----
+					-- Models come from the agent via ACP (`session/update`); pick them with `ga` in chat.
+					-- Only `defaults.model` is read for ACP (see codecompanion `acp/init.lua` apply_default_model).
+					-- export CODECOMPANION_CURSOR_MODEL to a real modelId (`cursor-agent --list-models`).
+					-- The standart model here is empty, so Cursor itself decides it (desire behavior for now)
+					-- And the UI models list comes from what models Cursor exposes through ACP
 					cursor_cli = function()
-						return require("codecompanion.adapters").extend("cursor_cli", {
-							-- defaults.model: used by ACP apply_default_model() (substring match on Cursor modelId)
-							defaults = {
-								model = "auto",
-							},
-							schema = {
-								model = {
-									order = 1,
-									type = "enum",
-									mapping = "parameters",
-									default = "auto",
-									desc = "Cursor CLI default model hint (ACP); switch via model picker or change defaults.model",
-									choices = { "auto", "claude-sonnet-4.6" },
-								},
-							},
-						})
+						local opts = {}
+						local m = vim.env.CODECOMPANION_CURSOR_MODEL
+						if type(m) == "string" and m ~= "" then
+							opts.defaults = { model = m }
+						end
+						return require("codecompanion.adapters").extend("cursor_cli", opts)
 					end,
 				},
 
@@ -69,7 +63,7 @@ return {
 						show_presets = false,
 					},
 
-					-- ---[[ Github Copilot ]]-----
+					-- ----- [[ Github Copilot ]]-----
 					-- Model names for copilot provider:
 					-- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
 					-- model = "gpt-4.1",
@@ -115,166 +109,82 @@ return {
 								},
 							},
 							env = {
-								api_key = os.getenv("GEMINI_API_KEY"),
+								api_key = vim.env.GEMINI_API_KEY,
 							},
 						})
 					end,
 
-					----[[ Ollama models ]]----
-					---[[ Local Models ]]---
-					--[[ Ollama qwen2.5-coder:7b-base-q5_K_M ]]
-					ollama_qwen2_5_coder_7b_base_q5_K_M = function()
+					----[[ Ollama (local + cloud); pick model with `ga` in chat ]]----
+					-- Cloud models need OLLAMA_API_KEY; Authorization is sent only when the key is set.
+					ollama = function()
+						local models = {
+							["qwen2.5-coder:7b-base-q5_K_M"] = {
+								formatted_name = "Qwen2.5 Coder 7B base q5_K_M (local)",
+							},
+							["qwen2.5-coder:7b-instruct-q5_K_M"] = {
+								formatted_name = "Qwen2.5 Coder 7B instruct q5_K_M (local)",
+							},
+							["qwen3.5:9b-q4_K_M"] = {
+								formatted_name = "Qwen3.5 9B q4_K_M (local)",
+							},
+							["qwen3.5:4b-q8_0"] = {
+								formatted_name = "Qwen3.5 4B q8_0 (local)",
+							},
+							["qwen3-coder:480b-cloud"] = {
+								formatted_name = "Qwen3 Coder 480B (cloud)",
+							},
+							["devstral-2:123b-cloud"] = {
+								formatted_name = "Devstral 2 123B (cloud)",
+							},
+							["devstral-small-2:24b-cloud"] = {
+								formatted_name = "Devstral Small 2 24B (cloud)",
+							},
+							["gemini-3-pro-preview:latest"] = {
+								formatted_name = "Gemini 3 Pro preview (cloud)",
+							},
+							["gemini-3-flash-preview:cloud"] = {
+								formatted_name = "Gemini 3 Flash preview (cloud)",
+							},
+						}
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
 								url = "http://localhost:11434",
+								api_key = function()
+									return vim.env.OLLAMA_API_KEY
+								end,
+							},
+							headers = {
+								["Content-Type"] = "application/json",
+								["Authorization"] = function(adapter)
+									local key = adapter.env_replaced and adapter.env_replaced.api_key
+									if type(key) == "string" and key ~= "" then
+										return "Bearer " .. key
+									end
+									return nil
+								end,
 							},
 							parameters = {
 								sync = true,
-								model = "qwen2.5-coder:7b-base-q5_K_M",
 							},
-						})
-					end,
-
-					--[[ Ollama qwen2.5-coder:7b-instruct-q5_K_M]]
-					ollama_qwen2_5_coder_7b_instruct_q5_K_M = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-							},
-							parameters = {
-								sync = true,
-								model = "qwen2.5-coder:7b-instruct-q5_K_M",
-							},
-						})
-					end,
-
-					--[[ Ollama qwen3.5:9b-q4_K_M   ]]
-					ollama_qwen3_5_9b_q4_K_M = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-							},
-							parameters = {
-								sync = true,
-								model = "qwen3.5:9b-q4_K_M",
-							},
-						})
-					end,
-
-					--[[ Ollama qwen3.5:4b-q8_0 ]]
-					ollama_qwen3_5_4b_q8_0 = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-							},
-							parameters = {
-								sync = true,
-								model = "qwen3.5:4b-q8_0",
-							},
-						})
-					end,
-
-					---[[ Ollama Cloud Models ]]---
-					--[[ Ollama qwen3-coder:480b-cloud ]]
-					ollama_qwen3_coder_480b_cloud = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-								api_key = os.getenv("OLLAMA_API_KEY"),
-							},
-							-- headers = {
-							-- ["Content-Type"] = "application/json",
-							-- ["Authorization"] = "Bearer ${api_key}",
-							-- },
-							parameters = {
-								sync = true,
-								model = "qwen3-coder:480b-cloud",
-							},
-						})
-					end,
-
-					--[[ Ollama devstral-2:123b-cloud ]]
-					ollama_devstral_2_123b_cloud = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-								api_key = os.getenv("OLLAMA_API_KEY"),
-							},
-							-- headers = {
-							-- ["Content-Type"] = "application/json",
-							-- ["Authorization"] = "Bearer ${api_key}",
-							-- },
-							parameters = {
-								sync = true,
-								model = "devstral-2:123b-cloud",
-							},
-						})
-					end,
-
-					--[[ Ollama devstral-small-2:24b-cloud ]]
-					ollama_devstral_small_2_24b_cloud = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-								api_key = os.getenv("OLLAMA_API_KEY"),
-							},
-							-- headers = {
-							-- ["Content-Type"] = "application/json",
-							-- ["Authorization"] = "Bearer ${api_key}",
-							-- },
-							parameters = {
-								sync = true,
-								model = "devstral-small-2:24b-cloud",
-							},
-						})
-					end,
-
-					--[[ Ollama gemini-3-pro-preview:latest ]]
-					ollama_gemini_3_pro_preview_cloud = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-								api_key = os.getenv("OLLAMA_API_KEY"),
-							},
-							-- headers = {
-							-- ["Content-Type"] = "application/json",
-							-- ["Authorization"] = "Bearer ${api_key}",
-							-- },
-							parameters = {
-								sync = true,
-								model = "gemini-3-pro-preview:latest",
-							},
-						})
-					end,
-
-					--[[ Ollama gemini-3-flash-preview:cloud ]]
-					ollama_gemini_3_flash_preview_cloud = function()
-						return require("codecompanion.adapters").extend("ollama", {
-							env = {
-								url = "http://localhost:11434",
-								api_key = os.getenv("OLLAMA_API_KEY"),
-							},
-							-- headers = {
-							-- ["Content-Type"] = "application/json",
-							-- ["Authorization"] = "Bearer ${api_key}",
-							-- },
-							parameters = {
-								sync = true,
-								model = "gemini-3-flash-preview:cloud",
+							schema = {
+								model = {
+									default = "qwen2.5-coder:7b-instruct-q5_K_M",
+									choices = models,
+								},
 							},
 						})
 					end,
 				},
 			},
 
-			--[[ Interactions
-      - Interaction types:
-        - Chat - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
-        - Inline - An inline assistant that can write code directly into a buffer (:CodeCompanion)
-        - Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)
-        - Background - Runs tasks in the background such as compacting chat messages or generating titles for chats
-      ]]
-			----------[[ Default Adapters For Each Interaction ]]----------
+			-----[[ Interactions ]] -----
+			-- Interaction types:
+			-- Chat - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)at - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
+			-- Inline - An inline assistant that can write code directly into a buffer (:CodeCompanion) inline assistant that can write code directly into a buffer (:CodeCompanion)
+			-- Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)te Neovim commands in the command-line (:CodeCompanionCmd)
+			-- Background - Runs tasks in the background such as compacting chat messages or generating titles for chatsbackground such as compacting chat messages or generating titles for chats
+
+			----- [[ Default Adapters For Each Interaction ]] -----
 			interactions = {
 				chat = {
 					opts = {
