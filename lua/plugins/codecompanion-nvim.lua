@@ -1,7 +1,7 @@
 -- Local and cloud LLM models
 return {
 	"olimorris/codecompanion.nvim",
-	version = "^18.0.0", -- Tagging because plugin can have breaking changes
+	version = "^19.0.0", -- Tagging because plugin can have breaking changes
 	dependencies = {
 		{ "nvim-lua/plenary.nvim", branch = "master" },
 		"nvim-treesitter/nvim-treesitter",
@@ -41,28 +41,70 @@ return {
 						show_presets = false,
 					},
 
-					-- [[ Cursor CLI ]] -- TODO: Make work
-					cursor_cli_adapter = function()
+					-- [[ Cursor CLI ]]
+					-- ACP model list comes from Cursor; defaults.model is matched exactly or as substring on modelId.
+					cursor_cli = function()
 						return require("codecompanion.adapters").extend("cursor_cli", {
-							name = "cursor_cli",
-							commands = {
-								default = "cursor-agent",
+							-- defaults.model: used by ACP apply_default_model() (substring match on Cursor modelId)
+							defaults = {
+								model = "auto",
+							},
+							schema = {
+								model = {
+									order = 1,
+									type = "enum",
+									mapping = "parameters",
+									default = "auto",
+									desc = "Cursor CLI default model hint (ACP); switch via model picker or change defaults.model",
+									choices = { "auto", "claude-sonnet-4.6" },
+								},
 							},
 						})
 					end,
 				},
+
 				----[[ Http Protocol ]]----
 				http = {
 					opts = {
 						show_presets = false,
 					},
 
-					-----[[ Github Copilot ]]-----
-					-- copilot = {
-					-- 	name = "copilot",
-					-- 	model = "gpt-4.1", -- Specify model if wanted (check available ones)
-					-- },
-					--
+					-- ---[[ Github Copilot ]]-----
+					-- Model names for copilot provider:
+					-- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
+					-- model = "gpt-4.1",
+					-- model = "claude-sonnet-4.5" (Non-Student)
+					-- model = "gemini-3.5-pro-preview"
+					-- model = "gpt-5.1-codex"
+					-- model = "gpt-5.2-codex"
+					-- model = "gemini-3-pro-preview"
+					-- model = "gpt-5.1-codex-mini"
+					-- model = "gemini-3-flash-preview"
+					-- model = "gpt-5.4"
+					-- model = "gpt-5.3-codex-mx"
+					-- model = "gemini-2.5-pro"
+					-- model = "gpt-5-mini"
+					-- model = "claude-opus-4.5" (Non-Student)
+					-- model = "gpt-5.2"
+					-- model = "oswe-vscode-prime"
+					-- model = "gpt-4o"
+					-- model = "gpt-5.3-codex"
+					-- model = "claude-sonnet-4" (Non-Student)
+					-- model = "gpt-5.1"
+					-- model = "claude-opus-4.6" (Non-Student)
+					-- model = "grok-code-fast-1"
+					-- model = "claude-haiku-4.5"
+					-- model = "claude-sonnet-4.6" (Non-Student)
+					copilot = function()
+						return require("codecompanion.adapters").extend("copilot", {
+							schema = {
+								model = {
+									default = "gpt-4.1",
+								},
+							},
+						})
+					end,
+
 					-----[[ Gemini ]]-----
 					gemini = function()
 						return require("codecompanion.adapters").extend("gemini", {
@@ -238,35 +280,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = {
-						-- protocol = "acp", name = "cursor_cli"
-						name = "copilot",
-						--[[ Model names for copilot provider ]]
-						-- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
-						model = "gpt-4.1",
-						-- model = "claude-sonnet-4.5" (Gone)
-						-- model = "gemini-3.5-pro-preview"
-						-- model = "gpt-5.1-codex"
-						-- model = "gpt-5.2-codex"
-						-- model = "gemini-3-pro-preview"
-						-- model = "gpt-5.1-codex-mini"
-						-- model = "gemini-3-flash-preview"
-						-- model = "gpt-5.4"
-						-- model = "gpt-5.3-codex-mx"
-						-- model = "gemini-2.5-pro"
-						-- model = "gpt-5-mini"
-						-- model = "claude-opus-4.5" (Gone)
-						-- model = "gpt-5.2"
-						-- model = "oswe-vscode-prime"
-						-- model = "gpt-4o"
-						-- model = "gpt-5.3-codex"
-						-- model = "claude-sonnet-4" (Gone)
-						-- model = "gpt-5.1"
-						-- model = "claude-opus-4.6" (Gone)
-						-- model = "grok-code-fast-1"
-						-- model = "claude-haiku-4.5"
-						-- model = "claude-sonnet-4.6" (Gone)
-					},
+					adapter = "copilot",
 				},
 
 				inline = {
@@ -307,14 +321,14 @@ return {
 						---Automatically generate titles for new chats
 						auto_generate_title = true,
 						title_generation_opts = {
-							---Adapter for generating titles (defaults to current chat adapter)
-							adapter = nil, -- "copilot"
-							---Model for generating titles (defaults to current chat model)
-							model = nil, -- "gpt-4o"
+							---HTTP adapter only: ACP chats (e.g. cursor_cli) cannot generate titles
+							adapter = "copilot",
+							---Match http.adapters.copilot default; avoids reusing ACP model settings
+							model = "gpt-4.1",
 							---Number of user prompts after which to refresh the title (0 to disable)
 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
 							---Maximum number of times to refresh the title (default: 3)
-							max_refreshes = 3,
+							max_refreshes = 12,
 							format_title = function(original_title)
 								-- this can be a custom function that applies some custom
 								-- formatting to the title.
@@ -338,8 +352,8 @@ return {
 							browse_summaries_keymap = "gbs",
 
 							generation_opts = {
-								adapter = nil, -- defaults to current chat adapter
-								model = nil, -- defaults to current chat model
+								adapter = "copilot",
+								model = "gpt-4.1",
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results
