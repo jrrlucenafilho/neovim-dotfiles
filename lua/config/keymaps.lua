@@ -60,3 +60,13 @@ end, { desc = "Create new file" })
 -- Open Lazy and Mason
 vim.keymap.set("n", "<leader>la", "<cmd>Lazy<CR>", { desc = "Open Lazy" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Mason<CR>", { desc = "Open Mason" })
+
+-- Check buffer type and buffer name
+vim.keymap.set('n', '<leader>bt', function()
+  print(vim.bo.buftype)
+end, { desc = "Show buffer type" })
+
+-- Show buffer name with <leader>bn
+vim.keymap.set('n', '<leader>bn', function()
+  print(vim.api.nvim_buf_get_name(0))
+end, { desc = "Show buffer name" })
