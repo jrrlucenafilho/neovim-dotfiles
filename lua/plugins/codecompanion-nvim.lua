@@ -449,6 +449,7 @@ return {
 										file_win = w
 									end
 								end
+
 								if unnamed_win then
 									vim.api.nvim_set_current_win(unnamed_win)
 									-- If the target buffer is loaded, display it in this window
@@ -461,6 +462,11 @@ return {
 											vim.api.nvim_buf_delete(unnamed_buf, { force = true })
 										end
 									end
+									-- Always set focus to the window where the buffer was placed
+									vim.api.nvim_set_current_win(unnamed_win)
+								elseif file_win then
+									vim.api.nvim_set_current_win(file_win)
+									vim.api.nvim_win_set_buf(file_win, cur_buf)
 								end
 							end
 						end)
