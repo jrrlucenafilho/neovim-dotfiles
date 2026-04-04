@@ -30,7 +30,7 @@ return {
 
 			-- when you go to window selection mode, status bar will show one of
 			-- following letters on them so you can use that letter to select the window
-			selection_chars = "FJDKSLA;CMRUEIWOQP",
+			selection_chars = "DFGHJKLSA;CMRUEIWOQP",
 
 			-- This section contains picker specific configurations
 			picker_config = {
@@ -62,7 +62,7 @@ return {
 			},
 
 			-- whether to show 'Pick window:' prompt
-			show_prompt = true,
+			show_prompt = false,
 
 			-- prompt message to show to get the user input
 			prompt_message = "Pick window: ",
@@ -84,7 +84,7 @@ return {
 			filter_rules = {
 				-- when there is only one window available to pick from, use that window
 				-- without prompting the user to select
-				autoselect_one = false,
+				autoselect_one = true,
 
 				-- whether you want to include the window you are currently on to window
 				-- selection or not
