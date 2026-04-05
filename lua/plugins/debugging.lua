@@ -122,21 +122,23 @@ return {
 			}
 			dap.configurations.typescript = dap.configurations.javascript
 
-			-- React using vscode-js-debug as well, gotta run vite first
+			-- React using vscode-js-debug as well, gotta run the service first
 			dap.configurations.typescriptreact = {
 				{
 					type = "pwa-chrome",
 					request = "launch",
-					name = "Launch Chrome against Vite",
-					url = "http://localhost:8080/",
+					name = "Launch Chrome",
+					url = "http://localhost:8080/", -- Port where the React app is running
 					webRoot = "${workspaceFolder}",
-					sourceMaps = true,
+					sourceMaps = true, -- Only really used for typescript
 					protocol = "inspector",
 					outFiles = {},
 					timeout = 10000,
+					runtimeArgs = { "--remote-debugging-port=9222" }, -- Remote debugging port for safety
 					skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" }, -- Optional, skips steps through chosen files
 				},
 			}
+			dap.configurations.javascriptreact = dap.configurations.typescriptreact
 
 			-- Python with debugpy
 			dap.configurations.python = {
