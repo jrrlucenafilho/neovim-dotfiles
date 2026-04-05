@@ -11,15 +11,42 @@ return {
 		},
 
 		config = function()
-			require("dapui").setup()
+			require("dapui").setup({
+				layouts = {
+					{
+						elements = {
+							{ id = "scopes", size = 0.25 },
+							{ id = "breakpoints", size = 0.25 },
+							{ id = "stacks", size = 0.25 },
+							{ id = "watches", size = 0.25 },
+						},
+						position = "left",
+						size = 40,
+					},
+					{
+						elements = {
+							{ id = "repl", size = 0.5 },
+							{ id = "console", size = 0.5 },
+						},
+						position = "bottom",
+						size = 10,
+					},
+				},
+			})
 
 			local dap, dapui = require("dap"), require("dapui")
 
 			dap.listeners.before.attach.dapui_config = function()
 				dapui.open()
+				vim.schedule(function()
+					dapui.open()
+				end)
 			end
 			dap.listeners.before.launch.dapui_config = function()
 				dapui.open()
+				vim.schedule(function()
+					dapui.open()
+				end)
 			end
 			dap.listeners.before.event_terminated.dapui_config = function()
 				dapui.close()
@@ -190,13 +217,79 @@ return {
 					dap.run_last()
 				end
 			end, { desc = "Restart debugging" })
+
+			-- Lock DAP-ui window widths
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = {
+					"dapui_scopes",
+					"dapui_breakpoints",
+					"dapui_stacks",
+					"dapui_watches",
+					"dap-repl",
+					"dapui_console",
+				},
+				callback = function()
+					vim.wo.winfixwidth = true
+					vim.wo.winfixheight = true
+				end,
+			})
+
+			-- Restore DAP-ui width on any window change
+			vim.api.nvim_create_autocmd("WinResized", {
+				callback = function()
+					vim.schedule(function()
+						for _, win in ipairs(vim.api.nvim_list_wins()) do
+							local buf = vim.api.nvim_win_get_buf(win)
+							local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+							-- Restore left sidebar (vertical split)
+							if
+								ft:match("^dapui_scopes")
+								or ft:match("^dapui_breakpoints")
+								or ft:match("^dapui_stacks")
+								or ft:match("^dapui_watches")
+							then
+								if vim.api.nvim_win_get_width(win) < 35 then
+									vim.api.nvim_win_set_width(win, 40)
+								end
+							end
+							-- Restore bottom panel (horizontal split)
+							if ft == "dapui_repl" or ft == "dapui_console" then
+								if vim.api.nvim_win_get_height(win) < 8 then
+									vim.api.nvim_win_set_height(win, 10)
+								end
+							end
+						end
+					end)
+				end,
+			})
+
+			-- Restore bottom buffer widths on resize
+			vim.api.nvim_create_autocmd("WinResized", {
+				callback = function()
+					vim.schedule(function()
+						local available_width = vim.o.columns - 40 -- Remaining space after left sidebar
+						local repl_width = math.floor(available_width * 0.7)
+						local console_width = available_width - repl_width
+
+						for _, win in ipairs(vim.api.nvim_list_wins()) do
+							local buf = vim.api.nvim_win_get_buf(win)
+							local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+							if ft == "dapui_repl" then
+								vim.api.nvim_win_set_width(win, repl_width)
+							elseif ft == "dapui_console" then
+								vim.api.nvim_win_set_width(win, console_width)
+							end
+						end
+						vim.cmd("redraw")
+					end)
+				end,
+			})
 		end,
 	},
 
 	----------[[External dap setups handled by plugins]]----------
 	{ -- Go
 		"leoluz/nvim-dap-go",
-
 		config = function()
 			require("dap-go").setup()
 		end,

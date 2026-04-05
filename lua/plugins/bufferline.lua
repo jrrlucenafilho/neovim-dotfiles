@@ -28,6 +28,12 @@ return {
 						text_align = "center",
 						separator = true,
 					},
+          {
+						filetype = "dapui_watches",
+						text = "Nvim-DAP",
+						text_align = "center",
+						separator = true,
+					},
 				},
 			},
 		})
