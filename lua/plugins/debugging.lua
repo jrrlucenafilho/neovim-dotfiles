@@ -53,6 +53,19 @@ return {
 				},
 			}
 
+			-- Debug on chrome, for React
+			dap.adapters["pwa-chrome"] = {
+				type = "server",
+				host = "localhost",
+				port = "${port}",
+				executable = {
+					command = "node",
+					args = {
+						"/home/jrrlu/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+						"${port}",
+					},
+				},
+			}
 			-- debugpy (Python)
 			dap.adapters.python = function(cb, config)
 				if config.request == "attach" then
@@ -108,6 +121,20 @@ return {
 				},
 			}
 			dap.configurations.typescript = dap.configurations.javascript
+
+			-- React using vscode-js-debug as well, gotta run vite first
+			dap.configurations.typescriptreact = {
+				{
+					type = "pwa-chrome",
+					request = "launch",
+					name = "Launch Chrome against Vite",
+					url = "http://localhost:8080",
+					webRoot = "${workspaceFolder}/src",
+					sourceMaps = true,
+					protocol = "inspector",
+					outFiles = {}, -- Not needed for Vite dev
+				},
+			}
 
 			-- Python with debugpy
 			dap.configurations.python = {
