@@ -47,6 +47,12 @@ diag.config({ virtual_text = false })
 -- Set nvim virtual environment
 g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
 
+-- Set Debugging breakpoint symbols
+vim.fn.sign_define('DapBreakpoint', {text='●', texthl='DapBreakpoint', linehl='', numhl=''})
+vim.api.nvim_set_hl(0, 'DapBreakpoint', {fg='#FF0000'})
+
+vim.fn.sign_define('DapRestart', {text='○', texthl='DapRestart', linehl='', numhl=''})
+
 -- Get environment variables (for neovide)
 if g.neovide then
 	-- Run Fish as a login shell and grab the full environment list
