@@ -151,6 +151,9 @@ return {
 							["gemma4:31b-cloud"] = {
 								formatted_name = "Gemma 4 31B (cloud)",
 							},
+							["gemma4:e4b"] = {
+								formatted_name = "Gemma 4 e4B (local)",
+							},
 							["minimax-m2.7:cloud"] = {
 								formatted_name = "Minimax M2.7 (cloud)",
 							},
@@ -311,7 +314,7 @@ return {
 				vim.opt_local.number = false
 				vim.opt_local.relativenumber = false
 				vim.opt.scrolloff = 15
-        vim.opt.wrap = true
+				vim.opt.wrap = true
 			end,
 		})
 
