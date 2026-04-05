@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- local opts = {}
 
 -- Vim config options
-require("config.vim-options")
+require("config.options")
 
 -- Kitty options
 require("config.kitty-options")
