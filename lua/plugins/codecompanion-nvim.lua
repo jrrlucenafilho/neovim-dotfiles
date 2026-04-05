@@ -304,11 +304,14 @@ return {
 		})
 
 		-----------[[ Autocmds ]]---------
-		-- Disable line count for chat buffer
+		-- Codecompanion specific chat buffer options
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
 				vim.opt_local.number = false
+				vim.opt_local.relativenumber = false
+				vim.opt.scrolloff = 15
+        vim.opt.wrap = true
 			end,
 		})
 
