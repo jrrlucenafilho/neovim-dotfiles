@@ -128,11 +128,13 @@ return {
 					type = "pwa-chrome",
 					request = "launch",
 					name = "Launch Chrome against Vite",
-					url = "http://localhost:8080",
-					webRoot = "${workspaceFolder}/src",
+					url = "http://localhost:8080/",
+					webRoot = "${workspaceFolder}",
 					sourceMaps = true,
 					protocol = "inspector",
-					outFiles = {}, -- Not needed for Vite dev
+					outFiles = {},
+					timeout = 10000,
+					skipFiles = { "<node_internals>/**", "${workspaceFolder}/node_modules/**" }, -- Optional, skips steps through chosen files
 				},
 			}
 
