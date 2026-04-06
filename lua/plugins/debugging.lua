@@ -153,6 +153,7 @@ return {
 					webRoot = "${workspaceFolder}",
 					sourceMaps = true, -- Only really used for typescript
 					protocol = "inspector",
+					port = 9222, -- Using the remote debugging port
 					outFiles = {},
 					timeout = 10000,
 					runtimeArgs = { "--remote-debugging-port=9222" }, -- Remote debugging port for safety
