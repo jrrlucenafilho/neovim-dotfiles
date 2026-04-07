@@ -11,6 +11,7 @@ opt.wrap = true -- Disable wrapping
 opt.scrolloff = 10 -- Keep 10 lines above/below cursor
 opt.sidescrolloff = 8 -- Keep 8 collumns left/right cursor
 opt.whichwrap = "b,s,h,l,<,>,[,]" -- Allow wrapping for these characters
+opt.foldenable = false
 
 -- Indentation
 opt.expandtab = true --  Use spaces over tabs
@@ -48,10 +49,13 @@ diag.config({ virtual_text = false })
 g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
 
 -- Set Debugging breakpoint symbols
-vim.fn.sign_define('DapBreakpoint', {text='●', texthl='DapBreakpoint', linehl='', numhl=''})
-vim.api.nvim_set_hl(0, 'DapBreakpoint', {fg='#FF0000'})
+vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#FF0000" })
 
-vim.fn.sign_define('DapRestart', {text='○', texthl='DapRestart', linehl='', numhl=''})
+vim.fn.sign_define("DapRestart", { text = "○", texthl = "DapRestart", linehl = "", numhl = "" })
+
+-- Set Window Separator
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#464e6a" })
 
 -- Get environment variables (for neovide)
 if g.neovide then
@@ -70,3 +74,17 @@ if g.neovide then
 		end
 	end
 end
+
+----- [[ Autocmds ]] -----
+----- Kitty margin management
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		vim.cmd("silent !kitty @ set-spacing margin=0")
+	end,
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+	callback = function()
+		vim.cmd("silent !kitty @ set-spacing margin=21.75")
+	end,
+})

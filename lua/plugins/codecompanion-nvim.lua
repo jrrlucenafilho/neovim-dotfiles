@@ -385,17 +385,17 @@ return {
 			{ desc = "Toggle CodeCompanion chat width" }
 		)
 
-		-- Add agent skills string to CodeCompanion chat buffer
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "codecompanion",
-			callback = function()
-				vim.keymap.set({ "n" }, "gk", function()
-					vim.fn.setreg("+", "#{buffer}@{file_search}@{files}@{read_file}@{agent}")
-					vim.cmd('normal! "+p')
-					vim.cmd("normal! o")
-				end, { desc = "Paste agent skills", silent = true, buffer = true })
-			end,
-		})
+		-- Add agent skills string to CodeCompanion chat buffer -- Not working right now TODO fix
+		-- vim.api.nvim_create_autocmd("FileType", {
+		-- 	pattern = "codecompanion",
+		-- 	callback = function()
+		-- 		vim.keymap.set({ "n" }, "gk", function()
+		-- 			vim.fn.setreg("+", "#{buffer}@{file_search}@{files}@{read_file}@{agent}")
+		-- 			vim.cmd('normal! "+p')
+		-- 			vim.cmd("normal! o")
+		-- 		end, { desc = "Paste agent skills", silent = true, buffer = true })
+		-- 	end,
+		-- })
 
 		----- [[ Miscellaneous Configs ]] -----
 		-- Expand 'cc' into 'CodeCompanion' in the command line

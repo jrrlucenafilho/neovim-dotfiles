@@ -12,13 +12,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Prepend treesitter's parsers folder to runtime path
+vim.opt.runtimepath:prepend("/home/jrrlu/.local/share/nvim/site")
+
 -- local opts = {}
 
 -- Vim config options
 require("config.options")
 
 -- Kitty options
-require("config.kitty-options")
+-- require("config.kitty-options")
 
 -- Miscellaneous keymaps
 require("config.keymaps")

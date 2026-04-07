@@ -20,6 +20,11 @@ return {
 		config = function()
 			-- Set up nvim-cmp.
 			local cmp = require("cmp")
+			cmp.setup({
+				formatting = {
+					format = require("nvim-highlight-colors").format,
+				},
+			})
 
 			require("luasnip.loaders.from_vscode").lazy_load()
 
