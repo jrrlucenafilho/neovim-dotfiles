@@ -32,7 +32,7 @@ opt.incsearch = true -- Show matches as we're typing
 
 -- Visual settings
 opt.termguicolors = true -- Enable true color support
-opt.guifont = { "JetBrainsMono Nerd Font", ":h11" } -- Font choide
+opt.guifont = { "JetBrainsMono Nerd Font", ":h11" } -- Font choice
 opt.showmatch = true -- Highlight matching brackets
 opt.winblend = 10 -- Floating windows transparency %
 opt.pumblend = 10 -- Pop up menu tranparency %
