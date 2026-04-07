@@ -405,13 +405,10 @@ return {
 			pattern = "codecompanion",
 			callback = function()
 				vim.keymap.set({ "n" }, "gkr", function()
-					vim.fn.setreg(
-						"+",
-						"#{buffer}@{file_search}@{files}@{read_file}@{grep_search}@{get_diagnostics}"
-					)
+					vim.fn.setreg("+", "#{buffer}@{file_search}@{files}@{read_file}@{grep_search}@{get_diagnostics}")
 					vim.cmd('normal! "+p')
 					vim.cmd("normal! o")
-				end, { desc = "Insert agent skills into chat", silent = true, buffer = true })
+				end, { desc = "Insert reading skills into chat", silent = true, buffer = true })
 			end,
 		})
 
