@@ -20,9 +20,6 @@ vim.opt.runtimepath:prepend("/home/jrrlu/.local/share/nvim/site")
 -- Vim config options
 require("config.options")
 
--- Kitty options
--- require("config.kitty-options")
-
 -- Miscellaneous keymaps
 require("config.keymaps")
 
