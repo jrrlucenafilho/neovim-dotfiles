@@ -389,11 +389,29 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
-				vim.keymap.set({ "n" }, "gk", function()
-					vim.fn.setreg("+", "#{buffer}@{file_search}@{files}@{read_file}@{agent}")
+				vim.keymap.set({ "n" }, "gka", function()
+					vim.fn.setreg(
+						"+",
+						"#{buffer}@{file_search}@{files}@{read_file}@{run_command}@{grep_search}@{get_diagnostics}@{agent}"
+					)
 					vim.cmd('normal! "+p')
 					vim.cmd("normal! o")
-				end, { desc = "Paste agent skills", silent = true, buffer = true })
+				end, { desc = "Insert agent skills into chat", silent = true, buffer = true })
+			end,
+		})
+
+		-- Add reading and file-finding skills, without the agent one
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "codecompanion",
+			callback = function()
+				vim.keymap.set({ "n" }, "gkr", function()
+					vim.fn.setreg(
+						"+",
+						"#{buffer}@{file_search}@{files}@{read_file}@{grep_search}@{get_diagnostics}"
+					)
+					vim.cmd('normal! "+p')
+					vim.cmd("normal! o")
+				end, { desc = "Insert agent skills into chat", silent = true, buffer = true })
 			end,
 		})
 
