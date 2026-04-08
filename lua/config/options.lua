@@ -5,7 +5,7 @@ local diag = vim.diagnostic
 
 -- Cursor handling and navigation
 opt.number = true -- Show line numbers
-opt.relativenumber = true -- Rlative number lines
+opt.relativenumber = true -- Relative number lines
 opt.cursorline = true -- Highlight current line
 opt.wrap = true -- Disable wrapping
 opt.scrolloff = 10 -- Keep 10 lines above/below cursor

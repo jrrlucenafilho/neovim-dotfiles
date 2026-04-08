@@ -1,6 +1,19 @@
 -- Miscellaneous keymaps
 -- Not specifically related to any plugin
 
+----- [[ Helper Funtctions ]] -----
+
+-- Toggle column numbers among relative and absolute
+local function toggle_relative_number()
+	if vim.wo.relativenumber then
+		vim.wo.relativenumber = false
+	else
+		vim.wo.relativenumber = true
+	end
+end
+
+----- [[ Keymaps ]] -----
+
 -- LazyVim's buffer closing function
 local buf_remove = require("utils.bufremove")
 vim.keymap.set("n", "<A-q>", buf_remove.bufremove, { desc = "Delete buffer" })
@@ -39,14 +52,18 @@ vim.keymap.set("n", "<leader>bo", "<cmd>lua require('telescope.builtin').marks()
 -- Copying/pasting to system clipboard commands for neovide
 if vim.g.neovide == true then
 	-- Copy current line
-	vim.keymap.set({ "n" }, "<C-S-C>", '"+yy', { desc = "Copy current line to system clipboard" })
+	vim.keymap.set({ "n" }, "<C-C>", '"+yy', { desc = "Copy current line to system clipboard" })
 	-- Copy visual selection
-	vim.keymap.set({ "v" }, "<C-S-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
-	-- Copy range of lines
-	vim.keymap.set("n", "<C-S-R>", ":<C-u>y+<left><left>", { desc = "Copy range to system clipboard" })
+	vim.keymap.set({ "v" }, "<C-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
 
+	-- Copy range of lines
+	vim.keymap.set("n", "yr", function()
+		toggle_relative_number()
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":<C-u>y+<Left><Left>", true, false, true), "m", false)
+		vim.schedule(toggle_relative_number)
+	end, { desc = "Copy range to system clipboard" })
 	-- Paste (normal and visual modes)
-	vim.keymap.set({ "n", "v" }, "<C-S-V>", '"+p', { desc = "Paste from system clipboard" })
+	vim.keymap.set({ "n", "v" }, "<C-V>", '"+p', { desc = "Paste from system clipboard" })
 end
 
 -- Create new file, prompts for name
@@ -66,7 +83,10 @@ vim.keymap.set("n", "<leader>bt", function()
 	print(vim.bo.buftype)
 end, { desc = "Show buffer type" })
 
--- Show buffer name with <leader>bn
+-- Show buffer name
 vim.keymap.set("n", "<leader>bn", function()
 	print(vim.api.nvim_buf_get_name(0))
 end, { desc = "Show buffer name" })
+
+-- Toggle between relative number column and vice versa
+vim.keymap.set("n", "<leader>cn", toggle_relative_number, { desc = "Toggle relative number column" })
