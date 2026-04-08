@@ -46,13 +46,13 @@ return {
 		vim.keymap.set("n", "<A-Left>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Cycle to previous buffer" })
 
 		-- Move current buffer to the left
-		vim.keymap.set("n", "<leader>n", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
+		vim.keymap.set("n", "<S-Left>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer to the left" })
 
 		-- Move current buffer to the right
-		vim.keymap.set("n", "<leader>p", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer left" })
-		
-    -- Toggle pin on a buffer tab
-    vim.keymap.set("n", "<A-p>", "<cmd>BufferLineTogglePin<CR>", { desc = "Move buffer left" })
+		vim.keymap.set("n", "<S-Right>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer to the right" })
+
+		-- Toggle pin on a buffer tab
+		vim.keymap.set("n", "<A-p>", "<cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" })
 
 		-- Close current buffer
 		-- Disabled cause I'm using LazyVim's custom buf closing function
