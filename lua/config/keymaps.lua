@@ -1,7 +1,7 @@
 -- Miscellaneous keymaps
 -- Not specifically related to any plugin
 
------ [[ Helper Funtctions ]] -----
+----- [[ Helper Functions ]] -----
 
 -- Toggle column numbers among relative and absolute
 local function toggle_relative_number()
