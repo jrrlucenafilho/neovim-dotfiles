@@ -1,6 +1,4 @@
--- Session manager
--- (mainly for dashboard's "last session" command)
-
+-- Session manager (mainly for dashboard's "last session" command)
 return {
 	"folke/persistence.nvim",
 	event = "BufReadPre", -- this will only start session saving when an actual file was opened
@@ -13,38 +11,47 @@ return {
 			options = { "buffers", "curdir", "tabpages", "winsize" },
 		})
 
-		-- Autocmd for closing toggable buffers when returning to a session, if it's open
-		vim.api.nvim_create_autocmd("User", {
-			pattern = "PersistenceLoadPost",
-			callback = function()
-				for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-					local ft = vim.bo[buf].filetype
-					local name = vim.api.nvim_buf_get_name(buf)
+		----- [[ Autocmds ]] -----
+		-- Autocmd for closing toggable buffers before saving a session
+		local function close_toggable_buffers()
+			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+				local ft = vim.bo[buf].filetype
+				local name = vim.api.nvim_buf_get_name(buf)
 
-          -- Neotree
-					if ft == "neo-tree" or name:match("neo%-tree") then
-						pcall(vim.api.nvim_buf_delete, buf, { force = true })
-					end
-
-          -- Outline
-					if ft == "Outline" or name:match("OUTLINE_1") then
-						pcall(vim.api.nvim_buf_delete, buf, { force = true })
-					end
-
-          -- Empty filetype buffers (CodeCompanion)
-					if ft == "" then
-						pcall(vim.api.nvim_buf_delete, buf, { force = true })
-					end
-
-          -- Trouble
-					if ft == "trouble" then
-						pcall(vim.api.nvim_buf_delete, buf, { force = true })
-					end
+				-- Neotree, filetype or name
+				if ft == "neo-tree" or name:match("neo%-tree") then
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
 				end
-			end,
+
+				-- Outline, by filetype or name
+				if ft == "Outline" or name:match("OUTLINE_1") then
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
+				end
+
+				-- CodeCompanion, by filetype
+				if ft == "codecompanion" then
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
+				end
+
+				-- Trouble, by filetype
+				if ft == "trouble" then
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
+				end
+
+				-- BetterTerm terminal, by filetype
+				if ft == "better_term" then
+					pcall(vim.api.nvim_buf_delete, buf, { force = true })
+				end
+			end
+		end
+
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "PersistenceSavePre",
+			desc = "Close toggable buffers before saving",
+			callback = close_toggable_buffers,
 		})
 
-		-- Keybindings
+		----- [[ Keymaps ]] -----
 		-- load the session for the current directory
 		vim.keymap.set("n", "<leader>ps", function()
 			persistence.load()
