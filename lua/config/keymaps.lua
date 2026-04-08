@@ -4,7 +4,7 @@
 ----- [[ Helper Functions ]] -----
 
 -- Toggle column numbers among relative and absolute
-local function toggle_relative_number()
+local function toggle_number_column()
 	if vim.wo.relativenumber then
 		vim.wo.relativenumber = false
 	else
@@ -53,15 +53,26 @@ vim.keymap.set("n", "<leader>bo", "<cmd>lua require('telescope.builtin').marks()
 if vim.g.neovide == true then
 	-- Copy current line
 	vim.keymap.set({ "n" }, "<C-C>", '"+yy', { desc = "Copy current line to system clipboard" })
+
 	-- Copy visual selection
 	vim.keymap.set({ "v" }, "<C-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
 
-	-- Copy range of lines
+	-- Copy range of lines (write "start_line end_line")
 	vim.keymap.set("n", "yr", function()
-		toggle_relative_number()
-		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":<C-u>y+<Left><Left>", true, false, true), "m", false)
-		vim.schedule(toggle_relative_number)
+		toggle_number_column()
+		vim.defer_fn(function()
+			vim.ui.input({ prompt = "Yank Range: " }, function(input)
+				if input and input ~= "" then
+					local start_line, end_line = input:match("(%d+)%s+(%d+)")
+					if start_line and end_line then
+						vim.cmd("silent " .. start_line .. "," .. end_line .. "y+")
+					end
+				end
+				toggle_number_column()
+			end)
+		end, 100)
 	end, { desc = "Copy range to system clipboard" })
+
 	-- Paste (normal and visual modes)
 	vim.keymap.set({ "n", "v" }, "<C-V>", '"+p', { desc = "Paste from system clipboard" })
 end
@@ -89,4 +100,4 @@ vim.keymap.set("n", "<leader>bn", function()
 end, { desc = "Show buffer name" })
 
 -- Toggle between relative number column and vice versa
-vim.keymap.set("n", "<leader>cn", toggle_relative_number, { desc = "Toggle relative number column" })
+vim.keymap.set("n", "<leader>nc", toggle_number_column, { desc = "Toggle relative number column" })
