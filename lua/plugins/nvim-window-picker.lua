@@ -2,21 +2,9 @@
 return {
 	"s1n7ax/nvim-window-picker",
 	name = "window-picker",
-	-- event = "VeryLazy", -- More consistency without it
+	event = "VeryLazy",
 	version = "2.*",
-	keys = {
-		{
-			",",
-			function()
-				local picked_window_id = require("window-picker").pick_window()
-				if picked_window_id then
-					vim.api.nvim_set_current_win(picked_window_id)
-				end
-			end,
-			desc = "Window Picker",
-			mode = { "n", "t" },
-		},
-	},
+
 	config = function()
 		require("window-picker").setup({
 			-- type of hints you want to get
@@ -144,5 +132,14 @@ return {
 				},
 			},
 		})
+
+		----- [[ Keymaps ]] -----
+		-- Keymap: ',' to pick window
+		vim.keymap.set({ "n", "t" }, ",", function()
+			local picked_window_id = require("window-picker").pick_window()
+			if picked_window_id then
+				vim.api.nvim_set_current_win(picked_window_id)
+			end
+		end, { desc = "Window Picker" })
 	end,
 }
