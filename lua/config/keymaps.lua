@@ -57,25 +57,25 @@ if vim.g.neovide == true then
 	-- Copy visual selection
 	vim.keymap.set({ "v" }, "<C-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
 
-	-- Copy range of lines (write "start_line end_line")
-	vim.keymap.set("n", "yr", function()
-		toggle_number_column()
-		vim.defer_fn(function()
-			vim.ui.input({ prompt = "Yank Range: " }, function(input)
-				if input and input ~= "" then
-					local start_line, end_line = input:match("(%d+)%s+(%d+)")
-					if start_line and end_line then
-						vim.cmd("silent " .. start_line .. "," .. end_line .. "y+")
-					end
-				end
-				toggle_number_column()
-			end)
-		end, 100)
-	end, { desc = "Copy range to system clipboard" })
-
 	-- Paste (normal and visual modes)
 	vim.keymap.set({ "n", "v" }, "<C-V>", '"+p', { desc = "Paste from system clipboard" })
 end
+
+-- Copy range of lines (write "start_line end_line")
+vim.keymap.set("n", "yr", function()
+	toggle_number_column()
+	vim.defer_fn(function()
+		vim.ui.input({ prompt = "Yank Range: " }, function(input)
+			if input and input ~= "" then
+				local start_line, end_line = input:match("(%d+)%s+(%d+)")
+				if start_line and end_line then
+					vim.cmd("silent " .. start_line .. "," .. end_line .. "y+")
+				end
+			end
+			toggle_number_column()
+		end)
+	end, 100)
+end, { desc = "Copy range to system clipboard" })
 
 -- Create new file, prompts for name
 vim.keymap.set("n", "<leader>nf", function()
