@@ -19,9 +19,16 @@ return {
 			on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 		})
 
+    ----- [[ Keymaps ]] -----
 		-- Jump to context (top)
 		vim.keymap.set("n", "]c", function()
 			require("treesitter-context").go_to_context(vim.v.count1)
 		end, { desc = "Jump to context", silent = true })
+
+    -- Toggle context
+		vim.keymap.set("n", "<leader>ct", function()
+			require("treesitter-context").toggle()
+		end, { desc = "Context toggle", silent = true })
+
 	end,
 }
