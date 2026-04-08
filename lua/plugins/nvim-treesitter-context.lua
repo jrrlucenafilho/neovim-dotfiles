@@ -20,7 +20,7 @@ return {
 		})
 
 		-- Jump to context (top)
-		vim.keymap.set("n", "<leader>jc", function()
+		vim.keymap.set("n", "]c", function()
 			require("treesitter-context").go_to_context(vim.v.count1)
 		end, { desc = "Jump to context", silent = true })
 	end,
