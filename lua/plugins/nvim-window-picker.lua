@@ -2,7 +2,7 @@
 return {
 	"s1n7ax/nvim-window-picker",
 	name = "window-picker",
-	event = "VeryLazy",
+	-- event = "VeryLazy", -- More consistency without it
 	version = "2.*",
 	keys = {
 		{
