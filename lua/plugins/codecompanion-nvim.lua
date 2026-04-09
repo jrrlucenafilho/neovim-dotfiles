@@ -55,6 +55,21 @@ return {
 						end
 						return require("codecompanion.adapters").extend("cursor_cli", opts)
 					end,
+
+					----- [[ Claude Code ]] -----
+					claude_code = function()
+						local opts = {}
+						return require("codecompanion.adapters").extend("claude_code", {
+							env = {
+								CLAUDE_CODE_OAUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
+							},
+						})
+					end,
+
+					----- [[ OpenCode ]] -----
+					opencode = function()
+						local opts = {}
+					end,
 				},
 
 				----[[ Http Protocol ]]----

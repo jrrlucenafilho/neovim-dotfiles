@@ -52,7 +52,7 @@ return {
 		vim.keymap.set("n", "<S-Right>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer to the right" })
 
 		-- Toggle pin on a buffer tab
-		vim.keymap.set("n", "<A-p>", "<cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" })
+		vim.keymap.set("n", "<S-p>", "<cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" })
 
 		-- Close current buffer
 		-- Disabled cause I'm using LazyVim's custom buf closing function

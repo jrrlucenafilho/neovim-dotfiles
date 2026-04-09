@@ -6,7 +6,7 @@ return {
 		require("treesitter-context").setup({
 			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 			multiwindow = true, -- Enable multiwindow support.
-			max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
+			max_lines = 2, -- How many lines the window should span. Values <= 0 mean no limit.
 			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 			line_numbers = true,
 			multiline_threshold = 20, -- Maximum number of lines to show for a single context
@@ -19,16 +19,15 @@ return {
 			on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 		})
 
-    ----- [[ Keymaps ]] -----
+		----- [[ Keymaps ]] -----
 		-- Jump to context (top)
 		vim.keymap.set("n", "]c", function()
 			require("treesitter-context").go_to_context(vim.v.count1)
 		end, { desc = "Jump to context", silent = true })
 
-    -- Toggle context
+		-- Toggle context
 		vim.keymap.set("n", "<leader>ct", function()
 			require("treesitter-context").toggle()
 		end, { desc = "Context toggle", silent = true })
-
 	end,
 }
