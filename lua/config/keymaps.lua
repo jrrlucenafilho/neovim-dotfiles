@@ -44,10 +44,28 @@ end, { desc = "Line diagnostics" })
 -- Create a bookmark
 -- Lowercase: local bookmark
 -- Uppercase: global bookmark (survives file switches)
-vim.keymap.set("n", "<leader>bs", "m", { desc = "Set mark (bookmark)" })
+vim.keymap.set("n", "<leader>ms", "m", { desc = "Set mark (bookmark)" })
 
 -- Open a bookmark
-vim.keymap.set("n", "<leader>bo", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "Open bookmarks" })
+vim.keymap.set("n", "<leader>ml", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
+
+-- List bookmarks only for current buffer
+vim.keymap.set("n", "<leader>mb", function()
+	local marks = vim.fn.getmarklist(0)
+	local lines = {}
+	for _, mark in ipairs(marks) do
+		if mark.mark:match("^[a-z]$") then
+			local lnum = mark.pos[2]
+			local text = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1] or ""
+			table.insert(lines, string.format("'%s  line %d: %s", mark.mark, lnum, text))
+		end
+	end
+	if #lines == 0 then
+		print("No buffer-local marks set.")
+		return
+	end
+	vim.lsp.util.open_floating_preview(lines, "markdown", { border = "single" })
+end, { desc = "Show buffer-local marks" })
 
 -- Copying/pasting to system clipboard commands for neovide
 if vim.g.neovide == true then
@@ -98,6 +116,25 @@ end, { desc = "Show buffer type" })
 vim.keymap.set("n", "<leader>bn", function()
 	print(vim.api.nvim_buf_get_name(0))
 end, { desc = "Show buffer name" })
+
+-- Show buffer-local marks only
+vim.keymap.set("n", "<leader>mb", function()
+	local lines = {}
+	for i = string.byte("a"), string.byte("z") do
+		local mark = string.char(i)
+		local pos = vim.fn.getpos("'" .. mark)
+		if pos[2] ~= 0 then -- mark exists and is in current buffer
+			local lnum = pos[2]
+			local text = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1] or ""
+			table.insert(lines, string.format("'%s  line %d: %s", mark, lnum, text))
+		end
+	end
+	if #lines == 0 then
+		print("No buffer-local marks set.")
+		return
+	end
+	vim.lsp.util.open_floating_preview(lines, "markdown", { border = "single" })
+end, { desc = "Show buffer-local marks" })
 
 -- Toggle between relative number column and vice versa
 vim.keymap.set("n", "<leader>nc", toggle_number_column, { desc = "Toggle relative number column" })
