@@ -49,22 +49,80 @@ vim.keymap.set("n", "<leader>ms", "m", { desc = "Set mark (bookmark)" })
 -- Open a bookmark
 vim.keymap.set("n", "<leader>ml", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
 
--- List bookmarks only for current buffer
+-- List bookmarks only for current buffer with Telescope
 vim.keymap.set("n", "<leader>mb", function()
-	local marks = vim.fn.getmarklist(0)
-	local lines = {}
-	for _, mark in ipairs(marks) do
-		if mark.mark:match("^[a-z]$") then
-			local lnum = mark.pos[2]
+	local telescope = require("telescope.builtin")
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+
+	-- Collect buffer-local marks
+	local marks_data = {}
+	for i = string.byte("a"), string.byte("z") do
+		local mark = string.char(i)
+		local pos = vim.fn.getpos("'" .. mark)
+		if pos[2] ~= 0 then
+			local lnum = pos[2]
 			local text = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1] or ""
-			table.insert(lines, string.format("'%s  line %d: %s", mark.mark, lnum, text))
+			table.insert(marks_data, {
+				mark = mark,
+				lnum = lnum,
+				text = text,
+				display = string.format("'%s: %s", mark, text),
+			})
 		end
 	end
-	if #lines == 0 then
+
+	if #marks_data == 0 then
 		print("No buffer-local marks set.")
 		return
 	end
-	vim.lsp.util.open_floating_preview(lines, "markdown", { border = "single" })
+
+	-- Create custom picker
+	local picker = pickers.new({}, {
+		prompt_title = "Buffer Marks",
+		finder = finders.new_table({
+			results = marks_data,
+			entry_maker = function(entry)
+				return {
+					value = entry,
+					display = string.format("'%s: %s", entry.mark, entry.text),
+					ordinal = entry.mark,
+				}
+			end,
+		}),
+		sorter = conf.generic_sorter({}),
+		layout_strategy = "horizontal",
+		layout_config = {
+			preview_width = 0.6,
+		},
+		previewers = require("telescope.previewers").new_buffer_previewer({
+			define_preview = function(self, entry)
+				local lnum = entry.value.lnum
+				local bufnr = vim.api.nvim_get_current_buf()
+				vim.api.nvim_buf_call(bufnr, function()
+					local start = math.max(1, lnum - 5)
+					local finish = math.min(vim.api.nvim_buf_line_count(bufnr), lnum + 5)
+					local lines = vim.api.nvim_buf_get_lines(bufnr, start - 1, finish, false)
+					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
+					vim.api.nvim_buf_add_highlight(self.state.bufnr, -1, "Search", lnum - start, 0, -1)
+				end)
+			end,
+		}),
+		attach_mappings = function(prompt_bufnr, map)
+			actions.select_default:replace(function()
+				local entry = action_state.get_selected_entry()
+				actions.close(prompt_bufnr)
+				vim.api.nvim_win_set_cursor(0, { entry.value.lnum, 0 })
+			end)
+			map("i", "<C-j>", actions.move_selection_next)
+			map("i", "<C-k>", actions.move_selection_previous)
+			return true
+		end,
+	})
+	picker:find()
 end, { desc = "Show buffer-local marks" })
 
 -- Copying/pasting to system clipboard commands for neovide
@@ -116,25 +174,6 @@ end, { desc = "Show buffer type" })
 vim.keymap.set("n", "<leader>bn", function()
 	print(vim.api.nvim_buf_get_name(0))
 end, { desc = "Show buffer name" })
-
--- Show buffer-local marks only
-vim.keymap.set("n", "<leader>mb", function()
-	local lines = {}
-	for i = string.byte("a"), string.byte("z") do
-		local mark = string.char(i)
-		local pos = vim.fn.getpos("'" .. mark)
-		if pos[2] ~= 0 then -- mark exists and is in current buffer
-			local lnum = pos[2]
-			local text = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1] or ""
-			table.insert(lines, string.format("'%s  line %d: %s", mark, lnum, text))
-		end
-	end
-	if #lines == 0 then
-		print("No buffer-local marks set.")
-		return
-	end
-	vim.lsp.util.open_floating_preview(lines, "markdown", { border = "single" })
-end, { desc = "Show buffer-local marks" })
 
 -- Toggle between relative number column and vice versa
 vim.keymap.set("n", "<leader>nc", toggle_number_column, { desc = "Toggle relative number column" })
