@@ -2,9 +2,8 @@
 -- Not specifically related to any plugin
 
 ----- [[ Helper Functions ]] -----
-
 -- Toggle column numbers among relative and absolute
-local function toggle_number_column()
+local function toggle_number_column_type()
 	if vim.wo.relativenumber then
 		vim.wo.relativenumber = false
 	else
@@ -12,8 +11,12 @@ local function toggle_number_column()
 	end
 end
 
------ [[ Keymaps ]] -----
+-- Toggle the number column itself
+local function toggle_number_column()
+	vim.wo.number = not vim.wo.number
+end
 
+----- [[ Keymaps ]] -----
 -- LazyVim's buffer closing function
 local buf_remove = require("utils.bufremove")
 vim.keymap.set("n", "<A-q>", buf_remove.bufremove, { desc = "Delete buffer" })
@@ -47,11 +50,10 @@ end, { desc = "Line diagnostics" })
 vim.keymap.set("n", "<leader>ms", "m", { desc = "Set mark (bookmark)" })
 
 -- Open a bookmark
-vim.keymap.set("n", "<leader>ml", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
+vim.keymap.set("n", "<leader>mg", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
 
 -- List bookmarks only for current buffer with Telescope
 vim.keymap.set("n", "<leader>mb", function()
-	local telescope = require("telescope.builtin")
 	local actions = require("telescope.actions")
 	local action_state = require("telescope.actions.state")
 	local pickers = require("telescope.pickers")
@@ -157,7 +159,12 @@ end
 
 -- Copy range of lines (write "start_line end_line")
 vim.keymap.set("n", "yr", function()
-	toggle_number_column()
+	local ft = vim.api.nvim_buf_get_option(0, "filetype")
+	if ft == "codecompanion" then
+		toggle_number_column()
+	else
+		toggle_number_column_type()
+	end
 	vim.defer_fn(function()
 		vim.ui.input({ prompt = "Yank Range: " }, function(input)
 			if input and input ~= "" then
@@ -166,7 +173,12 @@ vim.keymap.set("n", "yr", function()
 					vim.cmd("silent " .. start_line .. "," .. end_line .. "y+")
 				end
 			end
-			toggle_number_column()
+
+			if ft == "codecompanion" then
+				toggle_number_column()
+			else
+				toggle_number_column_type()
+			end
 		end)
 	end, 100)
 end, { desc = "Copy range to system clipboard" })
@@ -194,4 +206,4 @@ vim.keymap.set("n", "<leader>bn", function()
 end, { desc = "Show buffer name" })
 
 -- Toggle between relative number column and vice versa
-vim.keymap.set("n", "<leader>nc", toggle_number_column, { desc = "Toggle relative number column" })
+vim.keymap.set("n", "<leader>nc", toggle_number_column_type, { desc = "Toggle relative number column" })
