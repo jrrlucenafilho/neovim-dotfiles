@@ -94,7 +94,7 @@ vim.keymap.set("n", "<leader>mb", function()
 				return {
 					value = entry,
 					display = string.format("'%s: %s", entry.mark, entry.text),
-					ordinal = entry.mark,
+					ordinal = entry.text,
 				}
 			end,
 		}),
