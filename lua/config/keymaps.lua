@@ -58,6 +58,9 @@ vim.keymap.set("n", "<leader>mb", function()
 	local finders = require("telescope.finders")
 	local conf = require("telescope.config").values
 
+	-- Store the original buffer before creating picker
+	local original_bufnr = vim.api.nvim_get_current_buf()
+
 	-- Collect buffer-local marks
 	local marks_data = {}
 	for i = string.byte("a"), string.byte("z") do
@@ -65,7 +68,7 @@ vim.keymap.set("n", "<leader>mb", function()
 		local pos = vim.fn.getpos("'" .. mark)
 		if pos[2] ~= 0 then
 			local lnum = pos[2]
-			local text = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1] or ""
+			local text = vim.api.nvim_buf_get_lines(original_bufnr, lnum - 1, lnum, false)[1] or ""
 			table.insert(marks_data, {
 				mark = mark,
 				lnum = lnum,
@@ -96,19 +99,34 @@ vim.keymap.set("n", "<leader>mb", function()
 		sorter = conf.generic_sorter({}),
 		layout_strategy = "horizontal",
 		layout_config = {
-			preview_width = 0.6,
+			horizontal = {
+				width = 0.95,
+				height = 0.95,
+				preview_width = 0.6,
+			},
 		},
-		previewers = require("telescope.previewers").new_buffer_previewer({
+		previewer = require("telescope.previewers").new_buffer_previewer({
 			define_preview = function(self, entry)
 				local lnum = entry.value.lnum
-				local bufnr = vim.api.nvim_get_current_buf()
-				vim.api.nvim_buf_call(bufnr, function()
-					local start = math.max(1, lnum - 5)
-					local finish = math.min(vim.api.nvim_buf_line_count(bufnr), lnum + 5)
-					local lines = vim.api.nvim_buf_get_lines(bufnr, start - 1, finish, false)
-					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
-					vim.api.nvim_buf_add_highlight(self.state.bufnr, -1, "Search", lnum - start, 0, -1)
-				end)
+				local start = math.max(1, lnum - 100)
+				local finish = math.min(vim.api.nvim_buf_line_count(original_bufnr), lnum + 100)
+				local lines = vim.api.nvim_buf_get_lines(original_bufnr, start - 1, finish, false)
+				vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
+				-- Highlight the mark line (relative position in preview)
+				local hl_line = lnum - start
+				vim.api.nvim_buf_add_highlight(self.state.bufnr, -1, "Search", hl_line, 0, -1)
+				-- Set filetype for syntax highlighting
+				local ft = vim.api.nvim_buf_get_option(original_bufnr, "filetype")
+				vim.api.nvim_buf_set_option(self.state.bufnr, "filetype", ft)
+				-- Move cursor and center on the mark line in preview window
+				vim.defer_fn(function()
+					if self.state.winid and vim.api.nvim_win_is_valid(self.state.winid) then
+						vim.api.nvim_win_set_cursor(self.state.winid, { hl_line + 1, 0 })
+						vim.api.nvim_win_call(self.state.winid, function()
+							vim.cmd("normal! zz")
+						end)
+					end
+				end, 10)
 			end,
 		}),
 		attach_mappings = function(prompt_bufnr, map)
