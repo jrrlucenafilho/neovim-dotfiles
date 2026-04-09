@@ -116,7 +116,7 @@ vim.keymap.set("n", "<leader>mb", function()
 				vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
 				-- Highlight the mark line (relative position in preview)
 				local hl_line = lnum - start
-				vim.api.nvim_buf_add_highlight(self.state.bufnr, -1, "Search", hl_line, 0, -1)
+				vim.api.nvim_buf_add_highlight(self.state.bufnr, -1, "TelescopeSelection", hl_line, 0, -1)
 				-- Set filetype for syntax highlighting
 				local ft = vim.api.nvim_buf_get_option(original_bufnr, "filetype")
 				vim.api.nvim_buf_set_option(self.state.bufnr, "filetype", ft)
