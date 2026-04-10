@@ -180,7 +180,7 @@ vim.keymap.set("n", "yr", function()
 				toggle_number_column_type()
 			end
 		end)
-	end, 100)
+	end, 50)
 end, { desc = "Copy range to system clipboard" })
 
 -- Copy single line (write "line_number")
@@ -206,11 +206,11 @@ vim.keymap.set("n", "yl", function()
 				toggle_number_column_type()
 			end
 		end)
-	end, 100)
+	end, 50)
 end, { desc = "Copy single line to system clipboard" })
 
 -- Copy range from CodeCompanion buffer, move to its window, and return to original window/buffer
-vim.keymap.set("n", "ya", function()
+vim.keymap.set("n", "yar", function()
 	local original_win = vim.api.nvim_get_current_win()
 	local original_buf = vim.api.nvim_get_current_buf()
 	local cc_bufnr, cc_winid = nil, nil
@@ -240,6 +240,52 @@ vim.keymap.set("n", "ya", function()
 				local start_line, end_line = input:match("(%d+)%s+(%d+)")
 				if start_line and end_line then
 					vim.cmd("silent " .. start_line .. "," .. end_line .. "y+")
+				end
+			end
+			-- Toggle number column back off
+			vim.api.nvim_buf_set_option(cc_bufnr, "number", false)
+			-- Return to original window and buffer
+			if vim.api.nvim_win_is_valid(original_win) then
+				vim.api.nvim_set_current_win(original_win)
+				if vim.api.nvim_buf_is_valid(original_buf) then
+					vim.api.nvim_set_current_buf(original_buf)
+				end
+			end
+		end)
+	end, 50)
+end)
+
+-- Copy single line from CodeCompanion buffer, move to its window, and return to original window/buffer
+vim.keymap.set("n", "yal", function()
+	local original_win = vim.api.nvim_get_current_win()
+	local original_buf = vim.api.nvim_get_current_buf()
+	local cc_bufnr, cc_winid = nil, nil
+	-- Find codecompanion buffer and its window
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local bufnr = vim.api.nvim_win_get_buf(win)
+		if vim.api.nvim_buf_is_valid(bufnr) then
+			local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+			if ft == "codecompanion" then
+				cc_bufnr = bufnr
+				cc_winid = win
+				break
+			end
+		end
+	end
+	if not cc_bufnr or not cc_winid then
+		print("No codecompanion buffer/window found.")
+		return
+	end
+	-- Move to codecompanion window
+	vim.api.nvim_set_current_win(cc_winid)
+	-- Toggle number column on
+	vim.api.nvim_buf_set_option(cc_bufnr, "number", true)
+	vim.defer_fn(function()
+		vim.ui.input({ prompt = "Yank Line from CodeCompanion: " }, function(input)
+			if input and input ~= "" then
+				local line_num = input:match("(%d+)")
+				if line_num then
+					vim.cmd("silent " .. line_num .. "y+")
 				end
 			end
 			-- Toggle number column back off
