@@ -18,7 +18,7 @@ return {
 
 			-- when you go to window selection mode, status bar will show one of
 			-- following letters on them so you can use that letter to select the window
-			selection_chars = "DFGHJKLSA;CMRUEIWOQP",
+			selection_chars = "SDFGHJKLSA;CMRUEIWOQP",
 
 			-- This section contains picker specific configurations
 			picker_config = {
