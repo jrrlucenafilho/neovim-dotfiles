@@ -9,6 +9,11 @@ return {
 				-- mode = "tabs",
 				separator_style = "slant",
 				diagnostics = "nvim_lsp",
+				themable = true,
+				color_icons = true,
+				indicator = {
+					style = "underline",
+				},
 				offsets = {
 					{
 						filetype = "neo-tree",
