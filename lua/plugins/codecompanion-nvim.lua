@@ -69,6 +69,11 @@ return {
 					----- [[ OpenCode ]] -----
 					opencode = function()
 						local opts = {}
+						return require("codecompanion.adapters").extend("opencode", {
+							env = {
+								-- api_key = vim.env.OPENCODE_API_KEY, -- Uncomment if needed
+							},
+						})
 					end,
 				},
 
