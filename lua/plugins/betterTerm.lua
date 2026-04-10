@@ -6,10 +6,14 @@ return {
 	config = function()
 		local betterTerm = require("betterTerm")
 
+		local original_size = math.floor(vim.o.lines / 2.5)
+		local large_size = math.floor(vim.o.lines * 0.8)
+		local is_large = false
+
 		betterTerm.setup({
 			prefix = "Term",
 			position = "bot",
-			size = math.floor(vim.o.lines / 2.5),
+			size = original_size,
 			startInserted = true,
 			show_tabs = true,
 			new_tab_mapping = "<C-t>",
@@ -20,6 +24,32 @@ return {
 			new_tab_icon = "+",
 			index_base = 1,
 		})
+
+		----- [[ Helper Functions ]] -----
+		-- Toggle terminal size between original and large
+		local function toggle_betterterm_size()
+			local found = false
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local name = vim.api.nvim_buf_get_name(buf)
+				if name:find("Term %(") then
+					vim.api.nvim_set_current_win(win)
+					if is_large then
+						vim.cmd("resize " .. original_size)
+						is_large = false
+					else
+						vim.cmd("resize " .. large_size)
+						is_large = true
+					end
+					found = true
+					break
+				end
+			end
+			if not found then
+				-- No BetterTerm terminal open, do nothing
+				return
+			end
+		end
 
 		-- Keybindings
 		-- Toggle the first terminal (ID defaults to index_base, which is 0)
@@ -72,6 +102,9 @@ return {
 		vim.keymap.set({ "n", "t" }, "<A-0>", function()
 			betterTerm.open(0)
 		end, { desc = "Toggle terminal 0" })
+
+		-- Toggle BetterTerm size with 'be' in normal mode
+		vim.keymap.set({ "n", "t" }, "<leader>be", toggle_betterterm_size, { desc = "Toggle terminal expansion" })
 
 		-- Select a terminal to focus
 		vim.keymap.set("n", "<leader>ts", betterTerm.select, { desc = "Select terminal" })
