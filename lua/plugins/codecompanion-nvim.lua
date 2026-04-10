@@ -71,7 +71,7 @@ return {
 						local opts = {}
 						return require("codecompanion.adapters").extend("opencode", {
 							env = {
-								-- api_key = vim.env.ZAI_API_KEY, -- In case it's needed
+								-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
 							},
 						})
 					end,

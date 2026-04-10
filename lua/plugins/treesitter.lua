@@ -10,14 +10,16 @@ return {
 	init = function()
 		-- Enabling highlighting and indentation myself
 		vim.api.nvim_create_autocmd("FileType", {
-			callback = function()
+			callback = function(ev)
 				-- Enable treesitter highlighting and disable regex syntax
 				pcall(vim.treesitter.start)
 				-- Enable treesitter-based indentation
 				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-				-- Folding behavior (Disabled it in options)
-				vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
-				vim.wo[0][0].foldmethod = "expr"
+				-- Folding behavior (Disabled it in options, skip for codecompanion)
+				if ev.match ~= "codecompanion" then
+					vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo[0][0].foldmethod = "expr"
+				end
 			end,
 		})
 
