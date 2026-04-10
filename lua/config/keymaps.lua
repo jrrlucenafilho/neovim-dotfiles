@@ -75,7 +75,7 @@ vim.keymap.set("n", "<leader>mb", function()
 				mark = mark,
 				lnum = lnum,
 				text = text,
-				display = string.format("'%s: %s", mark, text),
+				display = string.format("'%s (line %d): %s", mark, lnum, text),
 			})
 		end
 	end
@@ -93,7 +93,7 @@ vim.keymap.set("n", "<leader>mb", function()
 			entry_maker = function(entry)
 				return {
 					value = entry,
-					display = string.format("'%s: %s", entry.mark, entry.text),
+					display = string.format("'%s (line %d): %s", entry.mark, entry.lnum, entry.text),
 					ordinal = entry.text,
 				}
 			end,
