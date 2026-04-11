@@ -324,7 +324,7 @@ vim.keymap.set("n", "<leader>bn", function()
 end, { desc = "Show buffer name" })
 
 -- Toggle between relative number column and vice versa
-vim.keymap.set("n", "<leader>nc", toggle_number_column_type, { desc = "Toggle relative number column" })
+vim.keymap.set("n", "<leader>nn", toggle_number_column_type, { desc = "Toggle relative number column" })
 
 -- Toggle comment range of lines by entering "start end"
 vim.keymap.set("n", "gcr", function()
@@ -339,10 +339,12 @@ vim.keymap.set("n", "gcr", function()
 						local prefix = cs:match("^(.-)%%s")
 						for l = tonumber(start_line), tonumber(end_line) do
 							local line = vim.fn.getline(l)
-							if line:find("^" .. vim.pesc(prefix)) then
-								vim.fn.setline(l, (line:gsub("^" .. vim.pesc(prefix), "", 1)))
+							local indent = line:match("^(%s*)")
+							local rest = line:sub(#indent + 1)
+							if rest:find("^" .. vim.pesc(prefix)) then
+								vim.fn.setline(l, indent .. rest:gsub("^" .. vim.pesc(prefix), "", 1))
 							else
-								vim.fn.setline(l, prefix .. line)
+								vim.fn.setline(l, indent .. prefix .. rest)
 							end
 						end
 					end

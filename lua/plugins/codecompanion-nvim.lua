@@ -43,8 +43,7 @@ return {
 
 					----- [[ Cursor CLI ]] -----
 					-- Models come from the agent via ACP (`session/update`); pick them with `ga` in chat.
-					-- Only `defaults.model` is read for ACP (see codecompanion `acp/init.lua` apply_default_model).
-					-- export CODECOMPANION_CURSOR_MODEL to a real modelId (`cursor-agent --list-models`).
+					-- Only `defaults.model` is read for ACP (see codecompanion's 'gd' debug buffer when cursor_cli is sselected).
 					-- The standart model here is empty, so Cursor itself decides it (desire behavior for now)
 					-- And the UI models list comes from what models Cursor exposes through ACP
 					cursor_cli = function()
@@ -58,16 +57,21 @@ return {
 					end,
 
 					----- [[ Claude Code ]] -----
-					-- claude_code = function()
-					-- 	local opts = {}
-					-- 	return require("codecompanion.adapters").extend("claude_code", {
-					-- 		env = {
-					-- 			CLAUDE_CODE_OAUTH_TOKEN = vim.env.ANTHROPIC_AUTH_TOKEN,
-					-- 		},
-					-- 	})
-					-- end,
+					--- Install claude-agent-acp from the aur
+					--- Set ANTHROPIC_BASE_URL (currently points to z.ai's anthropic endpoint)
+					--- Set ANTHROPIC_AUTH_TOKEN to the api key (currently z.ai's)
+					claude_code = function()
+						return require("codecompanion.adapters").extend("claude_code", {
+							defaults = {
+								session_config_options = {
+									model = "Default (recommended)",
+								},
+							},
+						})
+					end,
 
 					----- [[ OpenCode ]] -----
+          -- For now, using Z.ai's GLM coding plan
 					opencode = function()
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
@@ -75,9 +79,9 @@ return {
 									model = "Z.AI Coding Plan/GLM-5.1",
 								},
 							},
-							env = {
-								-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
-							},
+							-- env = {
+							-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
+							-- },
 						})
 					end,
 				},
