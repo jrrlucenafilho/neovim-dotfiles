@@ -71,7 +71,7 @@ return {
 					end,
 
 					----- [[ OpenCode ]] -----
-          -- For now, using Z.ai's GLM coding plan
+					-- For now, using Z.ai's GLM coding plan
 					opencode = function()
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
@@ -79,9 +79,9 @@ return {
 									model = "Z.AI Coding Plan/GLM-5.1",
 								},
 							},
-							-- env = {
-							-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
-							-- },
+							env = {
+								api_key = vim.env.ZAI_API_KEY, -- In case it's needed
+							},
 						})
 					end,
 				},
