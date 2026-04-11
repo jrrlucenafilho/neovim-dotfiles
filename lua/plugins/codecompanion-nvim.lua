@@ -48,12 +48,13 @@ return {
 					-- The standart model here is empty, so Cursor itself decides it (desire behavior for now)
 					-- And the UI models list comes from what models Cursor exposes through ACP
 					cursor_cli = function()
-						local opts = {}
-						local m = vim.env.CODECOMPANION_CURSOR_MODEL
-						if type(m) == "string" and m ~= "" then
-							opts.defaults = { model = m }
-						end
-						return require("codecompanion.adapters").extend("cursor_cli", opts)
+						return require("codecompanion.adapters").extend("cursor_cli", {
+							defaults = {
+								session_config_options = {
+									model = "Auto",
+								},
+							},
+						})
 					end,
 
 					----- [[ Claude Code ]] -----
@@ -68,16 +69,15 @@ return {
 
 					----- [[ OpenCode ]] -----
 					opencode = function()
-						local opts = {}
 						return require("codecompanion.adapters").extend("opencode", {
+							defaults = {
+								session_config_options = {
+									model = "Z.AI Coding Plan/GLM-5.1",
+								},
+							},
 							env = {
 								-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
 							},
-              schema = {
-                model = {
-                  default = "Z.AI Coding Plan/GLM-5.1"
-                }
-              }
 						})
 					end,
 				},
@@ -118,7 +118,7 @@ return {
 						return require("codecompanion.adapters").extend("copilot", {
 							schema = {
 								model = {
-									default = "gpt-4.1",
+									default = "claude-haiku-4.5",
 								},
 							},
 						})
