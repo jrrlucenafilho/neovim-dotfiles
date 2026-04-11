@@ -73,6 +73,11 @@ return {
 							env = {
 								-- api_key = vim.env.ZAI_API_KEY, -- When it's needed
 							},
+              schema = {
+                model = {
+                  default = "Z.AI Coding Plan/GLM-5.1"
+                }
+              }
 						})
 					end,
 				},

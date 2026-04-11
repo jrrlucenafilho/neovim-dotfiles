@@ -325,3 +325,30 @@ end, { desc = "Show buffer name" })
 
 -- Toggle between relative number column and vice versa
 vim.keymap.set("n", "<leader>nc", toggle_number_column_type, { desc = "Toggle relative number column" })
+
+-- Toggle comment range of lines by entering "start end"
+vim.keymap.set("n", "gcr", function()
+	toggle_number_column_type()
+	vim.defer_fn(function()
+		vim.ui.input({ prompt = "Comment Range: " }, function(input)
+			if input and input ~= "" then
+				local start_line, end_line = input:match("(%d+)%s+(%d+)")
+				if start_line and end_line then
+					local cs = vim.bo.commentstring
+					if cs and cs ~= "" then
+						local prefix = cs:match("^(.-)%%s")
+						for l = tonumber(start_line), tonumber(end_line) do
+							local line = vim.fn.getline(l)
+							if line:find("^" .. vim.pesc(prefix)) then
+								vim.fn.setline(l, (line:gsub("^" .. vim.pesc(prefix), "", 1)))
+							else
+								vim.fn.setline(l, prefix .. line)
+							end
+						end
+					end
+				end
+			end
+			toggle_number_column_type()
+		end)
+	end, 50)
+end, { desc = "Toggle comment on range of lines" })
