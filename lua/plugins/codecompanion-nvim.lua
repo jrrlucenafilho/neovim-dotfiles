@@ -79,9 +79,9 @@ return {
 									model = "Z.AI Coding Plan/GLM-5.1",
 								},
 							},
-							env = {
-								api_key = vim.env.ZAI_API_KEY, -- In case it's needed
-							},
+							-- env = {
+							-- api_key = vim.env.ZAI_API_KEY, -- In case it's needed
+							-- },
 						})
 					end,
 				},
@@ -231,7 +231,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "opencode",
+					adapter = "claude_code", -- More stable for now
 				},
 
 				inline = {
