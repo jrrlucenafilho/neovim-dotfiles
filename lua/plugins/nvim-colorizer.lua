@@ -35,7 +35,7 @@ return {
 					},
 					rgb = { enable = true }, -- rgb()/rgba() functions
 					hsl = { enable = true }, -- hsl()/hsla() functions
-					oklch = { enable = false }, -- oklch() function
+					oklch = { enable = true }, -- oklch() function
 					hwb = { enable = true }, -- hwb() function (CSS Color Level 4)
 					lab = { enable = false }, -- lab() function (CIE Lab)
 					lch = { enable = false }, -- lch() function (CIE LCH)
