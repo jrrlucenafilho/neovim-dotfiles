@@ -97,7 +97,9 @@ return {
 
 			use_trouble_qf = false, -- Quickfix action will open trouble.nvim instead of built-in quickfix list
 		})
+	end,
 
+	init = function() -- On init since this plugin is lazyloaded
 		----- [[ Autocmds ]] -----
 		vim.api.nvim_create_autocmd("VimResized", {
 			pattern = "*",
