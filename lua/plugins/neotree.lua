@@ -88,7 +88,7 @@ return {
 				end
 			end
 		end
-		vim.keymap.set("n", "<leader>te", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
+		vim.keymap.set("n", "<leader>et", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
 
 		-- Function for git status picker
 		local function neotree_git_status_picker()

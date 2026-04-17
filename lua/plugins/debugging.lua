@@ -229,6 +229,7 @@ return {
 				end,
 			})
 
+      ----- [[ Autocmds ]] -----
 			-- Restore DAP-ui width on any window change
 			vim.api.nvim_create_autocmd("WinResized", {
 				callback = function()

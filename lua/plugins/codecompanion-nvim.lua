@@ -409,7 +409,7 @@ return {
 		end
 		vim.keymap.set(
 			{ "n", "t" },
-			"<leader>ae",
+			"<leader>ea",
 			toggle_codecompanion_width,
 			{ desc = "Toggle CodeCompanion chat width" }
 		)
