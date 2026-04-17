@@ -213,6 +213,7 @@ return {
 				end
 			end, { desc = "Restart debugging" })
 
+			----- [[ Autocmds ]] -----
 			-- Lock DAP-ui window widths
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = {
@@ -229,7 +230,6 @@ return {
 				end,
 			})
 
-      ----- [[ Autocmds ]] -----
 			-- Restore DAP-ui width on any window change
 			vim.api.nvim_create_autocmd("WinResized", {
 				callback = function()
