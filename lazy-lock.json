@@ -35,7 +35,7 @@
   "molten-nvim": { "branch": "main", "commit": "a286aa914d9a154bc359131aab788b5a077a5a99" },
   "multicursors.nvim": { "branch": "main", "commit": "72225ea9e4443c3f4b9df91d0193e07c4ee8d382" },
   "neo-tree.nvim": { "branch": "v3.x", "commit": "84c75e7a7e443586f60508d12fc50f90d9aee14e" },
-  "neogit": { "branch": "master", "commit": "e06745228600a585b88726fc9fba44a373c15a47" },
+  "neogit": { "branch": "master", "commit": "e906fce7e44ae562f06345be99a7db02f8315236" },
   "neoscroll.nvim": { "branch": "master", "commit": "c8d29979cb0cb3a2437a8e0ae683fd82f340d3b8" },
   "neovim-ayu": { "branch": "master", "commit": "e5a9f0fa2918d6b5f57c21b3ac014314ee5e41c8" },
   "none-ls-extras.nvim": { "branch": "main", "commit": "70ec8815cdf186223af04cc5a15bc8bdface0ef0" },

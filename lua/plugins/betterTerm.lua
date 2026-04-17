@@ -16,7 +16,7 @@ return {
 			size = original_size,
 			startInserted = true,
 			show_tabs = true,
-			new_tab_mapping = "<C-t>",
+			new_tab_mapping = "<A-t>",
 			jump_tab_mapping = "<C-$tab>",
 			active_tab_hl = "TabLineSel",
 			inactive_tab_hl = "TabLine",
