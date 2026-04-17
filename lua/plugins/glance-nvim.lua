@@ -101,18 +101,7 @@ return {
 
 	init = function() -- On init since this plugin is lazyloaded
 		----- [[ Autocmds ]] -----
-		vim.api.nvim_create_autocmd("VimResized", {
-			pattern = "*",
-			callback = function()
-				for _, win in ipairs(vim.api.nvim_list_wins()) do
-					if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "Glance" then
-						vim.api.nvim_win_close(win, false)
-					end
-				end
-			end,
-			desc = "Close Glance windows on window resize",
-		})
-
+    -- For now just take care to not decrease glance's preview size
 		----- [[ Keymaps ]] -----
 		vim.keymap.set("n", "<A-g>d", "<CMD>Glance definitions<CR>", { desc = "Glance definitions" })
 		vim.keymap.set("n", "<A-g>r", "<CMD>Glance references<CR>", { desc = "Glance references" })
