@@ -1,4 +1,5 @@
--- Allows better jupyter notebook navigation for molten
+-- Better navigation and editing with text objects
+-- Also allows better jupyter notebook navigation for molten
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	branch = "main",
@@ -53,47 +54,56 @@ return {
 
 		----- [[ Text objects: select ]] -----
 		-- You can use the capture groups defined in `textobjects.scm`
-		vim.keymap.set({ "x", "o" }, "am", function()
+		vim.keymap.set({ "x", "o", "n" }, "<leader>toof", function()
 			require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
-		end)
-		vim.keymap.set({ "x", "o" }, "im", function()
+		end, { desc = "Select outer function" })
+
+		vim.keymap.set({ "x", "o", "n" }, "<leader>toif", function()
 			require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
-		end)
-		vim.keymap.set({ "x", "o" }, "ac", function()
+		end, { desc = "Select inner function" })
+
+		vim.keymap.set({ "x", "o", "n" }, "<leader>tooc", function()
 			require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
-		end)
-		vim.keymap.set({ "x", "o" }, "ic", function()
+		end, { desc = "Select outer class" })
+
+		vim.keymap.set({ "x", "o", "n" }, "<leader>toic", function()
 			require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
-		end)
+		end, { desc = "Select inner class" })
+
 		-- You can also use captures from other query groups like `locals.scm`
-		vim.keymap.set({ "x", "o" }, "as", function()
+		vim.keymap.set({ "x", "o", "n" }, "<leader>tol", function()
 			require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
-		end)
+		end, { desc = "Select local scope" })
 
 		----- [[ Text objects: swap ]] -----
-		vim.keymap.set("n", "<leader>a", function()
+		vim.keymap.set("n", "<leader>ip", function()
 			require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
-		end)
-		vim.keymap.set("n", "<leader>A", function()
+		end, { desc = "Swap inner parameter" })
+
+		vim.keymap.set("n", "<leader>op", function()
 			require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer")
-		end)
+		end, { desc = "Swap outer parameter" })
 
 		----- [[ Text objects: move ]] -----
 		-- You can use the capture groups defined in `textobjects.scm`
 		vim.keymap.set({ "n", "x", "o" }, "]m", function()
 			require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "]]", function()
 			require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
 		end)
+
 		-- You can also pass a list to group multiple queries.
 		vim.keymap.set({ "n", "x", "o" }, "]o", function()
 			require("nvim-treesitter-textobjects.move").goto_next_start({ "@loop.inner", "@loop.outer" }, "textobjects")
 		end)
+
 		-- You can also use captures from other query groups like `locals.scm` or `folds.scm`
 		vim.keymap.set({ "n", "x", "o" }, "]s", function()
 			require("nvim-treesitter-textobjects.move").goto_next_start("@local.scope", "locals")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "]z", function()
 			require("nvim-treesitter-textobjects.move").goto_next_start("@fold", "folds")
 		end)
@@ -101,6 +111,7 @@ return {
 		vim.keymap.set({ "n", "x", "o" }, "]M", function()
 			require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "][", function()
 			require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
 		end)
@@ -108,6 +119,7 @@ return {
 		vim.keymap.set({ "n", "x", "o" }, "[m", function()
 			require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "[[", function()
 			require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
 		end)
@@ -115,6 +127,7 @@ return {
 		vim.keymap.set({ "n", "x", "o" }, "[M", function()
 			require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "[]", function()
 			require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
 		end)
@@ -124,6 +137,7 @@ return {
 		vim.keymap.set({ "n", "x", "o" }, "]d", function()
 			require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects")
 		end)
+
 		vim.keymap.set({ "n", "x", "o" }, "[d", function()
 			require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects")
 		end)
