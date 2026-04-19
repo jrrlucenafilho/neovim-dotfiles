@@ -1,6 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "a62e1083a3cfe8b6b206e7d3d33a51091df25357" },
-  "alpha-nvim": { "branch": "main", "commit": "7563da4a861ee6b3ed674d0ee5c5c0bd19383a38" },
+  "alpha-nvim": { "branch": "main", "commit": "6c6a89d5b068b5251c8bdf0dd57bb921bcfeeb09" },
   "betterTerm.nvim": { "branch": "main", "commit": "08f06962b46628033d73a78e3cf7c99de9c5f3a1" },
   "buffer-reopen.nvim": { "branch": "main", "commit": "e08dfc4bfea21bbb771f24e1dd032b437a0f8401" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
@@ -40,7 +40,7 @@
   "neoscroll.nvim": { "branch": "master", "commit": "c8d29979cb0cb3a2437a8e0ae683fd82f340d3b8" },
   "neovim-ayu": { "branch": "master", "commit": "e5a9f0fa2918d6b5f57c21b3ac014314ee5e41c8" },
   "none-ls-extras.nvim": { "branch": "main", "commit": "70ec8815cdf186223af04cc5a15bc8bdface0ef0" },
-  "none-ls.nvim": { "branch": "main", "commit": "899e93f9f10251d7220b188eba1b837c0ba27927" },
+  "none-ls.nvim": { "branch": "main", "commit": "e135361b9c11755ef6c48f54a2c970c509b56239" },
   "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
   "nvim-autopairs": { "branch": "master", "commit": "59bce2eef357189c3305e25bc6dd2d138c1683f5" },
   "nvim-cmp": { "branch": "main", "commit": "a1d504892f2bc56c2e79b65c6faded2fd21f3eca" },

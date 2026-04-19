@@ -67,6 +67,48 @@ return {
 			end)
 			:totable()
 		require("nvim-treesitter").install(parsersToInstall)
+
+		-- Keymap to list installed parsers in Telescope
+		vim.keymap.set("n", "<leader>tp", function()
+			local actions = require("telescope.actions")
+			local action_state = require("telescope.actions.state")
+			local pickers = require("telescope.pickers")
+			local finders = require("telescope.finders")
+			local conf = require("telescope.config").values
+
+			local parsers = require("nvim-treesitter.config").get_installed()
+
+			local picker = pickers.new({}, {
+				prompt_title = "Installed Treesitter Parsers",
+				finder = finders.new_table({
+					results = parsers,
+					entry_maker = function(entry)
+						return {
+							value = entry,
+							display = entry,
+							ordinal = entry,
+						}
+					end,
+				}),
+				sorter = conf.generic_sorter({}),
+				layout_strategy = "horizontal",
+				layout_config = {
+					horizontal = {
+						width = 0.3,
+						height = 0.6,
+					},
+				},
+				attach_mappings = function(prompt_bufnr)
+					actions.select_default:replace(function()
+						local entry = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						print("Selected parser: " .. entry.value)
+					end)
+					return true
+				end,
+			})
+			picker:find()
+		end, { desc = "List installed Treesitter parsers" })
 	end,
 
 	-----[[ Config ]]-----
