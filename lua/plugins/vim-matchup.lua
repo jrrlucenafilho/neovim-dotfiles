@@ -16,9 +16,9 @@ return {
 			group = "matchup_matchparen_highlight",
 			pattern = "*",
 			callback = function()
-				vim.api.nvim_set_hl(0, "MatchParenCur", { fg = "#b9babb", bg = "#282c34", underline = true })
-				vim.api.nvim_set_hl(0, "MatchParen", { fg = "#b9babb", bg = "#282c34", underline = true })
-				vim.api.nvim_set_hl(0, "MatchWord", { fg = "NONE", bg = "#282c34", underline = true })
+				vim.api.nvim_set_hl(0, "MatchParen", { fg = "#1a1b26", bg = "#ff9e64", underline = false })
+				vim.api.nvim_set_hl(0, "MatchParenCur", { fg = "#1a1b26", bg = "#ff9e64", underline = false })
+				vim.api.nvim_set_hl(0, "MatchWord", { fg = "NONE", bg = "#343b58", underline = true })
 			end,
 		})
 	end,
