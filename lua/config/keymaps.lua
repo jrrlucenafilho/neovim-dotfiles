@@ -151,7 +151,7 @@ if vim.g.neovide == true then
 	vim.keymap.set({ "n" }, "<C-C>", '"+yy', { desc = "Copy current line to system clipboard" })
 
 	-- Copy visual selection
-	vim.keymap.set({ "v" }, "<C-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
+	vim.keymap.set({ "n", "v" }, "<C-C>", '"+y', { desc = "Copy visual selection to system clipboard" })
 
 	-- Paste (normal and visual modes)
 	vim.keymap.set({ "n", "v" }, "<C-V>", '"+p', { desc = "Paste from system clipboard" })
