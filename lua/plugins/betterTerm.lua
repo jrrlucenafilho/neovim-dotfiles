@@ -122,7 +122,14 @@ return {
 		vim.keymap.set({ "t" }, "<A-Right>", function()
 			betterTerm.cycle(1)
 		end, { desc = "Cycle to next terminal" })
+		vim.keymap.set({ "t" }, "<A-l>", function()
+			betterTerm.cycle(1)
+		end, { desc = "Cycle to next terminal" })
+
 		vim.keymap.set({ "t" }, "<A-Left>", function()
+			betterTerm.cycle(-1)
+		end, { desc = "Cycle to previous terminal" })
+		vim.keymap.set({ "t" }, "<A-h>", function()
 			betterTerm.cycle(-1)
 		end, { desc = "Cycle to previous terminal" })
 	end,

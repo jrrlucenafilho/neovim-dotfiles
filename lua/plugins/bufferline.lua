@@ -46,15 +46,19 @@ return {
 		-- Bufferline keymaps
 		-- Go to the next buffer
 		vim.keymap.set("n", "<A-Right>", "<cmd>BufferLineCycleNext<CR>", { desc = "Cycle to next buffer" })
+		vim.keymap.set("n", "<A-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "Cycle to next buffer" })
 
 		-- Go to the previous buffer
 		vim.keymap.set("n", "<A-Left>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Cycle to previous buffer" })
+		vim.keymap.set("n", "<A-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Cycle to previous buffer", noremap = true })
 
 		-- Move current buffer to the left
 		vim.keymap.set("n", "<S-Left>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer to the left" })
+		vim.keymap.set("n", "<S-h>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer to the left" })
 
 		-- Move current buffer to the right
 		vim.keymap.set("n", "<S-Right>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer to the right" })
+		vim.keymap.set("n", "<S-l>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer to the right" })
 
 		-- Toggle pin on a buffer tab
 		vim.keymap.set("n", "<S-p>", "<cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" })

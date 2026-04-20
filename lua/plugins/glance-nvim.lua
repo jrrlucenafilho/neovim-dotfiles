@@ -63,6 +63,7 @@ return {
 					["l"] = actions.open_fold,
 					["h"] = actions.close_fold,
 					["<A-Left>"] = actions.enter_win("preview"), -- Focus preview window
+					["<A-h>"] = actions.enter_win("preview"), -- Focus preview window
 					["q"] = actions.close, -- Closes Glance window
 					["Q"] = actions.close,
 					["<Esc>"] = actions.close,
@@ -75,6 +76,7 @@ return {
 					["<Tab>"] = actions.next_location, -- Next location (skips groups, cycles)
 					["<S-Tab>"] = actions.previous_location, -- Previous location (skips groups, cycles)
 					["<A-Right>"] = actions.enter_win("list"), -- Focus list window
+					["<A-l>"] = actions.enter_win("list"), -- Focus list window
 				},
 			},
 
@@ -101,7 +103,7 @@ return {
 
 	init = function() -- On init since this plugin is lazyloaded
 		----- [[ Autocmds ]] -----
-    -- For now just take care to not decrease glance's preview size
+		-- For now just take care to not decrease glance's preview size
 		----- [[ Keymaps ]] -----
 		vim.keymap.set("n", "<A-g>d", "<CMD>Glance definitions<CR>", { desc = "Glance definitions" })
 		vim.keymap.set("n", "<A-g>r", "<CMD>Glance references<CR>", { desc = "Glance references" })
