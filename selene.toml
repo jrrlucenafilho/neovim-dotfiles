@@ -2,3 +2,6 @@ std = "lua51+vim"
 
 [lints]
 mixed_table = "allow"
+
+[rules]
+type_check = "disable"
