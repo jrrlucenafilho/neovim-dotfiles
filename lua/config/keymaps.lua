@@ -49,11 +49,11 @@ end, { desc = "Line diagnostics" })
 -- Uppercase: global bookmark (survives file switches)
 vim.keymap.set("n", "<leader>ms", "m", { desc = "Set mark (bookmark)" })
 
--- Open a bookmark
-vim.keymap.set("n", "<leader>mg", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
+-- List global bookmarks
+vim.keymap.set("n", "<leader>mlg", "<cmd>lua require('telescope.builtin').marks()<CR>", { desc = "List bookmarks" })
 
 -- List bookmarks only for current buffer with Telescope
-vim.keymap.set("n", "<leader>mb", function()
+vim.keymap.set("n", "<leader>mlb", function()
 	local actions = require("telescope.actions")
 	local action_state = require("telescope.actions.state")
 	local pickers = require("telescope.pickers")

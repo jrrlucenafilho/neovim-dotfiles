@@ -19,10 +19,10 @@ return {
 		{ "<leader>mwq", "<cmd>Neominimap WinDisable<cr>", desc = "Disable minimap for current window" },
 
 		-- Tab-Specific Minimap Controls
-		{ "<leader>mtt", "<cmd>Neominimap TabToggle<cr>", desc = "Toggle minimap for current tab" },
-		{ "<leader>mtr", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
-		{ "<leader>mto", "<cmd>Neominimap TabEnable<cr>", desc = "Enable minimap for current tab" },
-		{ "<leader>mtq", "<cmd>Neominimap TabDisable<cr>", desc = "Disable minimap for current tab" },
+		{ "<leader>mat", "<cmd>Neominimap TabToggle<cr>", desc = "Toggle minimap for current tab" },
+		{ "<leader>mar", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
+		{ "<leader>mao", "<cmd>Neominimap TabEnable<cr>", desc = "Enable minimap for current tab" },
+		{ "<leader>maq", "<cmd>Neominimap TabDisable<cr>", desc = "Disable minimap for current tab" },
 
 		-- Buffer-Specific Minimap Controls
 		{ "<leader>mbt", "<cmd>Neominimap BufToggle<cr>", desc = "Toggle minimap for current buffer" },
