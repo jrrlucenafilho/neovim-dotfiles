@@ -84,7 +84,7 @@ return {
 				-- filter using buffer options
 				bo = {
 					-- if the file type is one of following, the window will be ignored
-					filetype = {},
+					filetype = { "neominimap" },
 
 					-- if the file type is one of following, the window will be ignored
 					buftype = {},
