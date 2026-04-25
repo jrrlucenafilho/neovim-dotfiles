@@ -7,33 +7,33 @@ return {
 	-- Optional. You can also set your own keybindings
 	keys = {
 		-- Global Minimap Controls
-		{ "<leader>mt", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
-		{ "<leader>mo", "<cmd>Neominimap Enable<cr>", desc = "Enable global minimap" },
-		{ "<leader>mq", "<cmd>Neominimap Disable<cr>", desc = "Disable global minimap" },
-		{ "<leader>mr", "<cmd>Neominimap Refresh<cr>", desc = "Refresh global minimap" },
+		{ "<leader>mmtt", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
+		{ "<leader>mmo", "<cmd>Neominimap Enable<cr>", desc = "Enable global minimap" },
+		{ "<leader>mmq", "<cmd>Neominimap Disable<cr>", desc = "Disable global minimap" },
+		{ "<leader>mmr", "<cmd>Neominimap Refresh<cr>", desc = "Refresh global minimap" },
 
 		-- Window-Specific Minimap Controls
-		{ "<leader>mwt", "<cmd>Neominimap WinToggle<cr>", desc = "Toggle minimap for current window" },
-		{ "<leader>mwr", "<cmd>Neominimap WinRefresh<cr>", desc = "Refresh minimap for current window" },
-		{ "<leader>mwo", "<cmd>Neominimap WinEnable<cr>", desc = "Enable minimap for current window" },
-		{ "<leader>mwq", "<cmd>Neominimap WinDisable<cr>", desc = "Disable minimap for current window" },
+		{ "<leader>mmwt", "<cmd>Neominimap WinToggle<cr>", desc = "Toggle minimap for current window" },
+		{ "<leader>mmwr", "<cmd>Neominimap WinRefresh<cr>", desc = "Refresh minimap for current window" },
+		{ "<leader>mmwo", "<cmd>Neominimap WinEnable<cr>", desc = "Enable minimap for current window" },
+		{ "<leader>mmwq", "<cmd>Neominimap WinDisable<cr>", desc = "Disable minimap for current window" },
 
 		-- Tab-Specific Minimap Controls
-		{ "<leader>mat", "<cmd>Neominimap TabToggle<cr>", desc = "Toggle minimap for current tab" },
-		{ "<leader>mar", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
-		{ "<leader>mao", "<cmd>Neominimap TabEnable<cr>", desc = "Enable minimap for current tab" },
-		{ "<leader>maq", "<cmd>Neominimap TabDisable<cr>", desc = "Disable minimap for current tab" },
+		{ "<leader>mmat", "<cmd>Neominimap TabToggle<cr>", desc = "Toggle minimap for current tab" },
+		{ "<leader>mmar", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
+		{ "<leader>mmao", "<cmd>Neominimap TabEnable<cr>", desc = "Enable minimap for current tab" },
+		{ "<leader>mmaq", "<cmd>Neominimap TabDisable<cr>", desc = "Disable minimap for current tab" },
 
 		-- Buffer-Specific Minimap Controls
-		{ "<leader>mbt", "<cmd>Neominimap BufToggle<cr>", desc = "Toggle minimap for current buffer" },
-		{ "<leader>mbr", "<cmd>Neominimap BufRefresh<cr>", desc = "Refresh minimap for current buffer" },
-		{ "<leader>mbo", "<cmd>Neominimap BufEnable<cr>", desc = "Enable minimap for current buffer" },
-		{ "<leader>mbc", "<cmd>Neominimap BufDisable<cr>", desc = "Disable minimap for current buffer" },
+		{ "<leader>mmbt", "<cmd>Neominimap BufToggle<cr>", desc = "Toggle minimap for current buffer" },
+		{ "<leader>mmbr", "<cmd>Neominimap BufRefresh<cr>", desc = "Refresh minimap for current buffer" },
+		{ "<leader>mmbo", "<cmd>Neominimap BufEnable<cr>", desc = "Enable minimap for current buffer" },
+		{ "<leader>mmbc", "<cmd>Neominimap BufDisable<cr>", desc = "Disable minimap for current buffer" },
 
 		-- Focus Controls
-		{ "<leader>mff", "<cmd>Neominimap Focus<cr>", desc = "Focus on minimap" },
-		{ "<leader>mfu", "<cmd>Neominimap Unfocus<cr>", desc = "Unfocus minimap" },
-		{ "<leader>mft", "<cmd>Neominimap ToggleFocus<cr>", desc = "Switch focus on minimap" },
+		{ "<leader>mmf", "<cmd>Neominimap Focus<cr>", desc = "Focus on minimap" },
+		{ "<leader>mmuf", "<cmd>Neominimap Unfocus<cr>", desc = "Unfocus minimap" },
+		{ "<leader>mmft", "<cmd>Neominimap ToggleFocus<cr>", desc = "Switch focus on minimap" },
 	},
 
 	init = function()
