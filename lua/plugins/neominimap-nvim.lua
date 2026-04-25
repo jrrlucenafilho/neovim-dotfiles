@@ -31,9 +31,9 @@ return {
 		{ "<leader>mmbc", "<cmd>Neominimap BufDisable<cr>", desc = "Disable minimap for current buffer" },
 
 		-- Focus Controls
-		{ "<leader>mmf", "<cmd>Neominimap Focus<cr>", desc = "Focus on minimap" },
-		{ "<leader>mmuf", "<cmd>Neominimap Unfocus<cr>", desc = "Unfocus minimap" },
-		{ "<leader>mmft", "<cmd>Neominimap ToggleFocus<cr>", desc = "Switch focus on minimap" },
+		-- { "<leader>mmf", "<cmd>Neominimap Focus<cr>", desc = "Focus on minimap" },
+		-- { "<leader>mmuf", "<cmd>Neominimap Unfocus<cr>", desc = "Unfocus minimap" },
+		{ "<leader>mmf", "<cmd>Neominimap ToggleFocus<cr>", desc = "Switch focus on minimap" },
 	},
 
 	init = function()
