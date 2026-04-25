@@ -354,3 +354,29 @@ vim.keymap.set("n", "gcr", function()
 		end)
 	end, 50)
 end, { desc = "Toggle comment on range of lines" })
+
+-- Stop Ctrl+Right from wrapping forward
+vim.keymap.set({ "n", "i", "v" }, "<C-Right>", function()
+	local current_line = vim.fn.line(".")
+	-- In Insert mode, we use <C-O> to run the normal command
+	local cmd = vim.api.nvim_get_mode().mode == "i" and [[\<C-O>w]] or "w"
+	vim.cmd("normal! " .. cmd)
+
+	-- If we moved to a new line, jump back to the end of the previous line
+	if vim.fn.line(".") > current_line then
+		vim.cmd("normal! k$")
+	end
+end, { desc = "Move word forward without line wrap" })
+
+-- Stop Ctrl+Left from wrapping backward
+vim.keymap.set({ "n", "i", "v" }, "<C-Left>", function()
+	local current_line = vim.fn.line(".")
+	-- Use 'b' to go back one word
+	local cmd = vim.api.nvim_get_mode().mode == "i" and [[\<C-O>b]] or "b"
+	vim.cmd("normal! " .. cmd)
+
+	-- If we moved to a previous line, jump back to the start of the original line
+	if vim.fn.line(".") < current_line then
+		vim.cmd("normal! j0")
+	end
+end, { desc = "Move word backward without line wrap" })
