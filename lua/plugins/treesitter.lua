@@ -68,7 +68,7 @@ return {
 			:totable()
 		require("nvim-treesitter").install(parsersToInstall)
 
-		-- Keymap to list installed parsers in Telescope
+		-- Keymap to list installed parsers in Telescope with details
 		vim.keymap.set("n", "<leader>tp", function()
 			local actions = require("telescope.actions")
 			local action_state = require("telescope.actions.state")
@@ -76,12 +76,63 @@ return {
 			local finders = require("telescope.finders")
 			local conf = require("telescope.config").values
 
-			local parsers = require("nvim-treesitter.config").get_installed()
+			local installed = require("nvim-treesitter.config").get_installed()
+			local parsers_config = require("nvim-treesitter.parsers")
+
+			-- Format parser details for display
+			local function format_parser_details(lang)
+				local config = parsers_config[lang]
+				if not config then
+					return string.format("Parser: %s\n\nNo configuration found.", lang)
+				end
+
+				local details = {}
+				table.insert(details, string.format("┌─ Parser: %s", lang))
+				table.insert(details, "│")
+				if config.install_info then
+					table.insert(details, string.format("│ Repository: %s", config.install_info.url or "N/A"))
+					table.insert(
+						details,
+						string.format(
+							"│ Revision:  %s",
+							config.install_info.revision or config.install_info.branch or "N/A"
+						)
+					)
+					if config.install_info.location then
+						table.insert(details, string.format("│ Location:  %s", config.install_info.location or "N/A"))
+					end
+				end
+				if config.maintainers then
+					table.insert(
+						details,
+						string.format(
+							"│ Maintainer%s: %s",
+							#config.maintainers > 1 and "s" or "",
+							table.concat(config.maintainers, ", ")
+						)
+					)
+				end
+				if config.tier then
+					local tier_names = { [1] = "stable", [2] = "unstable", [3] = "unmaintained" }
+					table.insert(
+						details,
+						string.format("│ Tier:      %s (%d)", tier_names[config.tier] or "unknown", config.tier)
+					)
+				end
+				if config.requires then
+					table.insert(details, string.format("│ Requires:  %s", table.concat(config.requires, ", ")))
+				end
+				table.insert(details, "│")
+				table.insert(details, "│ Installed:  ✓")
+				table.insert(details, "└─")
+
+				return table.concat(details, "\n")
+			end
 
 			local picker = pickers.new({}, {
 				prompt_title = "Installed Treesitter Parsers",
 				finder = finders.new_table({
-					results = parsers,
+					results = installed,
 					entry_maker = function(entry)
 						return {
 							value = entry,
@@ -94,21 +145,68 @@ return {
 				layout_strategy = "horizontal",
 				layout_config = {
 					horizontal = {
-						width = 0.3,
-						height = 0.6,
+						width = 0.8,
+						height = 0.7,
+						preview_width = 0.5,
 					},
 				},
-				attach_mappings = function(prompt_bufnr)
+				previewer = require("telescope.previewers").new_buffer_previewer({
+					define_preview = function(self, entry)
+						vim.api.nvim_buf_set_lines(
+							self.state.bufnr,
+							0,
+							-1,
+							false,
+							vim.split(format_parser_details(entry.value), "\n")
+						)
+						vim.api.nvim_buf_set_option(self.state.bufnr, "filetype", "text")
+					end,
+				}),
+				attach_mappings = function(prompt_bufnr, map)
 					actions.select_default:replace(function()
 						local entry = action_state.get_selected_entry()
-						actions.close(prompt_bufnr)
-						print("Selected parser: " .. entry.value)
+						local details = format_parser_details(entry.value)
+
+						local bufnr = vim.api.nvim_create_buf(false, true)
+						vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.split(details, "\n"))
+						vim.api.nvim_buf_set_option(bufnr, "filetype", "text")
+
+						local width, height = 60, 12
+						local row = math.floor((vim.o.lines - height) / 2)
+						local col = math.floor((vim.o.columns - width) / 2)
+
+						local winid = vim.api.nvim_open_win(bufnr, true, {
+							relative = "editor",
+							row = row,
+							col = col,
+							width = width,
+							height = height,
+							style = "minimal",
+							border = "rounded",
+							title = "Parser Details: " .. entry.value,
+							title_pos = "center",
+						})
+
+						local function close_popup()
+							if vim.api.nvim_win_is_valid(winid) then
+								vim.api.nvim_win_close(winid, true)
+							end
+							if vim.api.nvim_buf_is_valid(bufnr) then
+								vim.api.nvim_buf_delete(bufnr, { force = true })
+							end
+						end
+
+						vim.keymap.set("n", "q", close_popup, { buffer = bufnr, silent = true })
+						vim.keymap.set("n", "<Esc>", close_popup, { buffer = bufnr, silent = true })
+						vim.keymap.set("n", "<CR>", close_popup, { buffer = bufnr, silent = true })
 					end)
+					map("i", "<C-j>", actions.move_selection_next)
+					map("i", "<C-k>", actions.move_selection_previous)
 					return true
 				end,
 			})
 			picker:find()
-		end, { desc = "List installed Treesitter parsers" })
+		end, { desc = "List installed Treesitter parsers with details" })
 	end,
 
 	-----[[ Config ]]-----
