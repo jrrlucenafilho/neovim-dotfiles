@@ -341,7 +341,9 @@ vim.keymap.set("n", "gcr", function()
 							local line = vim.fn.getline(l)
 							local indent = line:match("^(%s*)")
 							local rest = line:sub(#indent + 1)
-							if not rest:find("^" .. vim.pesc(prefix)) then
+							if rest:find("^" .. vim.pesc(prefix)) then
+								vim.fn.setline(l, indent .. rest:gsub("^" .. vim.pesc(prefix), "", 1))
+							else
 								vim.fn.setline(l, indent .. prefix .. rest)
 							end
 						end
