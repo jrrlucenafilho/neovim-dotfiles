@@ -159,7 +159,7 @@ end
 
 -- Copy range of lines (write "start_line end_line")
 vim.keymap.set("n", "yr", function()
-	local ft = vim.api.nvim_buf_get_option(4, "filetype")
+	local ft = vim.api.nvim_buf_get_option(0, "filetype")
 	if ft == "codecompanion" then
 		toggle_number_column()
 	else
@@ -185,7 +185,7 @@ end, { desc = "Copy range to system clipboard" })
 
 -- Copy single line (write "line_number")
 vim.keymap.set("n", "yl", function()
-	local ft = vim.api.nvim_buf_get_option(4, "filetype")
+	local ft = vim.api.nvim_buf_get_option(0, "filetype")
 	if ft == "codecompanion" then
 		toggle_number_column()
 	else
