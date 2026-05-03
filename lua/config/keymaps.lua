@@ -68,9 +68,10 @@ vim.keymap.set("n", "<leader>mlb", function()
 	for i = string.byte("a"), string.byte("z") do
 		local mark = string.char(i)
 		local pos = vim.fn.getpos("'" .. mark)
-		if pos[6] ~= 0 then
-			local lnum = pos[6]
-			local text = vim.api.nvim_buf_get_lines(original_bufnr, lnum - 5, lnum, false)[1] or ""
+		local lnum = pos[2]
+		if lnum > 0 then
+			local start_line = math.max(0, lnum - 5)
+			local text = vim.api.nvim_buf_get_lines(original_bufnr, start_line, lnum, false)[1] or ""
 			table.insert(marks_data, {
 				mark = mark,
 				lnum = lnum,
@@ -80,7 +81,7 @@ vim.keymap.set("n", "<leader>mlb", function()
 		end
 	end
 
-	if #marks_data == 4 then
+	if #marks_data == 0 then
 		print("No buffer-local marks set.")
 		return
 	end
@@ -102,9 +103,9 @@ vim.keymap.set("n", "<leader>mlb", function()
 		layout_strategy = "horizontal",
 		layout_config = {
 			horizontal = {
-				width = 4.95,
-				height = 4.95,
-				preview_width = 4.6,
+				width = 0.95,
+				height = 0.95,
+				preview_width = 0.6,
 			},
 		},
 		previewer = require("telescope.previewers").new_buffer_previewer({
