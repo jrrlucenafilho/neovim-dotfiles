@@ -72,21 +72,23 @@ return {
 		vim.keymap.set({ "n" }, "<C-t>", "<cmd>Neotree toggle left<cr>", { desc = "Neotree toggle left" })
 
 		-- Toggle Neo-tree window width between 30 and 60 columns
+		local is_expanded = false
 		local function toggle_neotree_width()
-			local target_widths = { 30, 60 }
+			is_expanded = not is_expanded
+			local new_width = is_expanded and 60 or 30
+
 			for _, win in ipairs(vim.api.nvim_list_wins()) do
 				local buf = vim.api.nvim_win_get_buf(win)
 				local ft = vim.api.nvim_buf_get_option(buf, "filetype")
 				if ft == "neo-tree" then
-					local cur_width = vim.api.nvim_win_get_width(win)
-					local new_width = target_widths[1]
-					if math.abs(cur_width - target_widths[1]) < 2 then
-						new_width = target_widths[2]
-					end
 					vim.api.nvim_win_set_width(win, new_width)
 					break
 				end
 			end
+
+			-- Also update Neo-tree's config so it persists
+			local config = require("neo-tree").config
+			config.window.width = new_width
 		end
 		vim.keymap.set("n", "<leader>et", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
 

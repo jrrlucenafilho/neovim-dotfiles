@@ -215,15 +215,38 @@ return {
 							},
 						})
 					end,
+
+					-----[[ llama.cpp ]]-----
+					llama_cpp = function()
+						return require("codecompanion.adapters").extend("openai_compatible", {
+							env = {
+								url = "http://127.0.0.1:8080",
+								api_key = "TERM",
+								chat_url = "/v1/chat/completions",
+							},
+							handlers = {
+								parse_message_meta = function(data)
+									local extra = data.extra
+									if extra and extra.reasoning_content then
+										data.output.reasoning = { content = extra.reasoning_content }
+										if data.output.content == "" then
+											data.output.content = nil
+										end
+									end
+									return data
+								end,
+							},
+						})
+					end,
 				},
 			},
 
 			-----[[ Interactions ]] -----
 			-- Interaction types:
-			-- Chat - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)at - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
-			-- Inline - An inline assistant that can write code directly into a buffer (:CodeCompanion) inline assistant that can write code directly into a buffer (:CodeCompanion)
-			-- Cmd - Create Neovim commands in the command-line (:CodeCompanionCmd)te Neovim commands in the command-line (:CodeCompanionCmd)
-			-- Background - Runs tasks in the background such as compacting chat messages or generating titles for chatsbackground such as compacting chat messages or generating titles for chats
+			-- Chat     - A chat buffer where you can converse with an LLM (:CodeCompanionChat) (ACP only works here)
+			-- Inline   - An inline assistant that can write code directly into a buffer (:CodeCompanion)
+			-- Cmd      - Create Neovim commands in the command-line (:CodeCompanionCmd)
+			-- Background - Runs tasks in the background such as compacting chat messages or generating titles for chats
 
 			----- [[ Default Adapters For Each Interaction ]] -----
 			interactions = {
@@ -349,7 +372,7 @@ return {
 
 		-- Auto open codecompanion's commit writer when neogit's commit buffer opens
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "gitcommit",
+			pattern = "NeogitDiffView",
 			callback = function()
 				vim.api.nvim_command("CodeCompanion /commit")
 			end,
