@@ -61,6 +61,7 @@ return {
 
 			-- Options related to notification subsystem
 			notification = {
+				enable = false,
 				poll_rate = 10, -- How frequently to update and render notifications
 				filter = vim.log.levels.INFO, -- Minimum notifications level
 				history_size = 128, -- Number of removed messages to retain in history
@@ -111,13 +112,14 @@ return {
 			-- Options related to integrating with other plugins
 			integration = {
 				["nvim-tree"] = {
-					enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+					enable = false, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
 					-- DEPRECATED; use notification.window.avoid = { "NvimTree" }
 				},
 			},
 
 			-- Options related to logging
 			logger = {
+				enable = false,
 				level = vim.log.levels.WARN, -- Minimum logging level
 				max_size = 10000, -- Maximum log file size, in KB
 				float_precision = 0.01, -- Limit the number of decimals displayed for floats
