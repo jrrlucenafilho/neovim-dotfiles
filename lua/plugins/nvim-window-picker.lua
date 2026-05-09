@@ -135,7 +135,7 @@ return {
 
 		----- [[ Keymaps ]] -----
 		-- Keymap: ',' to pick window
-		vim.keymap.set({ "n", "t" }, ";", function()
+		vim.keymap.set({ "n" }, ",", function()
 			local picked_window_id = require("window-picker").pick_window()
 			if picked_window_id then
 				vim.api.nvim_set_current_win(picked_window_id)
