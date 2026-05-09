@@ -17,7 +17,7 @@ return {
 				chat = {
 					window = {
 						position = "right",
-						width = 0.3,
+						width = 0.23,
 					},
 					icons = {
 						buffer_sync_all = "󰪴 ",
@@ -414,7 +414,7 @@ return {
 
 		-- Toggle CodeCompanion chat window width between normal (default config) and expanded width
 		local function toggle_codecompanion_width()
-			local normal_width = math.floor(vim.o.columns * 0.3) -- match config default
+			local normal_width = math.floor(vim.o.columns * 0.23) -- match config default
 			local expanded_width = math.floor(vim.o.columns * 0.5)
 			for _, win in ipairs(vim.api.nvim_list_wins()) do
 				local buf = vim.api.nvim_win_get_buf(win)
