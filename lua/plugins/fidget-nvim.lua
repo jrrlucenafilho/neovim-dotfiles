@@ -125,6 +125,7 @@ return {
 				float_precision = 0.01, -- Limit the number of decimals displayed for floats
 				-- Where Fidget writes its logs to
 				path = string.format("%s/fidget.nvim.log", vim.fn.stdpath("cache")),
+				avoid = { "codecompanion", "Outline" }, -- Filetypes the notification window should avoid
 			},
 		})
 

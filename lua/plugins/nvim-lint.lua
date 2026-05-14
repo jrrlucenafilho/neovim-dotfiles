@@ -6,9 +6,17 @@ return {
 	"mfussenegger/nvim-lint",
 
 	config = function()
-		require("lint").linters_by_ft = {
-      ----------[[ Linters ]]----------
-      c = { "clangtidy" },
+		local lint = require("lint")
+
+		----- [[ Linter Args ]] -----
+		lint.linters.selene.args = {
+			"--config",
+			".selene.toml",
+		}
+
+		----- [[ Linters ]] -----
+		lint.linters_by_ft = {
+			c = { "clangtidy" },
 			cpp = { "clangtidy" }, -- Complementing cppcheck
 			lua = { "selene" },
 		}

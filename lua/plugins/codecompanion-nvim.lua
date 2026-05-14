@@ -76,7 +76,7 @@ return {
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									model = "Z.AI Coding Plan/GLM-5.1",
+									model = "Z.AI Coding Plan/GLM-4.7",
 								},
 							},
 							-- env = {
@@ -254,7 +254,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "claude_code", -- More stable for now
+					adapter = "claude_code",
 				},
 
 				inline = {
