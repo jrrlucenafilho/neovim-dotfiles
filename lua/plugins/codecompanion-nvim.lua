@@ -71,12 +71,12 @@ return {
 					end,
 
 					----- [[ OpenCode ]] -----
-					-- For now, using Z.ai's GLM coding plan
 					opencode = function()
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									model = "Z.AI Coding Plan/GLM-4.7",
+									-- model = "Z.AI Coding Plan/GLM-4.7",
+									model = "OpenCode Zen/DeepSeek V4 Flash Free",
 								},
 							},
 							-- env = {
