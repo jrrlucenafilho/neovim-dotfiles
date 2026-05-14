@@ -185,6 +185,32 @@ vim.keymap.set("n", "yr", function()
 	end, 54)
 end, { desc = "Copy range to system clipboard" })
 
+-- Delete range of lines (write "start_line end_line")
+vim.keymap.set("n", "dr", function()
+	local ft = vim.api.nvim_buf_get_option(0, "filetype")
+	if ft == "codecompanion" then
+		toggle_number_column()
+	else
+		toggle_number_column_type()
+	end
+	vim.defer_fn(function()
+		vim.ui.input({ prompt = "Delete Range: " }, function(input)
+			if input and input ~= "" then
+				local start_line, end_line = input:match("(%d+)%s+(%d+)")
+				if start_line and end_line then
+					vim.cmd("silent " .. start_line .. "," .. end_line .. "d")
+				end
+			end
+
+			if ft == "codecompanion" then
+				toggle_number_column()
+			else
+				toggle_number_column_type()
+			end
+		end)
+	end, 54)
+end, { desc = "Delete range of lines" })
+
 -- Copy single line (write "line_number")
 vim.keymap.set("n", "yl", function()
 	local ft = vim.api.nvim_buf_get_option(0, "filetype")
