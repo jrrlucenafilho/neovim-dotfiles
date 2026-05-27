@@ -52,6 +52,7 @@ return {
 
 			-- bacon_ls (rust diagnostics language server)
 			vim.lsp.config("bacon-ls", {
+				capabilities = capabilities,
 				init_options = {
 					cargo = { updateOnInsert = true },
 				},
