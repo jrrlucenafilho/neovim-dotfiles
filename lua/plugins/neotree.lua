@@ -36,6 +36,9 @@ return {
 	config = function()
 		require("neo-tree").setup({
 			close_if_last_window = true,
+			filesystem = {
+				use_libuv_file_watcher = true,
+			},
 			window = {
 				width = 30,
 				mappings = {
@@ -90,7 +93,7 @@ return {
 			local config = require("neo-tree").config
 			config.window.width = new_width
 		end
-		vim.keymap.set("n", "<leader>et", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
+		vim.keymap.set("n", "<leader>en", toggle_neotree_width, { desc = "Toggle Neo-tree window width" })
 
 		-- Function for git status picker
 		local function neotree_git_status_picker()
