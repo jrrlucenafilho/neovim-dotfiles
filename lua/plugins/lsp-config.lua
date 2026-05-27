@@ -67,6 +67,7 @@ return {
 					},
 				},
 			})
+			vim.lsp.enable("bacon-ls")
 
 			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
