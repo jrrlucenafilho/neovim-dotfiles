@@ -44,6 +44,12 @@ return {
 			})
 			vim.lsp.enable("eslint-lsp")
 
+			-- rust-analyzer (Rust)
+			vim.lsp.config("rust-analyzer", {
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("rust-analyzer")
+
 			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,
@@ -139,19 +145,19 @@ return {
 			vim.lsp.config("css_lsp", {
 				capabilities = capabilities,
 			})
-      vim.lsp.enable("css_lsp")
+			vim.lsp.enable("css_lsp")
 
-      -- css variables (css-variables-language-server)
-      vim.lsp.config("css_variables", {
+			-- css variables (css-variables-language-server)
+			vim.lsp.config("css_variables", {
 				capabilities = capabilities,
 			})
-      vim.lsp.enable("css_variables")
+			vim.lsp.enable("css_variables")
 
-      -- css modules (css-modules-language-server)
+			-- css modules (css-modules-language-server)
 			vim.lsp.config("cssmodules_ls", {
 				capabilities = capabilities,
 			})
-      vim.lsp.enable("cssmodules_ls")
+			vim.lsp.enable("cssmodules_ls")
 
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })

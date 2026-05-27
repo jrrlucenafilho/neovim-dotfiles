@@ -21,7 +21,7 @@ return {
 				---[[ Typescript/Javascript ]]--
 				none_ls.builtins.formatting.prettier,
 				none_ls.builtins.diagnostics.semgrep,
-				-- require("none-ls.diagnostics.eslint_d"), -- Superceded by eslint_lsp
+				-- require("none-ls.diagnostics.eslint_d"), -- Superceded by eslint_lsp (Not used anymore)
 
 				---[[ Python ]]---
 				none_ls.builtins.formatting.black, -- general formatting
@@ -30,15 +30,19 @@ return {
 
 				---[[ Html ]]---
 				-- none_ls.builtins.formatting.prettier, -- (already included)
-				-- none_ls.builtins.diagnostics.htmlhint, -- Superceded by Html-lsp
+				-- none_ls.builtins.diagnostics.htmlhint, -- Superceded by Html-lsp (not used anymore)
 
 				---[[ Css ]] --
 				none_ls.builtins.diagnostics.stylelint,
-				-- none_ls.builtins.formatting.prettier, -- (already included)
+				-- none_ls.builtins.formatting.prettier, -- (already included before)
 
 				---[[ C/C++ ]]---
 				none_ls.builtins.formatting.clang_format,
 				none_ls.builtins.diagnostics.cppcheck, -- Not in Mason, complementing clangtidy
+
+				---[[ Rust ]]---
+				-- require("none-ls.formatting.rustfmt"),
+				-- require("none-ls.diagnostics.rust_analyzer"),
 			},
 		})
 

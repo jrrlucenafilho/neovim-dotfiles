@@ -338,8 +338,8 @@ vim.keymap.set("n", "<leader>nf", function()
 end, { desc = "Create new file" })
 
 -- Open Lazy and Mason
-vim.keymap.set("n", "<leader>laz", "<cmd>Lazy<CR>", { desc = "Open Lazy" })
-vim.keymap.set("n", "<leader>mas", "<cmd>Mason<CR>", { desc = "Open Mason" })
+vim.keymap.set("n", "<leader>pml", "<cmd>Lazy<CR>", { desc = "Open Lazy" })
+vim.keymap.set("n", "<leader>pmm", "<cmd>Mason<CR>", { desc = "Open Mason" })
 
 -- Check buffer type and buffer name
 vim.keymap.set("n", "<leader>bft", function()

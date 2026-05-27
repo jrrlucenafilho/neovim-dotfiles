@@ -254,7 +254,7 @@ return {
 					opts = {
 						completion_provider = "cmp",
 					},
-					adapter = "claude_code",
+					adapter = "opencode",
 				},
 
 				inline = {
