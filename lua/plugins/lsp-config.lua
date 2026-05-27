@@ -50,6 +50,24 @@ return {
 			})
 			vim.lsp.enable("rust-analyzer")
 
+			-- bacon_ls (rust diagnostics language server)
+			vim.lsp.config("bacon-ls", {
+				init_options = {
+					cargo = { updateOnInsert = true },
+				},
+				settings = {
+					bacon_ls = {
+						backend = "cargo",
+						cargo = {
+							command = "clippy",
+							-- updateOnInsert lives in init_options above; only the
+							-- runtime knob lives here:
+							updateOnInsertDebounceMillis = 500,
+						},
+					},
+				},
+			})
+
 			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,

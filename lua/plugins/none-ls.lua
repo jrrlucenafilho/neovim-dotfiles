@@ -41,8 +41,8 @@ return {
 				none_ls.builtins.diagnostics.cppcheck, -- Not in Mason, complementing clangtidy
 
 				---[[ Rust ]]---
-				-- require("none-ls.formatting.rustfmt"),
-				-- require("none-ls.diagnostics.rust_analyzer"),
+				require("none-ls.formatting.rustfmt"),
+				-- require("none-ls.diagnostics.bacon"), -- bacon_ls is used in lsp-config.lua for diagnostics (needs Cargo.toml file)
 			},
 		})
 
