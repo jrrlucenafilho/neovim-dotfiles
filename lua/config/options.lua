@@ -43,7 +43,7 @@ g.mapleader = " "
 g.localleader = "\\"
 
 -- Diagnostics appearing as text on file
-diag.config({ virtual_text = true })
+diag.config({ virtual_text = false })
 
 -- Set nvim virtual environment
 g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
