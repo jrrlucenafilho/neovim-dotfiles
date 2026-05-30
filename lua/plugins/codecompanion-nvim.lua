@@ -382,7 +382,7 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "NeogitDiffView",
 			callback = function()
-				vim.api.nvim_command("CodeCompanion /commit")
+				vim.api.nvim_command("CodeCompanion /commit-ptbr")
 			end,
 		})
 
