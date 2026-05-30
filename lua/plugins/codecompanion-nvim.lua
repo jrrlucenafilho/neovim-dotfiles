@@ -33,6 +33,14 @@ return {
 				},
 			},
 
+			prompt_library = {
+				markdown = {
+					dirs = {
+						"~/.config/nvim/prompt-lib",
+					},
+				},
+			},
+
 			----------[[ General Adapters ]]----------
 			adapters = {
 				---[[ Acp Protocol ]]---
