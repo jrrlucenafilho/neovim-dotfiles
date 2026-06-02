@@ -35,7 +35,7 @@ return {
 			desc = "Quickfix List (Trouble)",
 		},
 		({
-			"<leader>er",
+			"<leader>ed",
 			function()
 				local trouble_win
 				for _, win in ipairs(vim.api.nvim_list_wins()) do

@@ -452,7 +452,7 @@ return {
 				vim.keymap.set({ "n" }, "gka", function()
 					vim.fn.setreg(
 						"+",
-						"#{buffer}@{file_search}@{files}@{read_file}@{run_command}@{grep_search}@{get_diagnostics}@{agent}"
+						"#{buffers}@{file_search}@{files}@{read_file}@{run_command}@{grep_search}@{get_diagnostics}@{agent}"
 					)
 					vim.cmd('normal! "+p')
 					vim.cmd("normal! o")
@@ -465,7 +465,7 @@ return {
 			pattern = "codecompanion",
 			callback = function()
 				vim.keymap.set({ "n" }, "gkr", function()
-					vim.fn.setreg("+", "#{buffer}@{file_search}@{files}@{read_file}@{grep_search}@{get_diagnostics}")
+					vim.fn.setreg("+", "#{buffers}@{file_search}@{files}@{read_file}@{grep_search}@{get_diagnostics}")
 					vim.cmd('normal! "+p')
 					vim.cmd("normal! o")
 				end, { desc = "Insert reading skills into chat", silent = true, buffer = true })
