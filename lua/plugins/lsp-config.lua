@@ -134,6 +134,11 @@ return {
 			-- basedpyright (Python)
 			vim.lsp.config("basedpyright", {
 				capabilities = capabilities,
+				settings = {
+					python = {
+						venvPath = vim.fn.expand("~/.virtualenvs"),
+					},
+				},
 			})
 			vim.lsp.enable("basedpyright")
 

@@ -16,9 +16,9 @@ return {
 			"<leader>vq",
 			function()
 				require("venv-selector").deactivate()
-        print("Virtual environment deactivated")
+				print("Virtual environment deactivated")
 			end,
-			desc =  "Deactivate virtual environment",
+			desc = "Deactivate virtual environment",
 		},
 	},
 	opts = { -- this can be an empty lua table - just showing below for clarity.
