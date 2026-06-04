@@ -22,7 +22,7 @@ local buf_remove = require("utils.bufremove")
 vim.keymap.set("n", "<A-q>", buf_remove.bufremove, { desc = "Delete buffer" })
 
 -- Quick save
-vim.keymap.set("n", "<A-s>", ":w<CR>", { desc = "Quick save" })
+vim.keymap.set({ "n", "i", "v" }, "<A-s>", "<Cmd>w<CR>", { desc = "Quick save" })
 
 -- Stop search highlights
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
