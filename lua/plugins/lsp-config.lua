@@ -134,6 +134,23 @@ return {
 			-- basedpyright (Python)
 			vim.lsp.config("basedpyright", {
 				capabilities = capabilities,
+				settings = {
+					basedpyright = {
+						analysis = {
+							diagnosticSeverityOverrides = {
+								reportUnknownVariableType = "none",
+								reportUnannotatedClassAttribute = "none",
+								reportUnknownArgumentType = "none",
+								reportUnknownMemberType = "none",
+								reportUnknownParameterType = "none",
+								reportMissingParameterType = "none",
+								reportUnknownLambdaType = "none",
+								reportUnusedCallResult = "none",
+								reportAny = "none",
+							},
+						},
+					},
+				},
 			})
 			vim.lsp.enable("basedpyright")
 
