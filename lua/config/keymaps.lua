@@ -43,6 +43,9 @@ vim.keymap.set("n", "<leader>dl", function()
 	})
 end, { desc = "Line diagnostics" })
 
+-- Restart Lsp
+vim.keymap.set("n", "<leader>lr", "<cmd>lsp restart<cr>", { desc = "Restart LSP" })
+
 -- Bookmarking
 -- Create a bookmark
 -- Lowercase: local bookmark

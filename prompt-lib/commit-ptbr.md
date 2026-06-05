@@ -1,5 +1,5 @@
 ---
-name: Comit message in PTBR
+name: Commit message in PTBR
 interaction: chat
 description: Git commit message in brazillian portuguese
 opts:
