@@ -7,7 +7,7 @@ return {
 		require("bufferline").setup({
 			options = {
 				-- mode = "tabs",
-				separator_style = "slant",
+				separator_style = "slant", -- Supports "slant", "slope", "thick", "thin", "zigzag", { 'any', 'any' },
 				diagnostics = "nvim_lsp",
 				themable = true,
 				color_icons = true,
@@ -50,7 +50,12 @@ return {
 
 		-- Go to the previous buffer
 		vim.keymap.set("n", "<A-Left>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Cycle to previous buffer" })
-		vim.keymap.set("n", "<A-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Cycle to previous buffer", noremap = true })
+		vim.keymap.set(
+			"n",
+			"<A-h>",
+			"<cmd>BufferLineCyclePrev<CR>",
+			{ desc = "Cycle to previous buffer", noremap = true }
+		)
 
 		-- Move current buffer to the left
 		vim.keymap.set("n", "<S-Left>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer to the left" })
