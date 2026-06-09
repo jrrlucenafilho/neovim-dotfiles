@@ -38,6 +38,10 @@ return {
 			close_if_last_window = true,
 			filesystem = {
 				use_libuv_file_watcher = true,
+				filtered_items = {
+					visible = true,
+					never_show = { ".git" },
+				},
 			},
 			window = {
 				width = 30,
