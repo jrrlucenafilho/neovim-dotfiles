@@ -19,10 +19,10 @@ return {
 			on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 		})
 
-    ----- [[ Change highlight group ]] -----
-    vim.api.nvim_set_hl(0, 'TreesitterContext', { link = 'TelescopeSelection' })
-		
-    ----- [[ Keymaps ]] -----
+		----- [[ Change highlight group ]] -----
+		vim.api.nvim_set_hl(0, "TreesitterContext", { link = "TelescopeSelection" })
+
+		----- [[ Keymaps ]] -----
 		-- Jump to context (top)
 		vim.keymap.set("n", "<A-c>", function()
 			require("treesitter-context").go_to_context(vim.v.count1)

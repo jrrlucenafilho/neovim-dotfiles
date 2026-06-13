@@ -57,8 +57,9 @@ vim.fn.sign_define("DapRestart", { text = "○", texthl = "DapRestart", linehl =
 -- Set Window Separator
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#464e6a" })
 
--- Get environment variables (for neovide)
+-- Neovide-exclusive config
 if g.neovide then
+	-- Get environment variables (for neovide)
 	-- Run Fish as a login shell and grab the full environment list
 	local env_output = vim.fn.system("fish -lc 'env'")
 
@@ -73,6 +74,12 @@ if g.neovide then
 			end
 		end
 	end
+
+  -- Floating window blur option on neovide
+	-- opt.winblend = 75  -- Controls floating windows' transparency
+	-- opt.pumblend = 100 -- Constrols popup menu's transparency
+	g.neovide_floating_blur_amount_x = 30  -- Horizontal blur
+	g.neovide_floating_blur_amount_y = 30  -- Vertical blur
 end
 
 ----- [[ Autocmds ]] -----

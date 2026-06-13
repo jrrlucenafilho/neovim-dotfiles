@@ -6,8 +6,8 @@ opts:
   alias: commit-ptbr
   auto_submit: true
   adapter:
-    name: copilot
-    model: claude-haiku-4.5
+    name: gemini
+    model: gemini-3.1-flash-lite-preview
 ---
 
 ## system
