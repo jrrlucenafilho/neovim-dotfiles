@@ -74,12 +74,6 @@ if g.neovide then
 			end
 		end
 	end
-
-  -- Floating window blur option on neovide
-	-- opt.winblend = 75  -- Controls floating windows' transparency
-	-- opt.pumblend = 100 -- Constrols popup menu's transparency
-	g.neovide_floating_blur_amount_x = 30  -- Horizontal blur
-	g.neovide_floating_blur_amount_y = 30  -- Vertical blur
 end
 
 ----- [[ Autocmds ]] -----
