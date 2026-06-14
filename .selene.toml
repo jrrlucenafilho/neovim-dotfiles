@@ -3,5 +3,8 @@ std = "lua51+vim"
 [lints]
 mixed_table = "allow"
 
+[lints.ignore]
+"Undefined doc name" = true
+
 [rules]
 type_check = "disable"
