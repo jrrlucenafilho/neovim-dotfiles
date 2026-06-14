@@ -246,6 +246,54 @@ return {
 							},
 						})
 					end,
+
+					-----[[ DeepSeek ]]-----
+					deepseek = function()
+						return require("codecompanion.adapters").extend("deepseek", {
+							env = {
+								url = "https://api.deepseek.com",
+								api_key = vim.env.DEEPSEEK_API_KEY,
+								chat_url = "/v1/chat/completions",
+							},
+							schema = {
+								model = {
+									default = "deepseek-v4-flash",
+								},
+								["thinking.type"] = {
+									default = "enabled",
+									optional = true,
+								},
+								reasoning_effort = {
+									default = "max",
+									optional = true,
+								},
+								temperature = {
+									default = 1,
+									optional = true,
+								},
+								top_p = {
+									default = 1,
+									optional = true,
+								},
+								max_tokens = {
+									default = 8192,
+									optional = true,
+								},
+							},
+							handlers = {
+								parse_message_meta = function(data)
+									local extra = data.extra
+									if extra and extra.reasoning_content then
+										data.output.reasoning = { content = extra.reasoning_content }
+										if data.output.content == "" then
+											data.output.content = nil
+										end
+									end
+									return data
+								end,
+							},
+						})
+					end,
 				},
 			},
 
@@ -266,15 +314,15 @@ return {
 				},
 
 				inline = {
-					adapter = "copilot",
+					adapter = "opencode",
 				},
 
 				cmd = {
-					adapter = "copilot",
+					adapter = "opencode",
 				},
 
 				background = {
-					adapter = "copilot",
+					adapter = "opencode",
 				},
 			},
 
@@ -304,9 +352,9 @@ return {
 						auto_generate_title = true,
 						title_generation_opts = {
 							---HTTP adapter only: ACP chats (e.g. cursor_cli) cannot generate titles
-							adapter = "copilot",
+							adapter = "ollama",
 							---Match http.adapters.copilot default; avoids reusing ACP model settings
-							model = "gpt-4.1",
+							model = "devstral-small-2:24b-cloud",
 							---Number of user prompts after which to refresh the title (0 to disable)
 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
 							---Maximum number of times to refresh the title (default: 3)
@@ -334,8 +382,8 @@ return {
 							browse_summaries_keymap = "gbs",
 
 							generation_opts = {
-								adapter = "copilot",
-								model = "gpt-4.1",
+								adapter = "ollama",
+								model = "devstral-small-2:24b-cloud",
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results

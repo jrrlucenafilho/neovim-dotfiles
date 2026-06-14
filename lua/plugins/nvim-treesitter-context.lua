@@ -32,24 +32,5 @@ return {
 		vim.keymap.set("n", "<leader>ct", function()
 			require("treesitter-context").toggle()
 		end, { desc = "Context toggle", silent = true })
-
-		----- [[ Autocmds ]] -----
-		----- [[ Set winblend only on treesitter-context floating window ]] -----
-		-- The plugin uses noautocmd=true, so we detect the float via vim.w.treesitter_context.
-		-- Must re-apply on every BufEnter/CursorMoved because the plugin recreates the float window.
-		local function set_winblend()
-			for _, win in ipairs(vim.api.nvim_list_wins()) do
-				if vim.w[win].treesitter_context then
-					vim.wo[win].winblend = 75
-					return
-				end
-			end
-		end
-		-- Try on next event loop tick
-		vim.schedule(set_winblend)
-		-- Re-apply whenever the buffer is entered or cursor moves
-		vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
-			callback = set_winblend,
-		})
 	end,
 }
