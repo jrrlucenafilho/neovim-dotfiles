@@ -87,9 +87,6 @@ return {
 									model = "OpenCode Zen/DeepSeek V4 Flash Free",
 								},
 							},
-							-- env = {
-							-- api_key = vim.env.ZAI_API_KEY, -- In case it's needed
-							-- },
 						})
 					end,
 				},
