@@ -155,6 +155,9 @@ return {
 					-- Cloud models need OLLAMA_API_KEY; Authorization is sent only when the key is set.
 					ollama = function()
 						local models = {
+							["qwen2.5-coder:7b"] = {
+								formatted_name = "Qwen2.5 Coder 7B (local)",
+              },
 							["qwen2.5-coder:7b-base-q5_K_M"] = {
 								formatted_name = "Qwen2.5 Coder 7B base q5_K_M (local)",
 							},
