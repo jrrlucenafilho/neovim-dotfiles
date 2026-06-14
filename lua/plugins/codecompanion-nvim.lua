@@ -72,7 +72,7 @@ return {
 						return require("codecompanion.adapters").extend("claude_code", {
 							defaults = {
 								session_config_options = {
-									model = "Default (recommended)",
+									model = "Haiku",
 								},
 							},
 						})
@@ -83,7 +83,6 @@ return {
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									-- model = "Z.AI Coding Plan/GLM-4.7",
 									model = "OpenCode Zen/DeepSeek V4 Flash Free",
 								},
 							},
