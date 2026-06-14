@@ -435,4 +435,4 @@ end, { desc = "Move word backward without line wrap" })
 vim.api.nvim_set_keymap("n", "<C-S-A>", "ggVG", { noremap = true, silent = true })
 
 -- Restart Neovim
-vim.keymap.set("n", "<leader>rr", "<cmd>restart<cr>", { desc = "Restart Neovim" })
+vim.keymap.set("n", "<leader>rrr", "<cmd>restart<cr>", { desc = "Restart Neovim" })
