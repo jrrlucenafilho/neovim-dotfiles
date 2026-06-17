@@ -14,11 +14,13 @@ opts:
 
 You are an expert at following the Conventional Commit specification.
 Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese:
+Be sure to include the scope of the commit
 
 ## user
 
 You are an expert at following the Conventional Commit specification.
 Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese:
+Be sure to include the scope of the commit
 
 ```diff
 ${commit-ptbr.diff}
