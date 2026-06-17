@@ -66,8 +66,8 @@ return {
 
 					----- [[ Claude Code ]] -----
 					--- Install claude-agent-acp from the aur
-					--- Set ANTHROPIC_BASE_URL (currently points to z.ai's anthropic endpoint)
-					--- Set ANTHROPIC_AUTH_TOKEN to the api key (currently z.ai's)
+					--- Set ANTHROPIC_BASE_URL to the API's one
+					--- Set ANTHROPIC_AUTH_TOKEN to the API key
 					claude_code = function()
 						return require("codecompanion.adapters").extend("claude_code", {
 							defaults = {
@@ -83,7 +83,9 @@ return {
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									model = "OpenCode Zen/DeepSeek V4 Flash Free",
+									-- model = "OpenCode Zen/DeepSeek V4 Flash Free", --Testing official API
+									model = "DeepSeek/DeepSeek V4 Flash",
+									thought_level = "High",
 								},
 							},
 						})
@@ -153,7 +155,7 @@ return {
 						local models = {
 							["qwen2.5-coder:7b"] = {
 								formatted_name = "Qwen2.5 Coder 7B (local)",
-              },
+							},
 							["qwen2.5-coder:7b-base-q5_K_M"] = {
 								formatted_name = "Qwen2.5 Coder 7B base q5_K_M (local)",
 							},
