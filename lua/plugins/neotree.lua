@@ -150,12 +150,17 @@ return {
 		vim.keymap.set("n", "<leader>cf", "<cmd>Neotree reveal<cr>", { desc = "Open Neo-tree in current file" })
 
 		----- [[ Autocmds ]] -----
-		-- Refresh neotree on each commit and push
+		local refresh = function()
+			require("neo-tree.sources.manager").refresh("filesystem")
+		end
+		-- Neogit: refresh after any operation (stage, unstage, commit, push, etc.)
 		vim.api.nvim_create_autocmd("User", {
-			pattern = { "NeogitCommitComplete", "NeogitPushComplete" },
-			callback = function()
-				require("neo-tree.sources.manager").refresh("filesystem")
-			end,
+			pattern = "NeogitProcessExit",
+			callback = refresh,
+		})
+		-- Fallback: refresh when returning to Neovim (e.g. after terminal `git commit`)
+		vim.api.nvim_create_autocmd("FocusGained", {
+			callback = refresh,
 		})
 	end,
 }
