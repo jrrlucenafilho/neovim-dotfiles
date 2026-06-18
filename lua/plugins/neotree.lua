@@ -36,6 +36,9 @@ return {
 	config = function()
 		require("neo-tree").setup({
 			close_if_last_window = true,
+			enable_git_status = true,
+			enable_diagnostics = true,
+			open_files_do_not_replace_types = { "codecompanion", "trouble", "Outline", "better_term" },
 			filesystem = {
 				use_libuv_file_watcher = true,
 				filtered_items = {
