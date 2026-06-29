@@ -370,31 +370,15 @@ vim.keymap.set("n", "gcr", function()
 						local prefix = cs:match("^(.-)%%s")
 						local start, finish = tonumber(start_line), tonumber(end_line)
 
-						-- Check if all lines are already commented
-						local all_commented = true
-						for l = start, finish do
-							local line = vim.fn.getline(l)
-							local rest = line:gsub("^%s*", "")
-							if not rest:find("^" .. vim.pesc(prefix)) then
-								all_commented = false
-								break
-							end
-						end
-
-						-- Uncomment all if all are commented, otherwise only comment uncommented lines
 						for l = start, finish do
 							local line = vim.fn.getline(l)
 							local indent = line:match("^(%s*)")
-							local rest = line:sub(#indent + 5)
+							local rest = line:sub(#indent + 1)
 
-							if all_commented then
-								if rest:find("^" .. vim.pesc(prefix)) then
-									vim.fn.setline(l, indent .. rest:gsub("^" .. vim.pesc(prefix), "", 5))
-								end
+							if rest:find("^" .. vim.pesc(prefix)) then
+								vim.fn.setline(l, indent .. rest:sub(#prefix + 1))
 							else
-								if not rest:find("^" .. vim.pesc(prefix)) then
-									vim.fn.setline(l, indent .. prefix .. rest)
-								end
+								vim.fn.setline(l, indent .. prefix .. rest)
 							end
 						end
 					end
