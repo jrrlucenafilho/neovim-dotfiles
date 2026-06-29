@@ -101,6 +101,13 @@ return {
 				{ desc = "Open output in browser", silent = true }
 			)
 
+			vim.keymap.set(
+				"n",
+				"<localleader>i",
+				":MoltenInit<CR>",
+				{ desc = "Select kernel for Molten init", silent = true }
+			)
+
 			-- Quarto keybindings (runner)
 			local runner = require("quarto.runner")
 			vim.keymap.set("n", "<localleader>rc", runner.run_cell, { desc = "Run cell", silent = true })
