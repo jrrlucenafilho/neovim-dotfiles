@@ -23,6 +23,9 @@ require("config.options")
 -- Miscellaneous keymaps
 require("config.keymaps")
 
+-- Miscellaneous autocmds
+require("config.autocmds")
+
 -- Molten utils for jupyter notebook handling
 require("utils.init-molten-buffer")
 require("utils.new-notebook")
