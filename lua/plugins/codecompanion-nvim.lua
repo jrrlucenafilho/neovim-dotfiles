@@ -177,9 +177,6 @@ return {
 							["devstral-2:123b-cloud"] = {
 								formatted_name = "Devstral 2 123B (cloud)",
 							},
-							["devstral-small-2:24b-cloud"] = {
-								formatted_name = "Devstral Small 2 24B (cloud)",
-							},
 							["gemini-3-pro-preview:latest"] = {
 								formatted_name = "Gemini 3 Pro preview (cloud)",
 							},
@@ -355,7 +352,7 @@ return {
 							---HTTP adapter only: ACP chats (e.g. cursor_cli) cannot generate titles
 							adapter = "ollama",
 							---Match http.adapters.copilot default; avoids reusing ACP model settings
-							model = "devstral-small-2:24b-cloud",
+							model = "gemma4:31b-cloud",
 							---Number of user prompts after which to refresh the title (0 to disable)
 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
 							---Maximum number of times to refresh the title (default: 3)
