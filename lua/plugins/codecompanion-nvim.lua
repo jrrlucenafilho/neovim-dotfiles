@@ -312,7 +312,7 @@ return {
 				},
 
 				inline = {
-					adapter = "opencode",
+					adapter = "deepseek",
 				},
 
 				cmd = {
