@@ -381,7 +381,7 @@ return {
 
 							generation_opts = {
 								adapter = "ollama",
-								model = "devstral-small-2:24b-cloud",
+								model = "gemma4:31b-cloud",
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results
