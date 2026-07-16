@@ -428,6 +428,8 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "gitcommit",
 			callback = function()
+				vim.keymap.set("n", "q", "<cmd>q!<CR>", { buffer = true, silent = true, nowait = true })
+
 				if vim.b.codecompanion_commit_triggered then
 					return
 				end
