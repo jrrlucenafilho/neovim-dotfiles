@@ -428,6 +428,7 @@ return {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "gitcommit",
 			callback = function()
+        -- Make 'q' quit the gitcommit ft buffer even if there are changes
 				vim.keymap.set("n", "q", "<cmd>q!<CR>", { buffer = true, silent = true, nowait = true })
 
 				if vim.b.codecompanion_commit_triggered then
