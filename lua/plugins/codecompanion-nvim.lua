@@ -424,11 +424,17 @@ return {
 			end,
 		})
 
-		-- Auto open codecompanion's commit writer when neogit's commit buffer opens
+		-- Generate commit message inline when viewing staged diff
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "NeogitDiffView",
+			pattern = "gitcommit",
 			callback = function()
-				vim.api.nvim_command("CodeCompanion /commit-ptbr")
+				if vim.b.codecompanion_commit_triggered then
+					return
+				end
+				vim.b.codecompanion_commit_triggered = true
+				vim.schedule(function()
+					vim.api.nvim_command("CodeCompanion /commit-ptbr")
+				end)
 			end,
 		})
 

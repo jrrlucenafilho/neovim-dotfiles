@@ -1,6 +1,6 @@
 ---
 name: Commit message in PTBR
-interaction: chat
+interaction: inline
 description: Git commit message in brazillian portuguese
 opts:
   alias: commit-ptbr
@@ -14,13 +14,15 @@ opts:
 
 You are an expert at following the Conventional Commit specification.
 Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese:
-Be sure to include the scope of the commit
+Be sure to include the scope of the commit.
+Don't write any text other than the commit message
 
 ## user
 
 You are an expert at following the Conventional Commit specification.
 Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese:
 Be sure to include the scope of the commit
+Don't write any text other than the commit message
 
 ```diff
 ${commit-ptbr.diff}
