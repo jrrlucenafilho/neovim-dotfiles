@@ -6,8 +6,8 @@ opts:
   alias: commit-ptbr
   auto_submit: true
   adapter:
-    name: gemini
-    model: gemini-3.1-flash-lite-preview
+    name: ollama
+    model: gemma4:31b-cloud
 ---
 
 ## system
