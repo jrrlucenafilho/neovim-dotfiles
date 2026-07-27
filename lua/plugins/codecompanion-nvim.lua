@@ -424,91 +424,11 @@ return {
 			end,
 		})
 
-		-- Generate commit message directly via LLM API
-		local function generate_commit_message()
-			local diff = vim.system({ "git", "diff", "--no-ext-diff", "--staged" }, { text = true }):wait().stdout
-
-			if diff == "" then
-				vim.notify("No staged changes found", vim.log.levels.WARN)
-				return
-			end
-
-			local system_prompt = [[You are an expert at following the Conventional Commit specification.
-        Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese.
-        Be sure to include the scope of the commit.
-        Don't write any text other than the commit message]]
-			local user_prompt = ([[You are an expert at following the Conventional Commit specification.
-        Given the git diff listed below, please generate a commit message for me in Brazillian Portuguese.
-        Be sure to include the scope of the commit.
-        Don't write any text other than the commit message.
-
-        ```diff
-        %s
-        ```]]):format(diff)
-
-			local url = "http://localhost:11434/v1/chat/completions"
-			local api_key = vim.env.OLLAMA_API_KEY
-
-			local body = vim.json.encode({
-				model = "gemma4:31b-cloud",
-				messages = {
-					{ role = "system", content = system_prompt },
-					{ role = "user", content = user_prompt },
-				},
-			})
-
-			local cmd = { "curl", "-s", "-X", "POST", url, "-H", "Content-Type: application/json" }
-			if api_key and api_key ~= "" then
-				table.insert(cmd, "-H")
-				table.insert(cmd, "Authorization: Bearer " .. api_key)
-			end
-			table.insert(cmd, "-d")
-			table.insert(cmd, body)
-
-			local result = vim.system(cmd, { text = true }):wait()
-			if result.code ~= 0 then
-				vim.notify("Failed to generate commit message: " .. result.stderr, vim.log.levels.ERROR)
-				return
-			end
-
-			local ok, data = pcall(vim.json.decode, result.stdout)
-			if not ok or not data.choices or #data.choices == 0 then
-				vim.notify("Failed to parse LLM response", vim.log.levels.ERROR)
-				return
-			end
-
-			local message = data.choices[1].message.content
-			local lines = vim.split(message, "\n", { plain = true })
-			table.insert(lines, "")
-
-			local buflines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-			local first_comment = #buflines + 1
-			for i, line in ipairs(buflines) do
-				if line:match("^#") then
-					first_comment = i
-					break
-				end
-			end
-
-			if first_comment > 1 then
-				vim.api.nvim_buf_set_lines(0, 0, first_comment - 1, false, {})
-			end
-			vim.api.nvim_buf_set_lines(0, 0, 0, false, lines)
-
-			vim.notify("Commit message generated", vim.log.levels.INFO)
-		end
-
+		-- Generate commit message from llm
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "gitcommit",
+			pattern = "NeogitDiffView",
 			callback = function()
-				vim.keymap.set("n", "q", "<cmd>q!<CR>", { buffer = true, silent = true, nowait = true })
-
-				if vim.b.llm_commit_message_triggered then
-					return
-				end
-				vim.b.llm_commit_message_triggered = true
-
-				vim.defer_fn(generate_commit_message, 200)
+				vim.api.nvim_command("CodeCompanion /commit-ptbr")
 			end,
 		})
 

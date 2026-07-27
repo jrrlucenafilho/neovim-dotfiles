@@ -1,6 +1,6 @@
 ---
 name: Commit message in PTBR
-interaction: inline
+interaction: chat
 description: Git commit message in brazillian portuguese
 opts:
   alias: commit-ptbr
