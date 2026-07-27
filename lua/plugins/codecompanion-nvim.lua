@@ -424,11 +424,39 @@ return {
 			end,
 		})
 
-		-- Generate commit message from llm
+		-- Generate commit message from llm and yank it to clipboard
+		local yank_next_chat_response = false
+
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "NeogitDiffView",
 			callback = function()
+				yank_next_chat_response = true
 				vim.api.nvim_command("CodeCompanion /commit-ptbr")
+			end,
+		})
+
+    -- Responsible for yanking the commit message
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "CodeCompanionChatDone",
+			callback = function(args)
+				if not yank_next_chat_response then
+					return
+				end
+				yank_next_chat_response = false
+
+				local chat = require("codecompanion").buf_get_chat(args.data.bufnr)
+				if not chat then
+					return
+				end
+
+				for i = #chat.messages, 1, -1 do
+					local msg = chat.messages[i]
+					if msg.role == "llm" and type(msg.content) == "string" and msg.content ~= "" then
+						vim.fn.setreg('"', msg.content)
+						vim.notify("Commit message yanked to clipboard!", vim.log.levels.INFO, { title = "CodeCompanion" })
+						break
+					end
+				end
 			end,
 		})
 
