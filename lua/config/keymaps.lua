@@ -411,7 +411,7 @@ vim.keymap.set({ "n", "i", "v" }, "<C-Left>", function()
 
 	-- If we moved to a previous line, jump back to the start of the original line
 	if vim.fn.line(".") < current_line then
-		vim.cmd("normal! j4")
+		vim.cmd("normal! j0")
 	end
 end, { desc = "Move word backward without line wrap" })
 
