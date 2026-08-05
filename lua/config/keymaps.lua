@@ -24,6 +24,16 @@ vim.keymap.set("n", "<A-q>", buf_remove.bufremove, { desc = "Delete buffer" })
 -- Quick save
 vim.keymap.set({ "n", "i", "v" }, "<A-s>", "<Cmd>w<CR>", { desc = "Quick save" })
 
+-- Split current buffer
+vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>", { desc = "Horizontal split" })
+vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<CR>", { desc = "Vertical split" })
+
+-- Close current window
+vim.keymap.set("n", "<leader>qq", "<cmd>q<CR>", { desc = "Close current window" })
+
+-- Close all windows
+vim.keymap.set("n", "<leader>qa", "<cmd>qa<CR>", { desc = "Close all windows" })
+
 -- Stop search highlights
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
