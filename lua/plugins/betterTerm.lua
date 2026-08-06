@@ -51,7 +51,7 @@ return {
 			end
 		end
 
-		-- Keybindings
+		-- [[ Keymaps ]] --
 		-- Toggle the first terminal (ID defaults to index_base, which is 0)
 		-- Open terminal 1
 		vim.keymap.set({ "n", "t" }, "<A-1>", function()
@@ -104,7 +104,7 @@ return {
 		end, { desc = "Toggle terminal 0" })
 
 		-- Toggle BetterTerm size with 'be' in normal mode
-		vim.keymap.set({ "n", "t" }, "<leader>eb", toggle_betterterm_size, { desc = "Toggle terminal expansion" })
+		vim.keymap.set({ "n" }, "<leader>eb", toggle_betterterm_size, { desc = "Toggle terminal expansion" })
 
 		-- Select a terminal to focus
 		vim.keymap.set("n", "<leader>ts", betterTerm.select, { desc = "Select terminal" })
@@ -133,4 +133,7 @@ return {
 			betterTerm.cycle(-1)
 		end, { desc = "Cycle to previous terminal" })
 	end,
+
+	-- Make 'esc' quit terminal mode
+	vim.keymap.set("t", "<Esc>", "<C-\\><C-n>"),
 }
