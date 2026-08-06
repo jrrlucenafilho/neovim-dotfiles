@@ -65,14 +65,13 @@ return {
 					end,
 
 					----- [[ Claude Code ]] -----
-					--- Install claude-agent-acp from the aur
-					--- Set ANTHROPIC_BASE_URL to the API's one
-					--- Set ANTHROPIC_AUTH_TOKEN to the API key
+					--- Install claude-agent-acp (AUR)
 					claude_code = function()
 						return require("codecompanion.adapters").extend("claude_code", {
 							defaults = {
 								session_config_options = {
-									model = "Haiku",
+									model = "deepseek-v4-flash",
+									thought_level = "High",
 								},
 							},
 						})
@@ -435,7 +434,7 @@ return {
 			end,
 		})
 
-    -- Responsible for yanking the commit message
+		-- Responsible for yanking the commit message
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "CodeCompanionChatDone",
 			callback = function(args)
@@ -453,7 +452,11 @@ return {
 					local msg = chat.messages[i]
 					if msg.role == "llm" and type(msg.content) == "string" and msg.content ~= "" then
 						vim.fn.setreg('"', msg.content)
-						vim.notify("Commit message yanked to clipboard!", vim.log.levels.INFO, { title = "CodeCompanion" })
+						vim.notify(
+							"Commit message yanked to clipboard!",
+							vim.log.levels.INFO,
+							{ title = "CodeCompanion" }
+						)
 						break
 					end
 				end
