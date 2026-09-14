@@ -70,7 +70,7 @@ return {
 						return require("codecompanion.adapters").extend("claude_code", {
 							defaults = {
 								session_config_options = {
-									model = "deepseek-v4-flash",
+									model = "deepseek-v4.1-flash",
 									thought_level = "High",
 								},
 							},
@@ -82,8 +82,7 @@ return {
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									-- model = "OpenCode Zen/DeepSeek V4 Flash Free", --Testing official API
-									model = "DeepSeek/DeepSeek V4 Flash",
+									model = "DeepSeek/DeepSeek V4.1 Flash",
 									thought_level = "High",
 								},
 							},
@@ -254,7 +253,7 @@ return {
 							},
 							schema = {
 								model = {
-									default = "deepseek-v4-flash",
+									default = "deepseek-v4.1-flash",
 								},
 								["thinking.type"] = {
 									default = "enabled",
