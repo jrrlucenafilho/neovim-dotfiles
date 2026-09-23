@@ -7,7 +7,7 @@ opts:
   auto_submit: true
   adapter:
     name: opencode
-    model: OpenCode Zen/DeepSeek V4 Flash Free"
+    model: deepseek/DeepSeek V4.1 Flash"
 ---
 
 ## system
