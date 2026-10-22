@@ -82,7 +82,7 @@ return {
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									model = "DeepSeek/DeepSeek V4.1 Flash",
+									model = "DeepSeek/DeepSeek V4.1 Flash 1017",
 									thought_level = "High",
 								},
 							},
