@@ -43,64 +43,105 @@ return {
 
 			----------[[ General Adapters ]]----------
 			adapters = {
-				---[[ Acp Protocol ]]---
+				---[[ acp protocol ]]---
 				acp = {
 					opts = {
 						show_presets = false,
 					},
 
-					----- [[ Cursor CLI ]] -----
-					-- Models come from the agent via ACP (`session/update`); pick them with `ga` in chat.
-					-- Only `defaults.model` is read for ACP (see codecompanion's 'gd' debug buffer when cursor_cli is sselected).
-					-- The standart model here is empty, so Cursor itself decides it (desire behavior for now)
-					-- And the UI models list comes from what models Cursor exposes through ACP
+					----- [[ cursor cli ]] -----
+					-- models come from the agent via acp (`session/update`); pick them with `ga` in chat.
+					-- only `defaults.model` is read for acp (see codecompanion's 'gd' debug buffer when cursor_cli is sselected).
+					-- the standart model here is empty, so cursor itself decides it (desire behavior for now)
+					-- and the ui models list comes from what models cursor exposes through acp
 					cursor_cli = function()
 						return require("codecompanion.adapters").extend("cursor_cli", {
 							defaults = {
 								session_config_options = {
-									model = "Auto",
+									model = "auto",
 								},
 							},
 						})
 					end,
 
-					----- [[ Claude Code ]] -----
-					--- Install claude-agent-acp (AUR)
+					----- [[ claude code ]] -----
+					--- install claude-agent-acp (aur)
 					claude_code = function()
 						return require("codecompanion.adapters").extend("claude_code", {
 							defaults = {
 								session_config_options = {
 									model = "deepseek-v4.1-flash",
-									thought_level = "High",
+									thought_level = "high",
 								},
 							},
 						})
 					end,
 
-					----- [[ OpenCode ]] -----
+					----- [[ opencode ]] -----
 					opencode = function()
 						return require("codecompanion.adapters").extend("opencode", {
 							defaults = {
 								session_config_options = {
-									model = "DeepSeek/DeepSeek V4.1 Flash 1017",
-									thought_level = "High",
+									model = "deepseek/deepseek v4.1 flash 1017",
+									thought_level = "high",
 								},
 							},
 						})
 					end,
+
+					----- [[ Deepseek Harness (Custom) ]] -----
+					-- deepseek_harness = function()
+					-- 	return {
+					-- 		name = "deepseek_harness",
+					-- 		formatted_name = "DeepSeek Harness Agent",
+					-- 		type = "acp",
+					-- 		roles = {
+					-- 			llm = "assistant",
+					-- 			user = "user",
+					-- 		},
+					-- 		commands = {
+					-- 			default = { "dsh", "--profile", "acp" },
+					-- 		},
+					-- 		defaults = {
+					-- 			model = "deepseek-v4.1-flash",
+					-- 			timeout = 30000, -- Await fot the JSON-RPC handshake
+					-- 		},
+					-- 		handlers = {
+					-- 			setup = function(self)
+					-- 				return true
+					-- 			end,
+					-- 			auth = function(self)
+					-- 				return true
+					-- 			end,
+					-- 		},
+					-- 		parameters = {
+					-- 			protocolVersion = 1,
+					-- 			clientCapabilities = {
+					-- 				fs = { readTextFile = true, writeTextFile = true },
+					-- 			},
+					-- 			clientInfo = {
+					-- 				name = "CodeCompanion.nvim",
+					-- 				version = "1.0.0",
+					-- 				env = {
+					-- 					DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY"),
+					-- 				},
+					-- 			},
+					-- 		},
+					-- 	}
+					-- end,
 				},
 
-				----[[ Http Protocol ]]----
+				----[[ http protocol ]]----
 				http = {
 					opts = {
 						show_presets = false,
 					},
 
-					-- ----- [[ Github Copilot ]]-----
-					-- Model names for copilot provider:
-					-- Check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
+					-- ----- [[ github copilot ]]-----
+					-- model names for copilot provider:
+					-- check rates here: https://docs.github.com/en/copilot/reference/ai-models/supported-models
 					-- model = "gpt-4.1",
-					-- model = "claude-sonnet-4.5" (Non-Student)
+					-- model = "claude-sonnet-4.5" (non-student)
 					-- model = "gemini-3.5-pro-preview"
 					-- model = "gpt-5.1-codex"
 					-- model = "gpt-5.2-codex"
@@ -111,17 +152,17 @@ return {
 					-- model = "gpt-5.3-codex-mx"
 					-- model = "gemini-2.5-pro"
 					-- model = "gpt-5-mini"
-					-- model = "claude-opus-4.5" (Non-Student)
+					-- model = "claude-opus-4.5" (non-student)
 					-- model = "gpt-5.2"
 					-- model = "oswe-vscode-prime"
 					-- model = "gpt-4o"
 					-- model = "gpt-5.3-codex"
-					-- model = "claude-sonnet-4" (Non-Student)
+					-- model = "claude-sonnet-4" (non-student)
 					-- model = "gpt-5.1"
-					-- model = "claude-opus-4.6" (Non-Student)
+					-- model = "claude-opus-4.6" (non-student)
 					-- model = "grok-code-fast-1"
 					-- model = "claude-haiku-4.5"
-					-- model = "claude-sonnet-4.6" (Non-Student)
+					-- model = "claude-sonnet-4.6" (non-student)
 					copilot = function()
 						return require("codecompanion.adapters").extend("copilot", {
 							schema = {
@@ -132,7 +173,7 @@ return {
 						})
 					end,
 
-					-----[[ Gemini ]]-----
+					-----[[ gemini ]]-----
 					gemini = function()
 						return require("codecompanion.adapters").extend("gemini", {
 							schema = {
@@ -142,68 +183,68 @@ return {
 								},
 							},
 							env = {
-								api_key = vim.env.GEMINI_API_KEY,
+								api_key = vim.env.gemini_api_key,
 							},
 						})
 					end,
 
-					----[[ Ollama (local + cloud); pick model with `ga` in chat ]]----
-					-- Cloud models need OLLAMA_API_KEY; Authorization is sent only when the key is set.
+					----[[ ollama (local + cloud); pick model with `ga` in chat ]]----
+					-- cloud models need ollama_api_key; authorization is sent only when the key is set.
 					ollama = function()
 						local models = {
 							["qwen2.5-coder:7b"] = {
-								formatted_name = "Qwen2.5 Coder 7B (local)",
+								formatted_name = "qwen2.5 coder 7b (local)",
 							},
-							["qwen2.5-coder:7b-base-q5_K_M"] = {
-								formatted_name = "Qwen2.5 Coder 7B base q5_K_M (local)",
+							["qwen2.5-coder:7b-base-q5_k_m"] = {
+								formatted_name = "qwen2.5 coder 7b base q5_k_m (local)",
 							},
-							["qwen2.5-coder:7b-instruct-q5_K_M"] = {
-								formatted_name = "Qwen2.5 Coder 7B instruct q5_K_M (local)",
+							["qwen2.5-coder:7b-instruct-q5_k_m"] = {
+								formatted_name = "qwen2.5 coder 7b instruct q5_k_m (local)",
 							},
-							["qwen3.5:9b-q4_K_M"] = {
-								formatted_name = "Qwen3.5 9B q4_K_M (local)",
+							["qwen3.5:9b-q4_k_m"] = {
+								formatted_name = "qwen3.5 9b q4_k_m (local)",
 							},
 							["qwen3.5:4b-q8_0"] = {
-								formatted_name = "Qwen3.5 4B q8_0 (local)",
+								formatted_name = "qwen3.5 4b q8_0 (local)",
 							},
 							["qwen3-coder:480b-cloud"] = {
-								formatted_name = "Qwen3 Coder 480B (cloud)",
+								formatted_name = "qwen3 coder 480b (cloud)",
 							},
 							["qwen3-coder-next:cloud"] = {
-								formatted_name = "Qwen3 Coder Next (cloud)",
+								formatted_name = "qwen3 coder next (cloud)",
 							},
 							["devstral-2:123b-cloud"] = {
-								formatted_name = "Devstral 2 123B (cloud)",
+								formatted_name = "devstral 2 123b (cloud)",
 							},
 							["gemini-3-pro-preview:latest"] = {
-								formatted_name = "Gemini 3 Pro preview (cloud)",
+								formatted_name = "gemini 3 pro preview (cloud)",
 							},
 							["gemini-3-flash-preview:cloud"] = {
-								formatted_name = "Gemini 3 Flash preview (cloud)",
+								formatted_name = "gemini 3 flash preview (cloud)",
 							},
 							["gemma4:31b-cloud"] = {
-								formatted_name = "Gemma 4 31B (cloud)",
+								formatted_name = "gemma 4 31b (cloud)",
 							},
 							["gemma4:e4b"] = {
-								formatted_name = "Gemma 4 e4B (local)",
+								formatted_name = "gemma 4 e4b (local)",
 							},
 							["minimax-m2.7:cloud"] = {
-								formatted_name = "Minimax M2.7 (cloud)",
+								formatted_name = "minimax m2.7 (cloud)",
 							},
 						}
 						return require("codecompanion.adapters").extend("ollama", {
 							env = {
 								url = "http://localhost:11434",
 								api_key = function()
-									return vim.env.OLLAMA_API_KEY
+									return vim.env.ollama_api_key
 								end,
 							},
 							headers = {
-								["Content-Type"] = "application/json",
-								["Authorization"] = function(adapter)
+								["content-type"] = "application/json",
+								["authorization"] = function(adapter)
 									local key = adapter.env_replaced and adapter.env_replaced.api_key
 									if type(key) == "string" and key ~= "" then
-										return "Bearer " .. key
+										return "bearer " .. key
 									end
 									return nil
 								end,
@@ -213,7 +254,7 @@ return {
 							},
 							schema = {
 								model = {
-									default = "qwen2.5-coder:7b-instruct-q5_K_M",
+									default = "qwen2.5-coder:7b-instruct-q5_k_m",
 									choices = models,
 								},
 							},
@@ -225,7 +266,7 @@ return {
 						return require("codecompanion.adapters").extend("openai_compatible", {
 							env = {
 								url = "http://127.0.0.1:8081",
-								api_key = "TERM",
+								api_key = "term",
 								chat_url = "/v1/chat/completions",
 							},
 							handlers = {
@@ -243,12 +284,12 @@ return {
 						})
 					end,
 
-					-----[[ DeepSeek ]]-----
+					-----[[ deepseek ]]-----
 					deepseek = function()
 						return require("codecompanion.adapters").extend("deepseek", {
 							env = {
 								url = "https://api.deepseek.com",
-								api_key = vim.env.DEEPSEEK_API_KEY,
+								api_key = vim.env.deepseek_api_key,
 								chat_url = "/v1/chat/completions",
 							},
 							schema = {
