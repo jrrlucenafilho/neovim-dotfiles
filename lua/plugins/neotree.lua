@@ -38,6 +38,11 @@ return {
 			close_if_last_window = true,
 			enable_git_status = true,
 			enable_diagnostics = true,
+			default_component_configs = {
+				name = {
+					highlight_opened_files = "all",
+				},
+			},
 			open_files_do_not_replace_types = { "codecompanion", "trouble", "Outline", "better_term" },
 			filesystem = {
 				use_libuv_file_watcher = true,
@@ -150,6 +155,17 @@ return {
 		vim.keymap.set("n", "<leader>cf", "<cmd>Neotree reveal<cr>", { desc = "Open Neo-tree in current file" })
 
 		----- [[ Autocmds ]] -----
+		-- Buffers opened before neo-tree existed don't trigger BufAdd, so sync
+		-- the opened-buffer list when the tree is first shown.
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "neo-tree",
+			callback = function()
+				require("neo-tree.sources.manager").opened_buffers_changed("filesystem", {
+					opened_buffers = require("neo-tree.utils").get_opened_buffers(),
+				})
+			end,
+		})
+
 		local refresh = function()
 			require("neo-tree.sources.manager").refresh("filesystem")
 		end
