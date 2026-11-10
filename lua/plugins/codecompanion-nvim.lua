@@ -188,48 +188,23 @@ return {
 						})
 					end,
 
-					----[[ ollama (local + cloud); pick model with `ga` in chat ]]----
-					-- cloud models need ollama_api_key; authorization is sent only when the key is set.
+					----[[ ollama local models]]----
 					ollama = function()
 						local models = {
-							["qwen2.5-coder:7b"] = {
-								formatted_name = "qwen2.5 coder 7b (local)",
+							["qwen2.5:0.5b"] = {
+								formatted_name = "qwen2.5 0.5b",
 							},
-							["qwen2.5-coder:7b-base-q5_k_m"] = {
-								formatted_name = "qwen2.5 coder 7b base q5_k_m (local)",
+							["qwen3.5:0.8b"] = {
+								formatted_name = "qwen3.5 0.8b",
 							},
-							["qwen2.5-coder:7b-instruct-q5_k_m"] = {
-								formatted_name = "qwen2.5 coder 7b instruct q5_k_m (local)",
+							["qwen3.5:2b"] = {
+								formatted_name = "qwen3.5 2b",
 							},
-							["qwen3.5:9b-q4_k_m"] = {
-								formatted_name = "qwen3.5 9b q4_k_m (local)",
-							},
-							["qwen3.5:4b-q8_0"] = {
-								formatted_name = "qwen3.5 4b q8_0 (local)",
-							},
-							["qwen3-coder:480b-cloud"] = {
-								formatted_name = "qwen3 coder 480b (cloud)",
-							},
-							["qwen3-coder-next:cloud"] = {
-								formatted_name = "qwen3 coder next (cloud)",
-							},
-							["devstral-2:123b-cloud"] = {
-								formatted_name = "devstral 2 123b (cloud)",
-							},
-							["gemini-3-pro-preview:latest"] = {
-								formatted_name = "gemini 3 pro preview (cloud)",
-							},
-							["gemini-3-flash-preview:cloud"] = {
-								formatted_name = "gemini 3 flash preview (cloud)",
-							},
-							["gemma4:31b-cloud"] = {
-								formatted_name = "gemma 4 31b (cloud)",
+							["qwen3.5:4b"] = {
+								formatted_name = "qwen3.5 4b",
 							},
 							["gemma4:e4b"] = {
-								formatted_name = "gemma 4 e4b (local)",
-							},
-							["minimax-m2.7:cloud"] = {
-								formatted_name = "minimax m2.7 (cloud)",
+								formatted_name = "gemma 4 e4b",
 							},
 						}
 						return require("codecompanion.adapters").extend("ollama", {
@@ -254,7 +229,7 @@ return {
 							},
 							schema = {
 								model = {
-									default = "qwen2.5-coder:7b-instruct-q5_k_m",
+									default = "qwen3.5:0.8b",
 									choices = models,
 								},
 							},
@@ -391,7 +366,7 @@ return {
 							---HTTP adapter only: ACP chats (e.g. cursor_cli) cannot generate titles
 							adapter = "ollama",
 							---Match http.adapters.copilot default; avoids reusing ACP model settings
-							model = "gemma4:31b-cloud",
+							model = "qwen3.5:2b",
 							---Number of user prompts after which to refresh the title (0 to disable)
 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
 							---Maximum number of times to refresh the title (default: 3)
@@ -420,7 +395,7 @@ return {
 
 							generation_opts = {
 								adapter = "ollama",
-								model = "gemma4:31b-cloud",
+								model = "qwen3.5:2b",
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results
