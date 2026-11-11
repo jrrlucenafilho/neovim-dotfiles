@@ -191,9 +191,6 @@ return {
 					----[[ ollama local models]]----
 					ollama = function()
 						local models = {
-							["qwen2.5:0.5b"] = {
-								formatted_name = "qwen2.5 0.5b",
-							},
 							["qwen3.5:0.8b"] = {
 								formatted_name = "qwen3.5 0.8b",
 							},
@@ -202,9 +199,6 @@ return {
 							},
 							["qwen3.5:4b"] = {
 								formatted_name = "qwen3.5 4b",
-							},
-							["gemma4:e4b"] = {
-								formatted_name = "gemma 4 e4b",
 							},
 						}
 						return require("codecompanion.adapters").extend("ollama", {
@@ -366,7 +360,7 @@ return {
 							---HTTP adapter only: ACP chats (e.g. cursor_cli) cannot generate titles
 							adapter = "ollama",
 							---Match http.adapters.copilot default; avoids reusing ACP model settings
-							model = "qwen3.5:2b",
+							model = "qwen3.5:0.8b",
 							---Number of user prompts after which to refresh the title (0 to disable)
 							refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
 							---Maximum number of times to refresh the title (default: 3)
@@ -374,7 +368,9 @@ return {
 							format_title = function(original_title)
 								-- this can be a custom function that applies some custom
 								-- formatting to the title.
-								return original_title
+								-- The local model sometimes returns multi-line titles. Keep them
+								-- single-line so telescope can render them (see note below).
+								return (original_title:gsub("[\r\n]+", " "):gsub("%s+$", ""))
 							end,
 						},
 						---On exiting and entering neovim, loads the last chat on opening chat
@@ -395,7 +391,7 @@ return {
 
 							generation_opts = {
 								adapter = "ollama",
-								model = "qwen3.5:2b",
+								model = "qwen3.5:0.8b",
 								context_size = 90000, -- max tokens that the model supports
 								include_references = true, -- include slash command content
 								include_tool_outputs = true, -- include tool execution results
@@ -425,6 +421,21 @@ return {
 				},
 			},
 		})
+
+		-- Auto-generated chat titles occasionally contain newlines (the local title
+		-- model is not reliable). Telescope renders each result as a single buffer
+		-- line, so a multi-line title makes its descending-sort entry inserter drop a
+		-- results line and then fail with "Invalid cursor line: out of range" from
+		-- `telescope/pickers.lua` (`get_result_completor`) whenever you type in the
+		-- `gh` history picker. Flatten titles at display time so old saved chats are
+		-- fixed too, not just newly generated ones.
+		local ok, history_picker = pcall(require, "codecompanion._extensions.history.pickers.default")
+		if ok then
+			local get_item_title = history_picker.get_item_title
+			history_picker.get_item_title = function(self, item)
+				return (tostring(get_item_title(self, item)):gsub("[\r\n]+", " "))
+			end
+		end
 
 		----------- [[ Autocmds ]] ---------
 		-- Codecompanion specific chat buffer options
@@ -537,7 +548,7 @@ return {
 			{ desc = "Toggle CodeCompanion chat width" }
 		)
 
-		-- Add agent skills string to CodeCompanion chat buffer -- Not working right now TODO fix
+		-- Add agent skills string to CodeCompanion chat buffer
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "codecompanion",
 			callback = function()
