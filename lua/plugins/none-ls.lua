@@ -45,8 +45,5 @@ return {
 				-- require("none-ls.diagnostics.bacon"), -- bacon_ls is used in lsp-config.lua for diagnostics (needs Cargo.toml file)
 			},
 		})
-
-		-- Formatting keymaps
-		vim.keymap.set("n", "<leader>ff", vim.lsp.buf.format, { desc = "Format" })
 	end,
 }
