@@ -196,14 +196,11 @@ return {
 			})
 			vim.lsp.enable("cssmodules_ls")
 
-      -- vhdl (hdl_checker)
-			vim.lsp.config("hdl_checker", {
+			-- vhdl (vhdl_ls)
+			vim.lsp.config("vhdl_ls", {
 				capabilities = capabilities,
-				-- hdl_checker 0.7.5 has no --lsp flag (lspconfig's default);
-				-- running it with no arguments starts the stdio server.
-				cmd = { "hdl_checker" },
 			})
-			vim.lsp.enable("hdl_checker")
+			vim.lsp.enable("vhdl_ls")
 
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })

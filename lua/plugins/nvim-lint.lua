@@ -19,6 +19,7 @@ return {
 			c = { "clangtidy" },
 			cpp = { "clangtidy" }, -- Complementing cppcheck
 			lua = { "selene" },
+			vhdl = { "vsg" },
 		}
 
 		-- Autocmd for linting
