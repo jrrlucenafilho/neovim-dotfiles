@@ -7,7 +7,7 @@ opts:
   auto_submit: true
   adapter:
     name: opencode
-    model: deepseek/DeepSeek V4.1 Flash 1017
+    model: opencode/DeepSeek V4.1 Flash Free
 ---
 
 ## system

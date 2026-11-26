@@ -38,20 +38,20 @@ return {
 			})
 			vim.lsp.enable("ts_ls")
 
-			-- eslint-lsp (Javascript/Typescript)
-			vim.lsp.config("eslint-lsp", {
+			-- eslint (Javascript/Typescript)
+			vim.lsp.config("eslint", {
 				capabilities = capabilities,
 			})
-			vim.lsp.enable("eslint-lsp")
+			vim.lsp.enable("eslint")
 
-			-- rust-analyzer (Rust)
-			vim.lsp.config("rust-analyzer", {
+			-- rust_analyzer (Rust)
+			vim.lsp.config("rust_analyzer", {
 				capabilities = capabilities,
 			})
-			vim.lsp.enable("rust-analyzer")
+			vim.lsp.enable("rust_analyzer")
 
 			-- bacon_ls (rust diagnostics language server)
-			vim.lsp.config("bacon-ls", {
+			vim.lsp.config("bacon_ls", {
 				capabilities = capabilities,
 				init_options = {
 					cargo = { updateOnInsert = true },
@@ -68,7 +68,7 @@ return {
 					},
 				},
 			})
-			vim.lsp.enable("bacon-ls")
+			vim.lsp.enable("bacon_ls")
 
 			-- lua_ls (Lua)
 			vim.lsp.config("lua_ls", {
@@ -172,17 +172,17 @@ return {
 			})
 			vim.lsp.enable("fish_lsp")
 
-			-- hypr_lsp (hypr.conf)
-			vim.lsp.config("hypr_lsp", {
+			-- hyprls (hyprland config)
+			vim.lsp.config("hyprls", {
 				capabilities = capabilities,
 			})
-			vim.lsp.enable("hypr_lsp")
+			vim.lsp.enable("hyprls")
 
-			-- css (css_lsp)
-			vim.lsp.config("css_lsp", {
+			-- cssls (css)
+			vim.lsp.config("cssls", {
 				capabilities = capabilities,
 			})
-			vim.lsp.enable("css_lsp")
+			vim.lsp.enable("cssls")
 
 			-- css variables (css-variables-language-server)
 			vim.lsp.config("css_variables", {
@@ -195,6 +195,15 @@ return {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("cssmodules_ls")
+
+      -- vhdl (hdl_checker)
+			vim.lsp.config("hdl_checker", {
+				capabilities = capabilities,
+				-- hdl_checker 0.7.5 has no --lsp flag (lspconfig's default);
+				-- running it with no arguments starts the stdio server.
+				cmd = { "hdl_checker" },
+			})
+			vim.lsp.enable("hdl_checker")
 
 			-- General Keybinds
 			vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Hover over" })
